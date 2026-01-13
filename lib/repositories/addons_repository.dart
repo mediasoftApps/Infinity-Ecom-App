@@ -1,0 +1,15 @@
+import 'package:infinity_ecom_app/app_config.dart';
+import 'package:infinity_ecom_app/data_model/addons_response.dart';
+import 'package:infinity_ecom_app/repositories/api-request.dart';
+
+class AddonsRepository {
+  Future<List<AddonsListResponse>> getAddonsListResponse() async {
+    // $();
+    String url = ('${AppConfig.BASE_URL}/addon-list');
+    final response = await ApiRequest.get(url: url);
+
+    return addonsListResponseFromJson(response.body);
+  }
+}
+
+//has_state =0

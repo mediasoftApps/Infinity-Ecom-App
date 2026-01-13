@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "443424626132",
+    "project_id": "mediasoft-fa102",
+    "storage_bucket": "mediasoft-fa102.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443424626132:android:99ed3c4fa457e298d53241",
+        "android_client_info": {
+          "package_name": "com.infinitymegamall.infinityapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmQ69H1O3w_lZq4DV2DrrFODvdNw2fey4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
