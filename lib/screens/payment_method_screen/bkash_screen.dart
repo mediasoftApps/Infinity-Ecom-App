@@ -1,26 +1,26 @@
 import 'dart:convert';
-
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../app_config.dart';
+import '../../custom/toast_component.dart';
 import '../../helpers/shared_value_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/payment_repository.dart';
+import '../orders/order_list.dart';
 import '../profile.dart';
+import '../wallet.dart';
 
 class BkashScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
-  BkashScreen({
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String? package_id;
+  final int? orderId;
+
+  const BkashScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,

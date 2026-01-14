@@ -1,27 +1,27 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:infinity_ecom_app/app_config.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/package/packages.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:http/http.dart' as http;
 
-class PhonePeScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
+import '../../app_config.dart';
+import '../../custom/toast_component.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../my_theme.dart';
+import '../../repositories/payment_repository.dart';
+import '../orders/order_list.dart';
+import '../package/packages.dart';
+import '../wallet.dart';
 
-  PhonePeScreen({
+class PhonePeScreen extends StatefulWidget {
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final int? package_id;
+  final int? orderId;
+
+  const PhonePeScreen({
     super.key,
     this.amount = 0.00,
     this.payment_type = "",

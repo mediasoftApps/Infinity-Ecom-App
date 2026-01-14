@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:infinity_ecom_app/screens/classified_ads/classified_model.dart';
-
 import '../app_config.dart';
 import '../data_model/classified_ads_details_response.dart';
 import '../data_model/classified_ads_response.dart';
 import '../data_model/common_response.dart';
 import '../helpers/shared_value_helper.dart';
+import '../screens/classified_ads/classified_model.dart';
 import 'api-request.dart';
 
 class ClassifiedProductRepository {

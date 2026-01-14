@@ -14,12 +14,13 @@ import '../../helpers/main_helpers.dart';
 import '../profile.dart';
 
 class NagadScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
-  NagadScreen({
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String? package_id;
+  final int? orderId;
+
+  const NagadScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,

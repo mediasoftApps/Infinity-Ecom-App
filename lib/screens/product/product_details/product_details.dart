@@ -22,6 +22,7 @@ import '../../../custom/lang_text.dart';
 import '../../../custom/quantity_input.dart';
 import '../../../custom/toast_component.dart';
 import '../../../data_model/product_details_response.dart';
+import '../../../data_model/product_mini_response.dart';
 import '../../../helpers/color_helper.dart';
 import '../../../helpers/main_helpers.dart';
 import '../../../helpers/shared_value_helper.dart';
@@ -58,12 +59,12 @@ class _ProductDetailsState extends State<ProductDetails>
   bool _showCopied = false;
   String? _appbarPriceString = ". . .";
   int _currentImage = 0;
-  final ScrollController _mainScrollController = ScrollController(
+  final _mainScrollController = ScrollController(
     initialScrollOffset: 0.0,
   );
-  final ScrollController _colorScrollController = ScrollController();
-  final ScrollController _variantScrollController = ScrollController();
-  final ScrollController _imageScrollController = ScrollController();
+  final _colorScrollController = ScrollController();
+  final _variantScrollController = ScrollController();
+  final _imageScrollController = ScrollController();
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
 
@@ -98,7 +99,7 @@ class _ProductDetailsState extends State<ProductDetails>
 
   double opacity = 0;
 
-  final List<dynamic> _relatedProducts = [];
+  final List<Product> _relatedProducts = [];
   bool _relatedProductInit = false;
   final List<dynamic> _topProducts = [];
   bool _topProductInit = false;
@@ -828,7 +829,7 @@ class _ProductDetailsState extends State<ProductDetails>
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    // final double statusBarHeight = MediaQuery.of(context).padding.top;
     SnackBar addedToCartSnackbar = SnackBar(
       content: Text(
         AppLocalizations.of(context)!.added_to_cart,
@@ -2462,7 +2463,7 @@ class _ProductDetailsState extends State<ProductDetails>
             itemBuilder: (context, index) {
               return MiniProductCard(
                 id: _relatedProducts[index].id,
-                slug: _relatedProducts[index].slug,
+                slug: _relatedProducts[index].slug ?? '',
                 image: _relatedProducts[index].thumbnail_image,
                 name: _relatedProducts[index].name,
                 main_price: _relatedProducts[index].main_price,

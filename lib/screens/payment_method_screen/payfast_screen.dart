@@ -1,27 +1,27 @@
 import 'dart:convert';
-
-import 'package:infinity_ecom_app/app_config.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/profile.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../app_config.dart';
+import '../../custom/toast_component.dart';
 import '../../helpers/main_helpers.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../my_theme.dart';
+import '../../repositories/payment_repository.dart';
+import '../orders/order_list.dart';
+import '../profile.dart';
+import '../wallet.dart';
 
 class PayfastScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  String package_id;
-  int? orderId;
-  PayfastScreen({
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String package_id;
+  final int? orderId;
+
+  const PayfastScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,
@@ -169,10 +169,8 @@ class _PayfastScreenState extends State<PayfastScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else {
       return SingleChildScrollView(

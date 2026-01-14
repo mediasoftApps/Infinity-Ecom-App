@@ -12,14 +12,15 @@ import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 
 import '../custom/btn.dart';
 import '../custom/toast_component.dart';
+import '../data_model/address_response.dart';
 import '../l10n/app_localizations.dart';
 import '../my_theme.dart';
 import '../other_config.dart';
 import '../repositories/address_repository.dart';
 
 class MapLocation extends StatefulWidget {
-  MapLocation({super.key, this.address});
-  var address;
+  final Address address;
+  const MapLocation({super.key, required this.address});
 
   @override
   State<MapLocation> createState() => MapLocationState();
@@ -44,7 +45,7 @@ class MapLocationState extends State<MapLocation>
   void initState() {
     super.initState();
 
-    if (widget.address.location_available) {
+    if (widget.address.location_available!) {
       setInitialLocation();
     } else {
       setDummyInitialLocation();
@@ -52,7 +53,7 @@ class MapLocationState extends State<MapLocation>
   }
 
   setInitialLocation() {
-    kInitialPosition = LatLng(widget.address.lat, widget.address.lang);
+    kInitialPosition = LatLng(widget.address.lat!, widget.address.lang!);
     setState(() {});
   }
 
@@ -73,11 +74,13 @@ class MapLocationState extends State<MapLocation>
     );
 
     if (addressUpdateLocationResponse.result == false) {
-      ToastComponent.showDialog(addressUpdateLocationResponse.message);
+      ToastComponent.showDialog(
+          addressUpdateLocationResponse.message ?? "Something went wrong");
       return;
     }
 
-    ToastComponent.showDialog(addressUpdateLocationResponse.message);
+    ToastComponent.showDialog(
+        addressUpdateLocationResponse.message ?? "Something went wrong");
   }
 
   @override

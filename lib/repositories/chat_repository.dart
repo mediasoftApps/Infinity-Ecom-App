@@ -1,16 +1,15 @@
 import 'dart:convert';
 
-import 'package:infinity_ecom_app/app_config.dart';
-import 'package:infinity_ecom_app/data_model/conversation_response.dart';
-import 'package:infinity_ecom_app/data_model/message_response.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/middlewares/banned_user.dart';
-import 'package:infinity_ecom_app/repositories/api-request.dart';
-
+import '../app_config.dart';
 import '../data_model/conversation_create_response.dart';
+import '../data_model/conversation_response.dart';
+import '../data_model/message_response.dart';
+import '../helpers/shared_value_helper.dart';
+import '../middlewares/banned_user.dart';
+import 'api-request.dart';
 
 class ChatRepository {
-  Future<dynamic> getConversationResponse({page = 1}) async {
+  Future<ConversationResponse> getConversationResponse({page = 1}) async {
     String url = ("${AppConfig.BASE_URL}/chat/conversations?page=$page");
     final response = await ApiRequest.get(
       url: url,
@@ -81,7 +80,7 @@ class ChatRepository {
     return messageResponseFromJson(response.body);
   }
 
-  Future<dynamic> getCreateConversationResponse({
+  Future<ConversationCreateResponse> getCreateConversationResponse({
     required product_id,
     required String title,
     required String message,

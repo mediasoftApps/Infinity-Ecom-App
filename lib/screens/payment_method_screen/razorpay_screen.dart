@@ -16,12 +16,12 @@ import '../../helpers/system_config.dart';
 import '../profile.dart';
 
 class RazorpayScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  int? orderId;
-  var package_id;
-  RazorpayScreen({
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final int? orderId;
+  final String? package_id;
+  const RazorpayScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,

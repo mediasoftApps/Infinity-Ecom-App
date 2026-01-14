@@ -16,13 +16,13 @@ import '../profile.dart';
 import '../wallet.dart';
 
 class PaypalScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String? package_id;
+  final int? orderId;
 
-  PaypalScreen({
+  const PaypalScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,

@@ -9,8 +9,8 @@ import 'package:photo_view/photo_view.dart';
 class ProductSliderImageWidget extends StatefulWidget {
   final List? productImageList;
   final CarouselSliderController? carouselController;
-  int? currentImage;
-  ProductSliderImageWidget({
+  final int? currentImage;
+  const ProductSliderImageWidget({
     super.key,
     this.productImageList,
     this.carouselController,
@@ -23,6 +23,14 @@ class ProductSliderImageWidget extends StatefulWidget {
 }
 
 class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
+  int _currentImage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentImage = widget.currentImage ?? 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.productImageList!.isEmpty) {
@@ -45,7 +53,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
             onPageChanged: (index, reason) {
               log(index.toString());
               setState(() {
-                widget.currentImage = index;
+                _currentImage = index;
               });
             }),
         items: widget.productImageList!.map(
@@ -56,8 +64,8 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        openPhotoDialog(context,
-                            widget.productImageList![widget.currentImage!]);
+                        openPhotoDialog(
+                            context, widget.productImageList![_currentImage]);
                       },
                       child: SizedBox(
                         height: double.infinity,
@@ -82,7 +90,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                                 vertical: 10.0, horizontal: 4.0),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: widget.currentImage == index
+                              color: _currentImage == index
                                   ? Colors.black.withValues(alpha: 0.5)
                                   : Color(0xff484848).withValues(alpha: 0.5),
                             ),

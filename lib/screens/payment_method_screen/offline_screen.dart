@@ -1,34 +1,35 @@
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/enum_classes.dart';
-import 'package:infinity_ecom_app/custom/input_decorations.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/file_helper.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/customer_package_repository.dart';
-import 'package:infinity_ecom_app/repositories/file_repository.dart';
-import 'package:infinity_ecom_app/repositories/offline_payment_repository.dart';
-import 'package:infinity_ecom_app/repositories/offline_wallet_recharge_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_details.dart';
-import 'package:infinity_ecom_app/screens/package/packages.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
-import 'package:infinity_ecom_app/ui_elements/html_content_webview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../custom/btn.dart';
+import '../../custom/enum_classes.dart';
+import '../../custom/input_decorations.dart';
+import '../../custom/toast_component.dart';
+import '../../helpers/file_helper.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/customer_package_repository.dart';
+import '../../repositories/file_repository.dart';
+import '../../repositories/offline_payment_repository.dart';
+import '../../repositories/offline_wallet_recharge_repository.dart';
+import '../../ui_elements/html_content_webview.dart';
+import '../orders/order_details.dart';
+import '../package/packages.dart';
+import '../wallet.dart';
+
 class OfflineScreen extends StatefulWidget {
-  int? order_id;
-  String? paymentInstruction;
-  String? paymentMethod;
+  final int? order_id;
+  final String? paymentInstruction;
+  final String? paymentMethod;
 
-  PaymentFor? offLinePaymentFor;
-  int? offline_payment_id;
+  final PaymentFor? offLinePaymentFor;
+  final int? offline_payment_id;
   final double? rechargeAmount;
-  var packageId;
+  final String packageId;
 
-  OfflineScreen({
+  const OfflineScreen({
     super.key,
     this.order_id,
     this.paymentInstruction,

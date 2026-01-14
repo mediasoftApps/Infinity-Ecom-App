@@ -194,7 +194,7 @@ packages:
     source: hosted
     version: "0.4.2"
   clipboard:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: clipboard
       sha256: c0ba5e7214035b824549473fa134870bc544fff0d7b89170d4756c0ac2c0239d
@@ -226,7 +226,7 @@ packages:
     source: hosted
     version: "1.19.1"
   connectivity_plus:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: connectivity_plus
       sha256: "33bae12a398f841c6cda09d1064212957265869104c478e5ad51e2fb26c3973c"
@@ -314,7 +314,7 @@ packages:
     source: hosted
     version: "1.1.54"
   dotted_line:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: dotted_line
       sha256: "41e3d655939559815daa1370fc1e07673a205fa628cf40ce3af45d90029a77b6"
@@ -322,7 +322,7 @@ packages:
     source: hosted
     version: "3.2.3"
   dropdown_search:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: dropdown_search
       sha256: c29b3e5147a82a06a4a08b3b574c51cb48cc17ad89893d53ee72a6f86643622e
@@ -740,7 +740,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_math_fork:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: flutter_math_fork
       sha256: "6d5f2f1aa57ae539ffb0a04bb39d2da67af74601d685a161aff7ce5bda5fa407"
@@ -950,13 +950,13 @@ packages:
     source: hosted
     version: "5.1.0"
   google_fonts:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: google_fonts
-      sha256: ca1cc501704c47e478f69a667d7f2d882755ddf7baad3f60c3b1256594467022
+      sha256: db3c46578e5a475dcf6fad22f5e541c5c75f8abddee8d4607e585c56ce5818a6
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.2"
+    version: "7.0.1"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -1025,10 +1025,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_sign_in
-      sha256: d0a2c3bcb06e607bb11e4daca48bd4b6120f0bbc4015ccebbe757d24ea60ed2a
+      sha256: "776a4c988dc179c3b8e9201de0ad61bf350a4e75d378ff9d94c76880378c7bca"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.1.0"
   google_sign_in_android:
     dependency: transitive
     description:
@@ -1214,7 +1214,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
@@ -1225,10 +1225,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: "5b89c1e32ae3840bb20a1b3434e3a590173ad3cb605896fb0f60487ce2f8104e"
+      sha256: "6b253f7851cf1626a05c8b49c792e04a14897349798c03798137f2b5f7e0b5b1"
       url: "https://pub.dev"
     source: hosted
-    version: "6.11.4"
+    version: "6.11.3"
   leak_tracker:
     dependency: transitive
     description:
@@ -1278,7 +1278,7 @@ packages:
     source: hosted
     version: "2.6.2"
   logging:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: logging
       sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
@@ -1606,7 +1606,7 @@ packages:
     source: hosted
     version: "1.5.0"
   rename:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: rename
       sha256: da5f4d67f8c68f066ad04edfd6585495dbe595f2baf3b1999eb6af1805d79539
@@ -1899,7 +1899,7 @@ packages:
     source: hosted
     version: "0.7.7"
   timeline_list:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: timeline_list
       sha256: "2d6a59f2e8047ab4948c68ff497d32f75078e137ebda4dfb6661a9a94ffad47f"

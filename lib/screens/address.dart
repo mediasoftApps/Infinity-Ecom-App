@@ -17,6 +17,7 @@ import '../my_theme.dart';
 import '../repositories/address_repository.dart';
 import '../repositories/business_setting_repository.dart';
 import 'map_location.dart';
+import '../data_model/address_response.dart' as address;
 
 class Address extends StatefulWidget {
   final bool from_shipping_info;
@@ -37,7 +38,7 @@ class _AddressState extends State<Address> {
   City? _selected_area;
 
   bool _isInitial = true;
-  final List<dynamic> _shippingAddressList = [];
+  final List<address.Address> _shippingAddressList = [];
   bool _isAreaRequired = false;
 
   //controllers for add purpose
@@ -1650,7 +1651,7 @@ class _AddressState extends State<Address> {
                     _shippingAddressList[index].address ?? "",
                   ),
                   if (_shippingAddressList[index].area_name != null &&
-                      _shippingAddressList[index].area_name.isNotEmpty)
+                      _shippingAddressList[index].area_name!.isNotEmpty)
                     buildAddressInfoRow(
                       "Area",
                       _shippingAddressList[index].area_name ?? "",
@@ -1660,7 +1661,7 @@ class _AddressState extends State<Address> {
                     _shippingAddressList[index].city_name ?? "",
                   ),
                   if (_shippingAddressList[index].state_name != null &&
-                      _shippingAddressList[index].state_name.isNotEmpty)
+                      _shippingAddressList[index].state_name!.isNotEmpty)
                     buildAddressInfoRow(
                       AppLocalizations.of(context)!.state_ucf,
                       _shippingAddressList[index].state_name ?? "",

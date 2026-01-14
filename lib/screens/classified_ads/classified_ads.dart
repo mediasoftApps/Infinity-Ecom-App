@@ -1,15 +1,16 @@
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/helpers/string_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/ui_elements/classified_product_card.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../custom/lang_text.dart';
+import '../../custom/useful_elements.dart';
+import '../../data_model/classified_ads_response.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../helpers/string_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
 import '../../repositories/classified_product_repository.dart';
+import '../../ui_elements/classified_product_card.dart';
 
 class ClassifiedAds extends StatefulWidget {
   const ClassifiedAds({super.key});
@@ -23,7 +24,7 @@ class _ClassifiedAdsState extends State<ClassifiedAds> {
 
   //init
   bool _dataFetch = false;
-  final dynamic _classifiedProducts = [];
+  final List<ClassifiedAdsMiniData> _classifiedProducts = [];
   int page = 1;
 
   @override
@@ -45,10 +46,10 @@ class _ClassifiedAdsState extends State<ClassifiedAds> {
   }
 
   fetchData() async {
-    var classifiedProductRes = await ClassifiedProductRepository()
-        .getClassifiedProducts(page: page);
+    var classifiedProductRes =
+        await ClassifiedProductRepository().getClassifiedProducts(page: page);
 
-    _classifiedProducts.addAll(classifiedProductRes.data);
+    _classifiedProducts.addAll(classifiedProductRes.data ?? []);
     _dataFetch = true;
     setState(() {});
   }
@@ -61,9 +62,8 @@ class _ClassifiedAdsState extends State<ClassifiedAds> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar(context),
@@ -105,7 +105,7 @@ class _ClassifiedAdsState extends State<ClassifiedAds> {
       );
     }
 
-    if (_classifiedProducts.length == 0) {
+    if (_classifiedProducts.isEmpty) {
       return Center(child: Text(LangText(context).local.no_data_is_available));
     }
     return RefreshIndicator(
@@ -124,7 +124,7 @@ class _ClassifiedAdsState extends State<ClassifiedAds> {
             // 3
             return ClassifiedAdsCard(
               id: _classifiedProducts[index].id,
-              slug: _classifiedProducts[index].slug,
+              slug: _classifiedProducts[index].slug ?? '',
               image: _classifiedProducts[index].thumbnailImage,
               name: _classifiedProducts[index].name,
               unit_price: _classifiedProducts[index].unitPrice,

@@ -16,12 +16,12 @@ import '../profile.dart';
 import '../wallet.dart';
 
 class AmarpayScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
-  AmarpayScreen({
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String? package_id;
+  final int? orderId;
+  const AmarpayScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,

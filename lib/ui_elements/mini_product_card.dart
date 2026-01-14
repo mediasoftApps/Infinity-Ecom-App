@@ -1,19 +1,20 @@
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/screens/product/product_details/product_details.dart';
 import 'package:flutter/material.dart';
 
+import '../helpers/system_config.dart';
+import '../my_theme.dart';
+import '../screens/product/product_details/product_details.dart';
+
 class MiniProductCard extends StatefulWidget {
-  int? id;
-  String slug;
-  String? image;
-  String? name;
-  String? main_price;
-  String? stroked_price;
-  bool? has_discount;
-  bool? is_wholesale;
-  var discount;
-  MiniProductCard({
+  final int? id;
+  final String slug;
+  final String? image;
+  final String? name;
+  final String? main_price;
+  final String? stroked_price;
+  final bool? has_discount;
+  final bool? is_wholesale;
+  final dynamic discount;
+  const MiniProductCard({
     super.key,
     this.id,
     required this.slug,
@@ -46,7 +47,6 @@ class _MiniProductCardState extends State<MiniProductCard> {
       },
       child: SizedBox(
         width: 140,
-
         child: Stack(
           children: [
             Column(

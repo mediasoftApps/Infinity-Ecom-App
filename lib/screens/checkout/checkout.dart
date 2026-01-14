@@ -615,7 +615,7 @@ class _CheckoutState extends State<Checkout> {
               amount: _grandTotalValue,
               payment_type: payment_type,
               payment_method_key: _selected_payment_method_key,
-              package_id: widget.packageId.toString(),
+              package_id: widget.packageId,
               orderId: widget.order_id,
             );
           },
@@ -649,7 +649,7 @@ class _CheckoutState extends State<Checkout> {
               offLinePaymentFor: widget.paymentFor,
               paymentMethod:
                   _paymentTypeList[_selected_payment_method_index].name,
-              packageId: widget.packageId,
+              packageId: widget.packageId.toString(),
             );
           },
         ),

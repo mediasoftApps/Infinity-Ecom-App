@@ -1,12 +1,14 @@
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/chat_repository.dart';
-import 'package:infinity_ecom_app/screens/chat/chat.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
+
+import '../../custom/lang_text.dart';
+import '../../custom/useful_elements.dart';
+import '../../data_model/conversation_response.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/chat_repository.dart';
+import 'chat.dart';
 
 class MessengerList extends StatefulWidget {
   const MessengerList({super.key});
@@ -16,9 +18,9 @@ class MessengerList extends StatefulWidget {
 }
 
 class _MessengerListState extends State<MessengerList> {
-  final ScrollController _xcrollController = ScrollController();
+  final _xcrollController = ScrollController();
 
-  final List<dynamic> _list = [];
+  final List<ConversationItem> _list = [];
   bool _isInitial = true;
   int _page = 1;
   int? _totalData = 0;
@@ -46,9 +48,9 @@ class _MessengerListState extends State<MessengerList> {
     var conversatonResponse = await ChatRepository().getConversationResponse(
       page: _page,
     );
-    _list.addAll(conversatonResponse.conversation_item_list);
+    _list.addAll(conversatonResponse.conversation_item_list!);
     _isInitial = false;
-    _totalData = conversatonResponse.meta.total;
+    _totalData = conversatonResponse.meta?.total;
     _showLoadingContainer = false;
     setState(() {});
   }
@@ -70,9 +72,8 @@ class _MessengerListState extends State<MessengerList> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar(context),
@@ -222,7 +223,7 @@ class _MessengerListState extends State<MessengerList> {
                 borderRadius: BorderRadius.circular(35),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: _list[index].shop_logo,
+                  image: _list[index].shop_logo!,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -241,7 +242,7 @@ class _MessengerListState extends State<MessengerList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _list[index].shop_name,
+                          _list[index].shop_name ?? '',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -253,7 +254,7 @@ class _MessengerListState extends State<MessengerList> {
                           ),
                         ),
                         Text(
-                          _list[index].title,
+                          _list[index].title ?? '',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,

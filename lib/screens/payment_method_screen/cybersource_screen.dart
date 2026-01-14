@@ -42,7 +42,7 @@ class _CybersourceScreenState extends State<CybersourceScreen> {
   bool _isLoading = true;
   bool _paymentCompleted = false;
   String? _errorMessage;
-  String? _currentUrl;
+  String? currentUrl;
 
   late WebViewController _webViewController;
   final Completer<WebViewController> _controllerCompleter =
@@ -75,13 +75,13 @@ class _CybersourceScreenState extends State<CybersourceScreen> {
           onPageStarted: (String url) {
             setState(() {
               _isLoading = true;
-              _currentUrl = url;
+              currentUrl = url;
             });
           },
           onPageFinished: (String url) {
             setState(() {
               _isLoading = false;
-              _currentUrl = url;
+              currentUrl = url;
             });
 
             if (url.contains('${AppConfig.BASE_URL}/payment/success') ||
@@ -108,7 +108,7 @@ class _CybersourceScreenState extends State<CybersourceScreen> {
               print('URL changed to: ${change.url}');
             }
             setState(() {
-              _currentUrl = change.url;
+              currentUrl = change.url;
             });
           },
         ),
@@ -239,9 +239,8 @@ class _CybersourceScreenState extends State<CybersourceScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),

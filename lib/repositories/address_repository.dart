@@ -131,7 +131,7 @@ class AddressRepository {
     return addressUpdateResponseFromJson(response.body);
   }
 
-  Future<dynamic> getAddressUpdateLocationResponse(
+  Future<AddressUpdateLocationResponse> getAddressUpdateLocationResponse(
     int? id,
     double? latitude,
     double? longitude,

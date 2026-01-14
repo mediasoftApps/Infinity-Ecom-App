@@ -20,8 +20,8 @@ import 'home.dart';
 import 'profile.dart';
 
 class Main extends StatefulWidget {
-  Main({super.key, go_back = true});
-  late bool go_back;
+  final bool go_back;
+  const Main({super.key, this.go_back = true});
 
   @override
   State<Main> createState() => _MainState();
@@ -190,8 +190,11 @@ class _MainState extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: willPop,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        willPop();
+      },
       child: Directionality(
         textDirection:
             app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,

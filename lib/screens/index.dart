@@ -1,14 +1,15 @@
-import 'package:infinity_ecom_app/helpers/addons_helper.dart';
-import 'package:infinity_ecom_app/helpers/auth_helper.dart';
-import 'package:infinity_ecom_app/helpers/business_setting_helper.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/presenter/currency_presenter.dart';
-import 'package:infinity_ecom_app/providers/locale_provider.dart';
-import 'package:infinity_ecom_app/screens/main.dart';
-import 'package:infinity_ecom_app/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../helpers/addons_helper.dart';
+import '../helpers/auth_helper.dart';
+import '../helpers/business_setting_helper.dart';
+import '../helpers/shared_value_helper.dart';
+import '../helpers/system_config.dart';
+import '../presenter/currency_presenter.dart';
+import '../providers/locale_provider.dart';
+import 'main.dart';
+import 'splash_screen.dart';
 
 class Index extends StatefulWidget {
   final bool? goBack;
@@ -54,7 +55,7 @@ class _IndexState extends State<Index> {
     SystemConfig.context ??= context;
     return Scaffold(
       body: SystemConfig.isShownSplashScreed
-          ? Main(go_back: widget.goBack)
+          ? Main(go_back: widget.goBack!)
           : SplashScreen(),
     );
   }

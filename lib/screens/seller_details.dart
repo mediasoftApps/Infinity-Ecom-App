@@ -39,19 +39,19 @@ class _SellerDetailsState extends State<SellerDetails> {
   //init
   int _current_slider = 0;
   final List<dynamic> _carouselImageList = [];
-  bool _carouselInit = false;
+  bool carouselInit = false;
   Shop? _shopDetails;
 
   final List<dynamic> _newArrivalProducts = [];
   bool _newArrivalProductInit = false;
   final List<dynamic> _topProducts = [];
-  bool _topProductInit = false;
+  bool topProductInit = false;
   final List<dynamic> _featuredProducts = [];
-  bool _featuredProductInit = false;
+  bool featuredProductInit = false;
   bool? _isThisSellerFollowed;
 
   final List<dynamic> _allProductList = [];
-  bool? _isInitialAllProduct;
+  bool? isInitialAllProduct;
   int _page = 1;
 
   int tabOptionIndex = 0;
@@ -122,7 +122,7 @@ class _SellerDetailsState extends State<SellerDetails> {
       page: _page,
     );
     _allProductList.addAll(productResponse.products!);
-    _isInitialAllProduct = false;
+    isInitialAllProduct = false;
     setState(() {});
   }
 
@@ -152,7 +152,7 @@ class _SellerDetailsState extends State<SellerDetails> {
         _carouselImageList.add(slider);
       });
     }
-    _carouselInit = true;
+    carouselInit = true;
 
     setState(() {});
   }
@@ -170,29 +170,29 @@ class _SellerDetailsState extends State<SellerDetails> {
     var topProductResponse = await ShopRepository()
         .getTopFromThisSellerProducts(id: _shopDetails?.id);
     _topProducts.addAll(topProductResponse.products!);
-    _topProductInit = true;
+    topProductInit = true;
   }
 
   fetchFeaturedProducts() async {
     var featuredProductResponse = await ShopRepository()
         .getfeaturedFromThisSellerProducts(id: _shopDetails?.id);
     _featuredProducts.addAll(featuredProductResponse.products!);
-    _featuredProductInit = true;
+    featuredProductInit = true;
   }
 
   reset() {
     _shopDetails = null;
     _carouselImageList.clear();
-    _carouselInit = false;
+    carouselInit = false;
     _newArrivalProducts.clear();
     _topProducts.clear();
     _featuredProducts.clear();
-    _topProductInit = false;
+    topProductInit = false;
     _newArrivalProductInit = false;
-    _featuredProductInit = false;
+    featuredProductInit = false;
 
     _allProductList.clear();
-    _isInitialAllProduct = true;
+    isInitialAllProduct = true;
     _page = 1;
     _isThisSellerFollowed = null;
 

@@ -45,9 +45,9 @@ import 'widgets/product_slider_image_widget.dart';
 import 'widgets/tappable_icon_widget.dart';
 
 class DigitalProductDetails extends StatefulWidget {
-  String slug;
+  final String slug;
 
-  DigitalProductDetails({super.key, required this.slug});
+  const DigitalProductDetails({super.key, required this.slug});
 
   @override
   State<DigitalProductDetails> createState() => _DigitalProductDetailsState();
@@ -58,19 +58,17 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   bool _showCopied = false;
   String? _appbarPriceString = ". . .";
   int _currentImage = 0;
-  final ScrollController _mainScrollController = ScrollController(
+  final _mainScrollController = ScrollController(
     initialScrollOffset: 0.0,
   );
-  final ScrollController _colorScrollController = ScrollController();
-  final ScrollController _variantScrollController = ScrollController();
-  final ScrollController _imageScrollController = ScrollController();
+  final _colorScrollController = ScrollController();
+  final _variantScrollController = ScrollController();
+  final _imageScrollController = ScrollController();
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
 
   double _scrollPosition = 0.0;
 
-  Animation? _colorTween;
-  late AnimationController _ColorAnimationController;
   WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..enableZoom(false);
@@ -83,7 +81,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   //init values
 
   bool _isInWishList = false;
-  var _productDetailsFetched = false;
+  bool productDetailsFetched = false;
   DetailedProduct? _productDetails;
   final _productImageList = [];
   final _colorList = [];
@@ -92,11 +90,10 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   var _choiceString = "";
   String? _variant = "";
   String? _totalPrice = "...";
-  var _singlePrice;
-  var _singlePriceString;
+  var singlePrice;
+  var singlePriceString;
   int? _quantity = 1;
   int? _stock = 0;
-  var _stock_txt;
 
   double opacity = 0;
 
@@ -109,15 +106,6 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   void initState() {
     quantityText.text = "${_quantity ?? 0}";
     controller;
-    _ColorAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 0),
-    );
-
-    _colorTween = ColorTween(
-      begin: Colors.transparent,
-      end: Colors.white,
-    ).animate(_ColorAnimationController);
 
     _mainScrollController.addListener(() {
       _scrollPosition = _mainScrollController.position.pixels;
@@ -192,8 +180,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
     if (_productDetails != null) {
       controller.loadHtmlString(makeHtml(_productDetails!.description!));
       _appbarPriceString = _productDetails!.price_high_low;
-      _singlePrice = _productDetails!.calculable_price;
-      _singlePriceString = _productDetails!.main_price;
+      singlePrice = _productDetails!.calculable_price;
+      singlePriceString = _productDetails!.main_price;
       // fetchVariantPrice();
       _stock = _productDetails!.current_stock;
       for (var photo in _productDetails!.photos!) {
@@ -208,7 +196,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
       }
       setChoiceString();
       fetchAndSetVariantWiseInfo(change_appbar_string: true);
-      _productDetailsFetched = true;
+      productDetailsFetched = true;
 
       setState(() {});
     }
@@ -286,7 +274,6 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
       qty: _quantity,
     );
     _stock = variantResponse.variantData!.stock;
-    _stock_txt = variantResponse.variantData!.stockTxt;
     if (_quantity! > _stock!) {
       _quantity = _stock;
     }
@@ -319,7 +306,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
     _variant = "";
     _selectedColorIndex = 0;
     _quantity = 1;
-    _productDetailsFetched = false;
+    productDetailsFetched = false;
     _isInWishList = false;
     sellerChatTitleController.clear();
     setState(() {});
@@ -413,11 +400,11 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
     setState(() {
       _showCopied = true;
     });
-    Timer timer = Timer(Duration(seconds: 3), () {
+    /* Timer timer = Timer(Duration(seconds: 3), () {
       setState(() {
         _showCopied = false;
       });
-    });
+    }); */
   }
 
   onPressShare(context) {
@@ -806,7 +793,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    // final double statusBarHeight = MediaQuery.of(context).padding.top;
     SnackBar addedToCartSnackbar = SnackBar(
       content: Text(
         AppLocalizations.of(context)!.added_to_cart,
@@ -1983,11 +1970,11 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
       children: [
         Text(
           SystemConfig.systemCurrency != null
-              ? _singlePriceString.replaceAll(
+              ? singlePriceString.replaceAll(
                   SystemConfig.systemCurrency!.code,
                   SystemConfig.systemCurrency!.symbol,
                 )
-              : _singlePriceString,
+              : singlePriceString,
           style: TextStyle(
             color: Color(0xffE62E04),
             fontFamily: 'Public Sans',
@@ -2032,7 +2019,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
         ),
         Text(
           "/${_productDetails!.unit}",
-          // _singlePriceString,
+          // singlePriceString,
           style: TextStyle(
             color: MyTheme.accent_color,
             fontSize: 16.0,

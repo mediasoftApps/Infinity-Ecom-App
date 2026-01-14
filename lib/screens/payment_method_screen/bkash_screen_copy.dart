@@ -15,13 +15,13 @@ import '../profile.dart';
 import '../wallet.dart';
 
 class BkashScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  var package_id;
-  int? orderId;
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String? package_id;
+  final int? orderId;
 
-  BkashScreen({
+  const BkashScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,
@@ -163,7 +163,7 @@ class _BkashScreenState extends State<BkashScreen> {
       token: _token,
       payment_type: widget.payment_type,
       combined_order_id: _combined_order_id,
-      package_id: widget.package_id,
+      package_id: widget.package_id.toString(),
       payment_id: paymentDetails['paymentID'],
     );
 

@@ -6,14 +6,14 @@ import '../my_theme.dart';
 import '../screens/classified_ads/classified_product_details.dart';
 
 class ClassifiedAdsCard extends StatefulWidget {
-  int? id;
-  String? image;
-  String slug;
-  String? name;
-  String? unit_price;
-  var condition;
+  final int? id;
+  final String? image;
+  final String slug;
+  final String? name;
+  final String? unit_price;
+  final String? condition;
 
-  ClassifiedAdsCard({
+  const ClassifiedAdsCard({
     super.key,
     this.id,
     this.image,
