@@ -157,9 +157,8 @@ class _ProductReviewsState extends State<ProductReviews> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -207,7 +206,7 @@ class _ProductReviewsState extends State<ProductReviews> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.8)),
+          decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.8)),
           height: 180,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
@@ -342,8 +341,7 @@ class _ProductReviewsState extends State<ProductReviews> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(35),
-                child:
-                    (_reviewList[index].avatar != null &&
+                child: (_reviewList[index].avatar != null &&
                         _reviewList[index].avatar.isNotEmpty)
                     ? FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
@@ -572,7 +570,8 @@ class _ProductReviewsState extends State<ProductReviews> {
                     fillColor: const Color.fromRGBO(251, 251, 251, 1),
                     hintText: AppLocalizations.of(
                       context,
-                    )!.type_your_review_here,
+                    )!
+                        .type_your_review_here,
                     hintStyle: TextStyle(
                       fontSize: 14.0,
                       color: MyTheme.textfield_grey,

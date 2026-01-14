@@ -29,8 +29,6 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
   bool _generalExpanded = true;
   bool _mediaExpanded = false;
   bool _priceExpanded = false;
-  final bool _descriptionExpanded = false;
-  final FocusNode _focusNode = FocusNode();
   bool _hasFocus = false;
 
   // Controllers
@@ -227,7 +225,7 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
     }
 
     if (productDescriptionKey.currentState != null) {
-      description = await productDescriptionKey.currentState!.getText() ?? "";
+      description = await productDescriptionKey.currentState!.getText();
     }
 
     setProductPhotoValue();
@@ -297,9 +295,8 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -448,7 +445,8 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: MyTheme.blue_grey.withOpacity(0.15),
+                                color:
+                                    MyTheme.blue_grey.withValues(alpha: 0.15),
                                 blurRadius: 20,
                                 spreadRadius: 0.0,
                                 offset: const Offset(
@@ -964,7 +962,7 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: MyTheme.white.withOpacity(0.15),
+                                color: MyTheme.white.withValues(alpha: 0.15),
                                 blurRadius: 20,
                                 spreadRadius: 0.0,
                                 offset: const Offset(
@@ -1008,10 +1006,10 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
                             ),
                             shape:
                                 WidgetStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6.0),
-                                  ),
-                                ),
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6.0),
+                              ),
+                            ),
                           ),
                           onPressed: submit,
                           child: Text(
@@ -1211,7 +1209,7 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
           ),
           boxShadow: [
             BoxShadow(
-              color: MyTheme.white.withOpacity(0.15),
+              color: MyTheme.white.withValues(alpha: 0.15),
               blurRadius: 20,
               spreadRadius: 0.0,
               offset: const Offset(0.0, 10.0), // shadow direction: bottom right
@@ -1270,7 +1268,7 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
           ),
           boxShadow: [
             BoxShadow(
-              color: MyTheme.white.withOpacity(0.15),
+              color: MyTheme.white.withValues(alpha: 0.15),
               blurRadius: 20,
               spreadRadius: 0.0,
               offset: const Offset(0.0, 10.0), // shadow direction: bottom right
@@ -1307,7 +1305,8 @@ class _ClassifiedProductAddState extends State<ClassifiedProductAdd> {
                   contentPadding: EdgeInsets.zero,
                   hintText: AppLocalizations.of(
                     context,
-                  )!.type_and_hit_submit_ucf,
+                  )!
+                      .type_and_hit_submit_ucf,
                   hintStyle: const TextStyle(fontSize: 12),
                   constraints: const BoxConstraints(maxWidth: 150),
                 ),

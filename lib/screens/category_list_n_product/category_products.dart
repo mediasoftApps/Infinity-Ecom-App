@@ -172,9 +172,8 @@ class _CategoryProductsState extends State<CategoryProducts> {
       secondChild: buildAppBarSearchOption(context),
       firstCurve: Curves.fastOutSlowIn,
       secondCurve: Curves.fastOutSlowIn,
-      crossFadeState: _showSearchBar
-          ? CrossFadeState.showSecond
-          : CrossFadeState.showFirst,
+      crossFadeState:
+          _showSearchBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       duration: Duration(milliseconds: 500),
     );
   }
@@ -242,9 +241,8 @@ class _CategoryProductsState extends State<CategoryProducts> {
             icon: Icon(Icons.clear, color: MyTheme.grey_153),
           ),
           filled: true,
-          fillColor: MyTheme.white.withOpacity(0.6),
-          hintText:
-              "${AppLocalizations.of(context)!.search_products_from} : "
+          fillColor: MyTheme.white.withValues(alpha: 0.6),
+          hintText: "${AppLocalizations.of(context)!.search_products_from} : "
               "", //widget.category_name!
           hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.font_grey),
           enabledBorder: OutlineInputBorder(

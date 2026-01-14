@@ -54,7 +54,6 @@ class _InhouseProductsState extends State<InhouseProducts> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     fetchData();
@@ -82,9 +81,8 @@ class _InhouseProductsState extends State<InhouseProducts> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),

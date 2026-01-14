@@ -15,7 +15,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import '../../app_config.dart';
 import '../../custom/intl_phone_input.dart';
-import '../../helpers/store_value.dart';
 import '../../repositories/address_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -182,12 +181,12 @@ class _PasswordForgetState extends State<PasswordForget> {
       return;
     }
 
-    var passwordForgetResponse = await AuthRepository()
-        .getPasswordForgetResponse(
-          _send_code_by == 'email' ? email : _phone,
-          _send_code_by,
-          googleRecaptchaKey,
-        );
+    var passwordForgetResponse =
+        await AuthRepository().getPasswordForgetResponse(
+      _send_code_by == 'email' ? email : _phone,
+      _send_code_by,
+      googleRecaptchaKey,
+    );
 
     if (passwordForgetResponse.result == false) {
       ToastComponent.showDialog(passwordForgetResponse.message!);
@@ -283,7 +282,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                           child: Text(
                             AppLocalizations.of(
                               context,
-                            )!.or_send_code_via_phone_number,
+                            )!
+                                .or_send_code_via_phone_number,
                             style: TextStyle(
                               color: MyTheme.accent_color,
                               fontStyle: FontStyle.italic,
@@ -326,8 +326,8 @@ class _PasswordForgetState extends State<PasswordForget> {
                           ),
                           inputDecoration:
                               InputDecorations.buildInputDecoration_phone(
-                                hint_text: "01710 333 558",
-                              ),
+                            hint_text: "01710 333 558",
+                          ),
                           onSaved: (PhoneNumber number) {},
                         ),
                       ),
@@ -361,7 +361,6 @@ class _PasswordForgetState extends State<PasswordForget> {
                         Radius.circular(6.0),
                       ),
                     ),
-
                     onPressed: _isRecaptchaVerifying
                         ? null
                         : () {

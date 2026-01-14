@@ -52,9 +52,8 @@ class _BlogListScreenState extends State<BlogListScreen> {
       secondChild: buildAppBarSearchOption(context),
       firstCurve: Curves.fastOutSlowIn,
       secondCurve: Curves.fastOutSlowIn,
-      crossFadeState: _showSearchBar
-          ? CrossFadeState.showSecond
-          : CrossFadeState.showFirst,
+      crossFadeState:
+          _showSearchBar ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       duration: Duration(milliseconds: 500),
     );
   }
@@ -114,7 +113,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
             icon: Icon(Icons.clear, color: MyTheme.grey_153),
           ),
           filled: true,
-          fillColor: MyTheme.white.withOpacity(0.6),
+          fillColor: MyTheme.white.withValues(alpha: 0.6),
           hintText: "Search in Blogs...", //widget.category_name!
           hintStyle: TextStyle(fontSize: 14.0, color: MyTheme.font_grey),
           enabledBorder: OutlineInputBorder(
@@ -185,8 +184,8 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [
-                                      Colors.white.withOpacity(0.5),
-                                      Colors.black.withOpacity(0.5),
+                                      Colors.white.withValues(alpha: 0.5),
+                                      Colors.black.withValues(alpha: 0.5),
                                     ],
                                   ),
                                 ),
@@ -224,8 +223,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                     ),
                                     Text(
                                       blogProvider
-                                          .blogs[index]
-                                          .shortDescription,
+                                          .blogs[index].shortDescription,
                                       style: const TextStyle(
                                         fontSize: 10,
                                         color: Colors.white,

@@ -47,7 +47,6 @@ class _LoginState extends State<Login> {
   String initialCountry = 'US';
   var countries_code = <String?>[];
   String? _phone = "";
-  bool _isRecaptchaVerifying = false;
 
   // reCAPTCHA v3 setup
   late final WebViewController _controller;
@@ -62,7 +61,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    print('recaptcha_login ${recaptcha_customer_login.$}');
+    log('recaptcha_login ${recaptcha_customer_login.$}');
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom],
@@ -138,9 +137,7 @@ class _LoginState extends State<Login> {
           isForMainFrame: ${error.isForMainFrame}
         ''');
             if (mounted) {
-              setState(() {
-                _isRecaptchaVerifying = false;
-              });
+              setState(() {});
               ToastComponent.showDialog(
                 "Error loading verification. Check your connection.",
               );
@@ -469,8 +466,8 @@ class _LoginState extends State<Login> {
                                 autofocus: false,
                                 decoration:
                                     InputDecorations.buildInputDecoration_1(
-                                      hint_text: "johndoe@example.com",
-                                    ),
+                                  hint_text: "johndoe@example.com",
+                                ),
                               ),
                             ),
                             if (otp_addon_installed.$)
@@ -483,7 +480,8 @@ class _LoginState extends State<Login> {
                                 child: Text(
                                   AppLocalizations.of(
                                     context,
-                                  )!.or_login_with_a_phone,
+                                  )!
+                                      .or_login_with_a_phone,
                                   style: TextStyle(
                                     color: MyTheme.accent_color,
                                     fontStyle: FontStyle.italic,
@@ -527,8 +525,8 @@ class _LoginState extends State<Login> {
                                 ),
                                 inputDecoration:
                                     InputDecorations.buildInputDecoration_phone(
-                                      hint_text: "01XXX XXX XXX",
-                                    ),
+                                  hint_text: "01XXX XXX XXX",
+                                ),
                                 onSaved: (PhoneNumber number) {},
                               ),
                             ),
@@ -541,7 +539,8 @@ class _LoginState extends State<Login> {
                               child: Text(
                                 AppLocalizations.of(
                                   context,
-                                )!.or_login_with_an_email,
+                                )!
+                                    .or_login_with_an_email,
                                 style: TextStyle(
                                   color: MyTheme.accent_color,
                                   fontStyle: FontStyle.italic,
@@ -577,8 +576,8 @@ class _LoginState extends State<Login> {
                               autocorrect: false,
                               decoration:
                                   InputDecorations.buildInputDecoration_1(
-                                    hint_text: "• • • • • • • •",
-                                  ),
+                                hint_text: "• • • • • • • •",
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -595,7 +594,8 @@ class _LoginState extends State<Login> {
                             child: Text(
                               AppLocalizations.of(
                                 context,
-                              )!.login_screen_forgot_password,
+                              )!
+                                  .login_screen_forgot_password,
                               style: TextStyle(
                                 color: MyTheme.accent_color,
                                 fontStyle: FontStyle.italic,
@@ -639,7 +639,8 @@ class _LoginState extends State<Login> {
                           Text(
                             AppLocalizations.of(
                               context,
-                            )!.login_screen_or_create_new_account,
+                            )!
+                                .login_screen_or_create_new_account,
                             style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 12,
@@ -660,7 +661,8 @@ class _LoginState extends State<Login> {
                             child: Text(
                               AppLocalizations.of(
                                 context,
-                              )!.login_screen_sign_up,
+                              )!
+                                  .login_screen_sign_up,
                               style: TextStyle(
                                 color: MyTheme.accent_color,
                                 fontSize: 14,
@@ -680,7 +682,8 @@ class _LoginState extends State<Login> {
                           child: Text(
                             AppLocalizations.of(
                               context,
-                            )!.login_screen_login_with,
+                            )!
+                                .login_screen_login_with,
                             style: TextStyle(
                               color: MyTheme.font_grey,
                               fontSize: 12,

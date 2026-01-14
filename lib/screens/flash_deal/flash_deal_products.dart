@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:infinity_ecom_app/custom/box_decorations.dart';
 import 'package:infinity_ecom_app/custom/device_info.dart';
 import 'package:infinity_ecom_app/custom/useful_elements.dart';
@@ -18,8 +20,8 @@ import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class FlashDealProducts extends StatefulWidget {
-  FlashDealProducts({Key? key, required this.slug}) : super(key: key);
   final String? slug;
+  const FlashDealProducts({super.key, required this.slug});
 
   @override
   State<FlashDealProducts> createState() => _FlashDealProductsState();
@@ -36,20 +38,20 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
   FlashDealResponseDatum? flashDealInfo;
 
   String timeText(String txt, {default_length = 3}) {
-    var blank_zeros = default_length == 3 ? "000" : "00";
-    var leading_zeros = "";
+    var blankZeros = default_length == 3 ? "000" : "00";
+    var leadingZeros = "";
     if (default_length == 3 && txt.length == 1) {
-      leading_zeros = "00";
+      leadingZeros = "00";
     } else if (default_length == 3 && txt.length == 2) {
-      leading_zeros = "0";
+      leadingZeros = "0";
     } else if (default_length == 2 && txt.length == 1) {
-      leading_zeros = "0";
+      leadingZeros = "0";
     }
 
-    var newtxt = (txt == "" || txt == null.toString()) ? blank_zeros : txt;
+    var newtxt = (txt == "" || txt == null.toString()) ? blankZeros : txt;
 
     if (default_length > txt.length) {
-      newtxt = leading_zeros + newtxt;
+      newtxt = leadingZeros + newtxt;
     }
 
     return newtxt;
@@ -57,7 +59,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
 
   getInfo() async {
     var res = await FlashDealRepository().getFlashDealInfo(widget.slug);
-    print(res.toJson());
+    log(res.toJson().toString());
     if (res.flashDeals?.isNotEmpty ?? false) {
       flashDealInfo = res.flashDeals?.first;
 
@@ -85,7 +87,6 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getInfo();
     _future = ProductRepository().getFlashDealProducts(widget.slug);
     _searchList = [];
@@ -93,7 +94,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     super.initState();
   }
 
-  _buildSearchList(search_key) async {
+  /* _buildSearchList(search_key) async {
     _searchList.clear();
     //print(_fullList.length);
 
@@ -108,14 +109,13 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
         }
       }
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar(context),
@@ -124,11 +124,11 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     );
   }
 
-  bool? shouldProductBoxBeVisible(product_name, search_key) {
-    if (search_key == "") {
+  bool? shouldProductBoxBeVisible(productName, searchKey) {
+    if (searchKey == "") {
       return true;
     }
-    return StringHelper().stringContains(product_name, search_key);
+    return StringHelper().stringContains(productName, searchKey);
   }
 
   AppBar buildAppBar(BuildContext context) {
@@ -162,68 +162,68 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
       future: _future,
       builder:
           (context, AsyncSnapshot<productMini.ProductMiniResponse> snapshot) {
-            if (snapshot.hasError) {
-              return Container();
-            } else if (snapshot.hasData) {
-              var productResponse = snapshot.data;
-              if (_fullList.length == 0) {
-                _fullList.addAll(productResponse!.products!);
-                _searchList.addAll(productResponse.products!);
-              }
+        if (snapshot.hasError) {
+          return Container();
+        } else if (snapshot.hasData) {
+          var productResponse = snapshot.data;
+          if (_fullList.isEmpty) {
+            _fullList.addAll(productResponse!.products!);
+            _searchList.addAll(productResponse.products!);
+          }
 
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    buildFlashDealsBanner(context),
-                    MasonryGridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      itemCount: _searchList.length,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(
-                        top: 16.0,
-                        bottom: 10,
-                        left: 18,
-                        right: 18,
-                      ),
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        // 3
-                        return ProductCardBlack(
-                          id: _searchList[index].id,
-                          slug: _searchList[index].slug!,
-                          image: _searchList[index].thumbnail_image,
-                          name: _searchList[index].name,
-                          main_price: _searchList[index].main_price,
-                          stroked_price: _searchList[index].stroked_price,
-                          has_discount: _searchList[index].has_discount!,
-                          discount: _searchList[index].discount,
-                          is_wholesale: _searchList[index].isWholesale,
-                        );
-                      },
-                    ),
-                  ],
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                buildFlashDealsBanner(context),
+                MasonryGridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 14,
+                  crossAxisSpacing: 14,
+                  itemCount: _searchList.length,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(
+                    top: 16.0,
+                    bottom: 10,
+                    left: 18,
+                    right: 18,
+                  ),
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    // 3
+                    return ProductCardBlack(
+                      id: _searchList[index].id,
+                      slug: _searchList[index].slug!,
+                      image: _searchList[index].thumbnail_image,
+                      name: _searchList[index].name,
+                      main_price: _searchList[index].main_price,
+                      stroked_price: _searchList[index].stroked_price,
+                      has_discount: _searchList[index].has_discount!,
+                      discount: _searchList[index].discount,
+                      is_wholesale: _searchList[index].isWholesale,
+                    );
+                  },
                 ),
-              );
-            } else {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    headerShimmer(),
-                    ShimmerHelper().buildProductGridShimmer(
-                      scontroller: _scrollController,
-                    ),
-                  ],
+              ],
+            ),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                headerShimmer(),
+                ShimmerHelper().buildProductGridShimmer(
+                  scontroller: _scrollController,
                 ),
-              );
-            }
-          },
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 
-  Container buildFlashDealsBanner(BuildContext context) {
-    return Container(
+  Widget buildFlashDealsBanner(BuildContext context) {
+    return SizedBox(
       //color: MyTheme.amber,
       height: 215,
       child: CountdownTimer(
@@ -244,7 +244,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.16),
+                        color: Colors.black.withValues(alpha: 0.16),
                         blurRadius: 20,
                         offset: Offset(0, 10),
                       ),
@@ -252,19 +252,17 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        child: Center(
-                          child: time == null
-                              ? Text(
-                                  AppLocalizations.of(context)!.ended_ucf,
-                                  style: TextStyle(
-                                    color: MyTheme.accent_color,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              : buildTimerRow(time),
-                        ),
+                      Center(
+                        child: time == null
+                            ? Text(
+                                AppLocalizations.of(context)!.ended_ucf,
+                                style: TextStyle(
+                                  color: MyTheme.accent_color,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            : buildTimerRow(time),
                       ),
                     ],
                   ),
@@ -278,7 +276,7 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
   }
 
   headerShimmer() {
-    return Container(
+    return SizedBox(
       // color: MyTheme.amber,
       height: 215,
       child: Stack(
@@ -300,15 +298,13 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
     );
   }
 
-  Container buildFlashDealBanner() {
-    return Container(
-      child: FadeInImage.assetNetwork(
-        placeholder: 'assets/placeholder_rectangle.png',
-        image: flashDealInfo?.banner ?? "",
-        fit: BoxFit.cover,
-        width: DeviceInfo(context).width,
-        height: 180,
-      ),
+  Widget buildFlashDealBanner() {
+    return FadeInImage.assetNetwork(
+      placeholder: 'assets/placeholder_rectangle.png',
+      image: flashDealInfo?.banner ?? "",
+      fit: BoxFit.cover,
+      width: DeviceInfo(context).width,
+      height: 180,
     );
   }
 
@@ -457,13 +453,13 @@ class _FlashDealProductsState extends State<FlashDealProducts> {
   Widget timerContainer(Widget child) {
     return Container(
       constraints: BoxConstraints(minWidth: 30, minHeight: 24),
-      child: child,
       alignment: Alignment.center,
       padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: MyTheme.accent_color,
       ),
+      child: child,
     );
   }
 }

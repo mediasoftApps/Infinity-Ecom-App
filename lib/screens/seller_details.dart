@@ -205,9 +205,8 @@ class _SellerDetailsState extends State<SellerDetails> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -553,9 +552,8 @@ class _SellerDetailsState extends State<SellerDetails> {
             color: tabOptionIndex == index
                 ? MyTheme.white
                 : MyTheme.dark_font_grey,
-            fontWeight: tabOptionIndex == index
-                ? FontWeight.bold
-                : FontWeight.normal,
+            fontWeight:
+                tabOptionIndex == index ? FontWeight.bold : FontWeight.normal,
           ),
         ),
       ),
@@ -575,7 +573,7 @@ class _SellerDetailsState extends State<SellerDetails> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 20,
               spreadRadius: 0.5,
               offset: Offset(0, 10),
@@ -636,7 +634,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                               border: Border.all(
                                 color: _current_slider == index
                                     ? Colors
-                                          .white // White border for active indicator
+                                        .white // White border for active indicator
                                     : Color(
                                         0xffE62E04,
                                       ), // Red border for inactive
@@ -647,11 +645,11 @@ class _SellerDetailsState extends State<SellerDetails> {
                                       0xffE62E04,
                                     ) // Red fill for active indicator
                                   : Colors
-                                        .transparent, // No fill for inactive indicator
+                                      .transparent, // No fill for inactive indicator
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(
-                                    0.2,
+                                  color: Colors.black.withValues(
+                                    alpha: 0.2,
                                   ), // Shadow color
                                   spreadRadius: 2, // Spread of the shadow
                                   blurRadius: 4, // Blur radius for softness
@@ -801,7 +799,7 @@ class _SellerDetailsState extends State<SellerDetails> {
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.08),
+                  color: Colors.black.withValues(alpha: .08),
                   blurRadius: 20,
                   spreadRadius: 0.0,
                   offset: Offset(0.0, 10.0), // shadow direction: bottom right
@@ -861,7 +859,7 @@ class _SellerDetailsState extends State<SellerDetails> {
               color: Color(0xffFEF0D7),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.08),
+                  color: Colors.black.withValues(alpha: .08),
                   blurRadius: 20,
                   spreadRadius: 0.0,
                   offset: Offset(0.0, 10.0), // shadow direction: bottom right
@@ -1116,10 +1114,10 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
                           child: Text(
                             SystemConfig.systemCurrency != null
                                 ? widget.stroked_price?.replaceAll(
-                                        SystemConfig.systemCurrency!.code!,
-                                        SystemConfig.systemCurrency!.symbol!,
-                                      ) ??
-                                      ''
+                                      SystemConfig.systemCurrency!.code!,
+                                      SystemConfig.systemCurrency!.symbol!,
+                                    ) ??
+                                    ''
                                 : widget.stroked_price ?? '',
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
@@ -1139,10 +1137,10 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
                         child: Text(
                           SystemConfig.systemCurrency != null
                               ? widget.main_price?.replaceAll(
-                                      SystemConfig.systemCurrency!.code!,
-                                      SystemConfig.systemCurrency!.symbol!,
-                                    ) ??
-                                    ''
+                                    SystemConfig.systemCurrency!.code!,
+                                    SystemConfig.systemCurrency!.symbol!,
+                                  ) ??
+                                  ''
                               : widget.main_price ?? '',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,

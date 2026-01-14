@@ -8,8 +8,8 @@ import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class BrandProducts extends StatefulWidget {
-  BrandProducts({super.key, required this.slug});
-  String slug;
+  final String slug;
+  const BrandProducts({super.key, required this.slug});
 
   @override
   State<BrandProducts> createState() => _BrandProductsState();
@@ -47,7 +47,6 @@ class _BrandProductsState extends State<BrandProducts> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _scrollController.dispose();
     _xcrollController.dispose();
     super.dispose();

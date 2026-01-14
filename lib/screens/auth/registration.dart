@@ -24,7 +24,6 @@ import 'package:validators/validators.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../custom/loading.dart';
 import '../../helpers/auth_helper.dart';
-import '../../helpers/store_value.dart';
 import '../../repositories/address_repository.dart';
 import 'otp.dart';
 
@@ -43,7 +42,6 @@ class _RegistrationState extends State<Registration> {
   // reCAPTCHA v3 setup
   late WebViewController _controller;
   bool _isWebViewReady = false;
-  bool _isWebViewLoading = false;
   final String _recaptchaUrl = "${AppConfig.BASE_URL}/google-recaptcha";
   String googleRecaptchaKey = "";
 
@@ -84,7 +82,6 @@ class _RegistrationState extends State<Registration> {
             log('WebView page started: $url');
             if (mounted) {
               setState(() {
-                _isWebViewLoading = true;
                 _isWebViewReady = false;
               });
             }
@@ -119,7 +116,6 @@ class _RegistrationState extends State<Registration> {
             if (mounted) {
               setState(() {
                 _isWebViewReady = true;
-                _isWebViewLoading = false;
               });
             }
           },
@@ -134,7 +130,6 @@ WebView Page resource error:
             if (mounted) {
               setState(() {
                 _isWebViewReady = false;
-                _isWebViewLoading = false;
               });
             }
           },
@@ -177,15 +172,12 @@ WebView Page resource error:
 
   void _loadWebView() async {
     try {
-      setState(() {
-        _isWebViewLoading = true;
-      });
+      setState(() {});
       await _controller.loadRequest(Uri.parse(_recaptchaUrl));
     } catch (e) {
       log('Error loading WebView: $e');
       if (mounted) {
         setState(() {
-          _isWebViewLoading = false;
           _isWebViewReady = false;
         });
       }
@@ -276,7 +268,8 @@ WebView Page resource error:
       ToastComponent.showDialog(
         AppLocalizations.of(
           context,
-        )!.password_must_contain_at_least_6_characters,
+        )!
+            .password_must_contain_at_least_6_characters,
       );
       return;
     } else if (password != passwordConfirm) {
@@ -330,12 +323,11 @@ WebView Page resource error:
 
         String? fcmToken = await fcm.getToken();
 
-        print("--fcm token--");
-        print(fcmToken);
+        log("--fcm token--");
+        log(fcmToken!);
         if (is_logged_in.$ == true) {
           // update device token
-          var deviceTokenUpdateResponse = await ProfileRepository()
-              .getDeviceTokenUpdateResponse(fcmToken!);
+          await ProfileRepository().getDeviceTokenUpdateResponse(fcmToken);
         }
       }
 
@@ -457,7 +449,8 @@ WebView Page resource error:
                             child: Text(
                               AppLocalizations.of(
                                 context,
-                              )!.or_register_with_a_phone,
+                              )!
+                                  .or_register_with_a_phone,
                               style: TextStyle(
                                 color: MyTheme.accent_color,
                                 fontStyle: FontStyle.italic,
@@ -500,8 +493,8 @@ WebView Page resource error:
                             ),
                             inputDecoration:
                                 InputDecorations.buildInputDecoration_phone(
-                                  hint_text: "01XXX XXX XXX",
-                                ),
+                              hint_text: "01XXX XXX XXX",
+                            ),
                             onSaved: (PhoneNumber number) {},
                           ),
                         ),
@@ -514,7 +507,8 @@ WebView Page resource error:
                           child: Text(
                             AppLocalizations.of(
                               context,
-                            )!.or_register_with_an_email,
+                            )!
+                                .or_register_with_an_email,
                             style: TextStyle(
                               color: MyTheme.accent_color,
                               fontStyle: FontStyle.italic,
@@ -556,7 +550,8 @@ WebView Page resource error:
                       Text(
                         AppLocalizations.of(
                           context,
-                        )!.password_must_contain_at_least_6_characters,
+                        )!
+                            .password_must_contain_at_least_6_characters,
                         style: TextStyle(
                           color: MyTheme.textfield_grey,
                           fontStyle: FontStyle.italic,
@@ -628,7 +623,8 @@ WebView Page resource error:
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => CommonWebviewScreen(
+                                        builder: (context) =>
+                                            CommonWebviewScreen(
                                           page_name: "Terms Conditions",
                                           url:
                                               "${AppConfig.RAW_BASE_URL}/mobile-page/terms",
@@ -646,7 +642,8 @@ WebView Page resource error:
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => CommonWebviewScreen(
+                                        builder: (context) =>
+                                            CommonWebviewScreen(
                                           page_name: "Privacy Policy",
                                           url:
                                               "${AppConfig.RAW_BASE_URL}/mobile-page/privacy-policy",
@@ -724,7 +721,6 @@ WebView Page resource error:
                     ],
                   ),
                 ),
-
                 SizedBox(height: 100),
               ],
             ),

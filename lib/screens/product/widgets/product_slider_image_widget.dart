@@ -1,12 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
- import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../../helpers/shimmer_helper.dart';
 import '../../../my_theme.dart';
 import 'package:photo_view/photo_view.dart';
-
-
 
 class ProductSliderImageWidget extends StatefulWidget {
   final List? productImageList;
@@ -51,7 +48,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
               });
             }),
         items: widget.productImageList!.map(
-              (i) {
+          (i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -78,7 +75,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(
                             widget.productImageList!.length,
-                                (index) => Container(
+                            (index) => Container(
                               width: 8.0,
                               height: 8.0,
                               margin: EdgeInsets.symmetric(
@@ -86,8 +83,8 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: widget.currentImage == index
-                                    ? Colors.black.withOpacity(0.5)
-                                    : Color(0xff484848).withOpacity(0.5),
+                                    ? Colors.black.withValues(alpha: 0.5)
+                                    : Color(0xff484848).withValues(alpha: 0.5),
                               ),
                             ),
                           ),
@@ -105,11 +102,11 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
   }
 
   openPhotoDialog(BuildContext context, path) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-        child: Container(
-            child: Stack(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+                child: Stack(
               children: [
                 PhotoView(
                   enableRotation: true,
@@ -142,7 +139,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                 ),
               ],
             )),
+          );
+        },
       );
-    },
-  );
 }

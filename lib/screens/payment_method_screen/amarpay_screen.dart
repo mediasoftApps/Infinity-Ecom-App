@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../app_config.dart';
 import '../../custom/toast_component.dart';
 import '../../helpers/main_helpers.dart';
 import '../../helpers/shared_value_helper.dart';
+import '../../l10n/app_localizations.dart';
 import '../../my_theme.dart';
 import '../../repositories/payment_repository.dart';
 import '../orders/order_list.dart';
@@ -62,54 +62,54 @@ class _AmarpayScreenState extends State<AmarpayScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            if (widget.payment_type == "cart_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "order_re_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "wallet_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Wallet(from_recharge: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "customer_package_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Profile();
-                  },
-                ),
-              );
-            }
-          }
-        });
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        if (widget.payment_type == "cart_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "order_re_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "wallet_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Wallet(from_recharge: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "customer_package_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Profile();
+              },
+            ),
+          );
+        }
+      }
+    });
   }
 
   amarpay() {
@@ -154,9 +154,8 @@ class _AmarpayScreenState extends State<AmarpayScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -170,10 +169,8 @@ class _AmarpayScreenState extends State<AmarpayScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else {
       return SingleChildScrollView(

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:infinity_ecom_app/custom/box_decorations.dart';
 import 'package:infinity_ecom_app/custom/btn.dart';
 import 'package:infinity_ecom_app/custom/device_info.dart';
@@ -15,13 +14,12 @@ import 'package:infinity_ecom_app/my_theme.dart';
 import 'package:infinity_ecom_app/repositories/address_repository.dart';
 import 'package:infinity_ecom_app/repositories/shipping_repository.dart';
 import 'package:infinity_ecom_app/screens/checkout/checkout.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShippingInfo extends StatefulWidget {
   final String? guestCheckOutShippingAddress;
 
-  ShippingInfo({Key? key, this.guestCheckOutShippingAddress}) : super(key: key);
+  const ShippingInfo({super.key, this.guestCheckOutShippingAddress});
 
   @override
   State<ShippingInfo> createState() => _ShippingInfoState();
@@ -218,9 +216,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
     mHeight = MediaQuery.of(context).size.height;
     mWidth = MediaQuery.of(context).size.width;
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         appBar: customAppBar(context) as PreferredSizeWidget?,
         bottomNavigationBar: buildBottomAppBar(context),
@@ -293,8 +290,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
       },
       child: Container(
         decoration: BoxDecorations.buildBoxDecoration_1(radius: 8).copyWith(
-          border:
-              _sellerWiseShippingOption[sellerArrayIndex].shippingId ==
+          border: _sellerWiseShippingOption[sellerArrayIndex].shippingId ==
                   _deliveryInfoList[sellerArrayIndex]
                       .pickupPoints![pickupPointIndex]
                       .id
@@ -439,8 +435,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
       },
       child: Container(
         decoration: BoxDecorations.buildBoxDecoration_1(radius: 8).copyWith(
-          border:
-              _sellerWiseShippingOption[sellerArrayIndex].shippingId ==
+          border: _sellerWiseShippingOption[sellerArrayIndex].shippingId ==
                   _deliveryInfoList[sellerArrayIndex]
                       .carriers!
                       .data![carrierIndex]
@@ -631,11 +626,10 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   Widget buildPickUpPointOption(BuildContext context, sellerIndex) {
     return Btn.basic(
-      color:
-          _sellerWiseShippingOption[sellerIndex].shippingOption ==
+      color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
               ShippingOption.PickUpPoint
           ? MyTheme.accent_color
-          : MyTheme.accent_color.withOpacity(0.1),
+          : MyTheme.accent_color.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
         side: const BorderSide(color: MyTheme.accent_color),
@@ -665,16 +659,15 @@ class _ShippingInfoState extends State<ShippingInfo> {
               AppLocalizations.of(context)!.pickup_point_ucf,
               style: TextStyle(
                 fontSize: 12,
-                color:
-                    _sellerWiseShippingOption[sellerIndex].shippingOption ==
+                color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
                         ShippingOption.PickUpPoint
                     ? MyTheme.white
                     : MyTheme.accent_color,
                 fontWeight:
                     _sellerWiseShippingOption[sellerIndex].shippingOption ==
-                        ShippingOption.PickUpPoint
-                    ? FontWeight.w700
-                    : FontWeight.normal,
+                            ShippingOption.PickUpPoint
+                        ? FontWeight.w700
+                        : FontWeight.normal,
               ),
             ),
           ],
@@ -685,11 +678,10 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   Widget buildAddressOption(BuildContext context, sellerIndex) {
     return Btn.basic(
-      color:
-          _sellerWiseShippingOption[sellerIndex].shippingOption ==
+      color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
               ShippingOption.HomeDelivery
           ? MyTheme.accent_color
-          : MyTheme.accent_color.withOpacity(0.1),
+          : MyTheme.accent_color.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
         side: const BorderSide(color: MyTheme.accent_color),
@@ -719,16 +711,15 @@ class _ShippingInfoState extends State<ShippingInfo> {
               AppLocalizations.of(context)!.home_delivery_ucf,
               style: TextStyle(
                 fontSize: 12,
-                color:
-                    _sellerWiseShippingOption[sellerIndex].shippingOption ==
+                color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
                         ShippingOption.HomeDelivery
                     ? MyTheme.white
                     : MyTheme.accent_color,
                 fontWeight:
                     _sellerWiseShippingOption[sellerIndex].shippingOption ==
-                        ShippingOption.HomeDelivery
-                    ? FontWeight.w700
-                    : FontWeight.normal,
+                            ShippingOption.HomeDelivery
+                        ? FontWeight.w700
+                        : FontWeight.normal,
               ),
             ),
           ],
@@ -739,11 +730,10 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   Widget buildCarrierOption(BuildContext context, sellerIndex) {
     return Btn.basic(
-      color:
-          _sellerWiseShippingOption[sellerIndex].shippingOption ==
+      color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
               ShippingOption.Carrier
           ? MyTheme.accent_color
-          : MyTheme.accent_color.withOpacity(0.1),
+          : MyTheme.accent_color.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
         side: const BorderSide(color: MyTheme.accent_color),
@@ -773,16 +763,15 @@ class _ShippingInfoState extends State<ShippingInfo> {
               AppLocalizations.of(context)!.carrier_ucf,
               style: TextStyle(
                 fontSize: 12,
-                color:
-                    _sellerWiseShippingOption[sellerIndex].shippingOption ==
+                color: _sellerWiseShippingOption[sellerIndex].shippingOption ==
                         ShippingOption.Carrier
                     ? MyTheme.white
                     : MyTheme.accent_color,
                 fontWeight:
                     _sellerWiseShippingOption[sellerIndex].shippingOption ==
-                        ShippingOption.Carrier
-                    ? FontWeight.w700
-                    : FontWeight.normal,
+                            ShippingOption.Carrier
+                        ? FontWeight.w700
+                        : FontWeight.normal,
               ),
             ),
           ],
@@ -958,12 +947,12 @@ class SellerWithShipping {
   });
 
   Map toJson() => {
-    'seller_id': sellerId,
-    'shipping_type': shippingOption == ShippingOption.HomeDelivery
-        ? "home_delivery"
-        : shippingOption == ShippingOption.Carrier
-        ? "carrier"
-        : "pickup_point",
-    'shipping_id': shippingId,
-  };
+        'seller_id': sellerId,
+        'shipping_type': shippingOption == ShippingOption.HomeDelivery
+            ? "home_delivery"
+            : shippingOption == ShippingOption.Carrier
+                ? "carrier"
+                : "pickup_point",
+        'shipping_id': shippingId,
+      };
 }

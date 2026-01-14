@@ -13,7 +13,6 @@ import 'package:infinity_ecom_app/repositories/flash_deal_repository.dart';
 import 'package:infinity_ecom_app/screens/flash_deal/flash_deal_products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 
 class FlashDealList extends StatefulWidget {
   const FlashDealList({super.key});
@@ -34,9 +33,8 @@ class _FlashDealListState extends State<FlashDealList> {
   Widget build(BuildContext context) {
     // print("object");
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         appBar: buildAppBar(context),
         backgroundColor: MyTheme.mainColor,
@@ -55,10 +53,8 @@ class _FlashDealListState extends State<FlashDealList> {
               child: Text(AppLocalizations.of(context)!.network_error),
             );
           } else if (snapshot.data == null) {
-            return Container(
-              child: Center(
-                child: Text(AppLocalizations.of(context)!.no_data_is_available),
-              ),
+            return Center(
+              child: Text(AppLocalizations.of(context)!.no_data_is_available),
             );
           } else if (snapshot.hasData) {
             FlashDealResponse flashDealResponse = snapshot.data!;
@@ -183,7 +179,7 @@ class _FlashDealListState extends State<FlashDealList> {
                       borderRadius: BorderRadius.circular(6),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.16),
+                          color: Colors.black.withValues(alpha: 0.16),
                           blurRadius: 20,
                           offset: Offset(0, 10),
                         ),
@@ -191,19 +187,17 @@ class _FlashDealListState extends State<FlashDealList> {
                     ),
                     child: Column(
                       children: [
-                        Container(
-                          child: Center(
-                            child: time == null
-                                ? Text(
-                                    AppLocalizations.of(context)!.ended_ucf,
-                                    style: TextStyle(
-                                      color: MyTheme.accent_color,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                : buildTimerRow(time),
-                          ),
+                        Center(
+                          child: time == null
+                              ? Text(
+                                  AppLocalizations.of(context)!.ended_ucf,
+                                  style: TextStyle(
+                                    color: MyTheme.accent_color,
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
+                              : buildTimerRow(time),
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -223,11 +217,8 @@ class _FlashDealListState extends State<FlashDealList> {
                               alignment: WrapAlignment.start,
 
                               children: List.generate(
-                                flashDealResponse
-                                    .flashDeals![index]
-                                    .products!
-                                    .products!
-                                    .length,
+                                flashDealResponse.flashDeals![index].products!
+                                    .products!.length,
                                 (productIndex) {
                                   return buildFlashDealsProductItem(
                                     flashDealResponse,
@@ -325,11 +316,8 @@ class _FlashDealListState extends State<FlashDealList> {
               child: FadeInImage(
                 placeholder: AssetImage("assets/placeholder.png"),
                 image: NetworkImage(
-                  flashDealResponse
-                      .flashDeals[flashDealIndex]
-                      .products
-                      .products[productIndex]
-                      .image,
+                  flashDealResponse.flashDeals[flashDealIndex].products
+                      .products[productIndex].image,
                 ),
                 fit: BoxFit
                     .cover, // Ensures the image fits within the rounded corners
@@ -340,11 +328,8 @@ class _FlashDealListState extends State<FlashDealList> {
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
               convertPrice(
-                flashDealResponse
-                    .flashDeals[flashDealIndex]
-                    .products
-                    .products[productIndex]
-                    .price,
+                flashDealResponse.flashDeals[flashDealIndex].products
+                    .products[productIndex].price,
               ),
               style: TextStyle(
                 fontSize: 13,
@@ -396,15 +381,13 @@ class _FlashDealListState extends State<FlashDealList> {
     );
   }
 
-  Container buildFlashDealBanner(flashDealResponse, index) {
-    return Container(
-      child: FadeInImage.assetNetwork(
-        placeholder: 'assets/placeholder_rectangle.png',
-        image: flashDealResponse.flashDeals[index].banner,
-        fit: BoxFit.cover,
-        width: DeviceInfo(context).width,
-        height: 180,
-      ),
+  Widget buildFlashDealBanner(flashDealResponse, index) {
+    return FadeInImage.assetNetwork(
+      placeholder: 'assets/placeholder_rectangle.png',
+      image: flashDealResponse.flashDeals[index].banner,
+      fit: BoxFit.cover,
+      width: DeviceInfo(context).width,
+      height: 180,
     );
   }
 

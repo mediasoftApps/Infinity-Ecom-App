@@ -1,21 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/text_styles.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/chat_repository.dart';
-import 'package:infinity_ecom_app/screens/auth/login.dart';
-import 'package:infinity_ecom_app/screens/brand_products.dart';
-import 'package:infinity_ecom_app/screens/chat/chat.dart';
-import 'package:infinity_ecom_app/screens/checkout/cart.dart';
-import 'package:infinity_ecom_app/screens/common_webview_screen.dart';
-import 'package:infinity_ecom_app/screens/seller_details.dart';
-import 'package:infinity_ecom_app/screens/video_description_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,9 +14,24 @@ import 'package:photo_view/photo_view.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../app_config.dart';
+import '../../custom/box_decorations.dart';
+import '../../custom/btn.dart';
+import '../../custom/device_info.dart';
 import '../../custom/lang_text.dart';
+import '../../custom/text_styles.dart';
+import '../../custom/toast_component.dart';
 import '../../helpers/main_helpers.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../my_theme.dart';
 import '../../repositories/auction_products_repository.dart';
+import '../../repositories/chat_repository.dart';
+import '../auth/login.dart';
+import '../brand_products.dart';
+import '../chat/chat.dart';
+import '../common_webview_screen.dart';
+import '../seller_details.dart';
+import '../video_description_screen.dart';
 
 class AuctionProductsDetails extends StatefulWidget {
   final String slug;
@@ -50,8 +50,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
   final ScrollController _mainScrollController = ScrollController(
     initialScrollOffset: 0.0,
   );
-  final ScrollController _colorScrollController = ScrollController();
-  final ScrollController _variantScrollController = ScrollController();
   final ScrollController _imageScrollController = ScrollController();
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
@@ -61,9 +59,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
 
   double _scrollPosition = 0.0;
 
-  Animation? _colorTween;
-  late AnimationController _ColorAnimationController;
-
   final CarouselSliderController _carouselController =
       CarouselSliderController();
   late BuildContext loadingcontext;
@@ -71,27 +66,13 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
   //init values
   final _formKey = GlobalKey<FormState>();
 
-  var _productDetailsFetched = false;
   dynamic _auctionproductDetails;
   final _productImageList = [];
-  final _selectedChoices = [];
-  final _variant = "";
-  final int _quantity = 1;
 
   double opacity = 0;
 
   @override
   void initState() {
-    _ColorAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 0),
-    );
-
-    _colorTween = ColorTween(
-      begin: Colors.transparent,
-      end: Colors.white,
-    ).animate(_ColorAnimationController);
-
     _mainScrollController.addListener(() {
       _scrollPosition = _mainScrollController.position.pixels;
 
@@ -112,7 +93,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
           }
         }
       }
-      print("opachity{} $_scrollPosition");
+      log("opachity{} $_scrollPosition");
 
       setState(() {});
     });
@@ -168,7 +149,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
       _auctionproductDetails.photos.forEach((photo) {
         _productImageList.add(photo.path);
       });
-      _productDetailsFetched = true;
 
       setState(() {});
     }
@@ -178,7 +158,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
     restProductDetailValues();
     _currentImage = 0;
     _productImageList.clear();
-    _productDetailsFetched = false;
     sellerChatTitleController.clear();
     setState(() {});
   }
@@ -204,11 +183,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
   onCopyTap(setState) {
     setState(() {
       _showCopied = true;
-    });
-    Timer timer = Timer(Duration(seconds: 3), () {
-      setState(() {
-        _showCopied = false;
-      });
     });
   }
 
@@ -293,7 +267,8 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
                           ),
                           onPressed: () {
                             // print("share links ${_auctionproductDetails.link}");
-                            Share.share(_auctionproductDetails.link);
+                            SharePlus.instance
+                                .share(_auctionproductDetails.link);
                           },
                         ),
                       ),
@@ -598,33 +573,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    SnackBar addedToCartSnackbar = SnackBar(
-      content: Text(
-        AppLocalizations.of(context)!.added_to_cart,
-        style: TextStyle(color: MyTheme.font_grey),
-      ),
-      backgroundColor: MyTheme.soft_accent_color,
-      duration: const Duration(seconds: 3),
-      action: SnackBarAction(
-        label: AppLocalizations.of(context)!.show_cart_all_capital,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return Cart(has_bottomnav: false);
-              },
-            ),
-          ).then((value) {
-            onPopped(value);
-          });
-        },
-        textColor: MyTheme.accent_color,
-        disabledTextColor: Colors.grey,
-      ),
-    );
-
     return Directionality(
       textDirection:
           app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
@@ -639,7 +587,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
                   bottom: 10,
                   top: 10,
                 ),
-                color: MyTheme.white.withOpacity(0.9),
+                color: MyTheme.white.withValues(alpha: 0.9),
                 child: InkWell(
                   onTap: () {
                     is_logged_in.$
@@ -693,7 +641,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
             slivers: <Widget>[
               SliverAppBar(
                 elevation: 0,
-                backgroundColor: Colors.white.withOpacity(opacity),
+                backgroundColor: Colors.white.withValues(alpha: opacity),
                 pinned: true,
                 automaticallyImplyLeading: false,
                 title: Row(
@@ -1157,7 +1105,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
                 children: [
                   InkWell(
                     onTap: () {
-                      if (is_logged_in == false) {
+                      if (is_logged_in.$ == false) {
                         ToastComponent.showDialog("You need to log in");
                         return;
                       }
@@ -1182,16 +1130,6 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
 
   showAlertDialog(BuildContext context) {
     // set up the buttons
-    Widget submitBtn = TextButton(
-      style: TextButton.styleFrom(backgroundColor: MyTheme.accent_color),
-      child: Text(
-        AppLocalizations.of(context)!.submit_ucf,
-        style: TextStyle(color: MyTheme.white),
-      ),
-      onPressed: () {
-        _bidPriceController.clear();
-      },
-    );
 
     // set up the AlertDialog
     // show the dialog
@@ -1338,19 +1276,17 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          Container(
-            child: Padding(
-              padding: app_language_rtl.$!
-                  ? EdgeInsets.only(left: 8.0)
-                  : EdgeInsets.only(right: 8.0),
-              child: SizedBox(
-                width: 75,
-                child: Text(
-                  AppLocalizations.of(context)!.total_price_ucf,
-                  style: TextStyle(
-                    color: Color.fromRGBO(153, 153, 153, 1),
-                    fontSize: 10,
-                  ),
+          Padding(
+            padding: app_language_rtl.$!
+                ? EdgeInsets.only(left: 8.0)
+                : EdgeInsets.only(right: 8.0),
+            child: SizedBox(
+              width: 75,
+              child: Text(
+                AppLocalizations.of(context)!.total_price_ucf,
+                style: TextStyle(
+                  color: Color.fromRGBO(153, 153, 153, 1),
+                  fontSize: 10,
                 ),
               ),
             ),
@@ -1468,13 +1404,13 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       padding: EdgeInsets.all(6),
-                      child: Text(
-                        '${auctionEndTimeList[index] ?? 00}',
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
                       decoration: BoxDecoration(
                         color: MyTheme.accent_color,
                         borderRadius: BorderRadius.circular(3.0),
+                      ),
+                      child: Text(
+                        '${auctionEndTimeList[index] ?? 00}',
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     );
                   },
@@ -1688,9 +1624,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
                 height: 50,
                 child: Html(data: _auctionproductDetails.description),
               ),
-              expanded: Container(
-                child: Html(data: _auctionproductDetails.description),
-              ),
+              expanded: Html(data: _auctionproductDetails.description),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -1726,41 +1660,38 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            child: Container(
-              child: Stack(
-                children: [
-                  PhotoView(
-                    enableRotation: true,
-                    heroAttributes:
-                        const PhotoViewHeroAttributes(tag: "someTag"),
-                    imageProvider: NetworkImage(path),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        color: MyTheme.medium_grey_50,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            topRight: Radius.circular(25),
-                            topLeft: Radius.circular(25),
-                          ),
+            child: Stack(
+              children: [
+                PhotoView(
+                  enableRotation: true,
+                  heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+                  imageProvider: NetworkImage(path),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      color: MyTheme.medium_grey_50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
                         ),
                       ),
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        icon: Icon(Icons.clear, color: MyTheme.white),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      ),
+                    ),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      icon: Icon(Icons.clear, color: MyTheme.white),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -1882,12 +1813,10 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
             child: SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder_rectangle.png',
-                  image: _productImageList[_currentImage],
-                  fit: BoxFit.scaleDown,
-                ),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/placeholder_rectangle.png',
+                image: _productImageList[_currentImage],
+                fit: BoxFit.scaleDown,
               ),
             ),
           ),
@@ -1913,7 +1842,7 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
           enlargeCenterPage: false,
           scrollDirection: Axis.horizontal,
           onPageChanged: (index, reason) {
-            print(index);
+            log(index.toString());
             setState(() {
               _currentImage = index;
             });
@@ -1922,51 +1851,49 @@ class _AuctionProductsDetailsState extends State<AuctionProductsDetails>
         items: _productImageList.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                child: Stack(
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        openPhotoDialog(
-                          context,
-                          _productImageList[_currentImage],
-                        );
-                      },
-                      child: SizedBox(
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/placeholder_rectangle.png',
-                          image: i,
-                          fit: BoxFit.fitHeight,
-                        ),
+              return Stack(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      openPhotoDialog(
+                        context,
+                        _productImageList[_currentImage],
+                      );
+                    },
+                    child: SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder_rectangle.png',
+                        image: i,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          _productImageList.length,
-                          (index) => Container(
-                            width: 7.0,
-                            height: 7.0,
-                            margin: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 4.0,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentImage == index
-                                  ? MyTheme.font_grey
-                                  : Colors.grey.withOpacity(0.2),
-                            ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        _productImageList.length,
+                        (index) => Container(
+                          width: 7.0,
+                          height: 7.0,
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 4.0,
+                          ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentImage == index
+                                ? MyTheme.font_grey
+                                : Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           );

@@ -36,7 +36,7 @@ class AIZImage {
           boxShadow: isShadow
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(.08),
+                    color: Colors.black.withValues(alpha: .08),
                     blurRadius: 20,
                     spreadRadius: 0.0,
                     offset: Offset(0.0, 10.0), // shadow direction: bottom right

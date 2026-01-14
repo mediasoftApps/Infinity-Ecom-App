@@ -33,7 +33,7 @@ class HomeBannerThree extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 30,
               spreadRadius: 0.5,
               offset: Offset(0, 10),

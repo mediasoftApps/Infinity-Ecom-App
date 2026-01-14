@@ -28,7 +28,6 @@ class _PasswordOtpState extends State<PasswordOtp> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmController =
       TextEditingController();
-  final bool _resetPasswordSuccess = false;
 
   String headeText = "";
 
@@ -76,7 +75,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
       ToastComponent.showDialog(
         AppLocalizations.of(
           context,
-        )!.password_must_contain_at_least_6_characters,
+        )!
+            .password_must_contain_at_least_6_characters,
       );
       return;
     } else if (password != passwordConfirm) {
@@ -86,8 +86,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
       return;
     }
 
-    var passwordConfirmResponse = await AuthRepository()
-        .getPasswordConfirmResponse(code, password);
+    var passwordConfirmResponse =
+        await AuthRepository().getPasswordConfirmResponse(code, password);
 
     if (passwordConfirmResponse.result == false) {
       ToastComponent.showDialog(passwordConfirmResponse.message!);
@@ -120,9 +120,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
 
   @override
   Widget build(BuildContext context) {
-    String verify_by = widget.verify_by; //phone or email
-    final screen_height = MediaQuery.of(context).size.height;
-    final screen_width = MediaQuery.of(context).size.width;
+    String verifyBy = widget.verify_by; //phone or email
+    final screenWidth = MediaQuery.of(context).size.width;
     return AuthScreen.buildScreen(
       context,
       headeText,
@@ -131,15 +130,15 @@ class _PasswordOtpState extends State<PasswordOtp> {
           gotoLoginScreen();
           return Future.delayed(Duration.zero);
         },
-        child: buildBody(context, screen_width, verify_by),
+        child: buildBody(context, screenWidth, verifyBy),
       ),
     );
   }
 
   Widget buildBody(
     BuildContext context,
-    double screen_width,
-    String verify_by,
+    double screenWidth,
+    String verifyBy,
   ) {
     return FlipCard(
       flipOnTouch: false,
@@ -152,12 +151,13 @@ class _PasswordOtpState extends State<PasswordOtp> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
-                width: screen_width * (3 / 4),
-                child: verify_by == "email"
+                width: screenWidth * (3 / 4),
+                child: verifyBy == "email"
                     ? Text(
                         AppLocalizations.of(
                           context,
-                        )!.enter_the_verification_code_that_sent_to_your_email_recently,
+                        )!
+                            .enter_the_verification_code_that_sent_to_your_email_recently,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: MyTheme.dark_grey,
@@ -167,7 +167,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
                     : Text(
                         AppLocalizations.of(
                           context,
-                        )!.enter_the_verification_code_that_sent_to_your_phone_recently,
+                        )!
+                            .enter_the_verification_code_that_sent_to_your_phone_recently,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: MyTheme.dark_grey,
@@ -177,7 +178,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
               ),
             ),
             SizedBox(
-              width: screen_width * (3 / 4),
+              width: screenWidth * (3 / 4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -240,7 +241,8 @@ class _PasswordOtpState extends State<PasswordOtp> {
                         Text(
                           AppLocalizations.of(
                             context,
-                          )!.password_must_contain_at_least_6_characters,
+                          )!
+                              .password_must_contain_at_least_6_characters,
                           style: TextStyle(
                             color: MyTheme.textfield_grey,
                             fontStyle: FontStyle.italic,
@@ -340,7 +342,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
-                width: screen_width * (3 / 4),
+                width: screenWidth * (3 / 4),
                 child: Text(
                   LangText(context).local.congratulations_ucf,
                   textAlign: TextAlign.center,
@@ -355,7 +357,7 @@ class _PasswordOtpState extends State<PasswordOtp> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: SizedBox(
-                width: screen_width * (3 / 4),
+                width: screenWidth * (3 / 4),
                 child: Text(
                   LangText(
                     context,

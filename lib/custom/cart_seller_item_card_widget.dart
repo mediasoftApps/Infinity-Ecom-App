@@ -4,15 +4,16 @@ import '../my_theme.dart';
 import '../presenter/cart_provider.dart';
 import 'box_decorations.dart';
 import 'device_info.dart';
+
 class CartSellerItemCardWidget extends StatelessWidget {
   final int sellerIndex;
   final int itemIndex;
   final CartProvider cartProvider;
   const CartSellerItemCardWidget(
       {super.key,
-        required this.cartProvider,
-        required this.sellerIndex,
-        required this.itemIndex});
+      required this.cartProvider,
+      required this.sellerIndex,
+      required this.itemIndex});
   @override
   Widget build(BuildContext context) {
     final cartItem = cartProvider.shopList[sellerIndex].cartItems[itemIndex];
@@ -45,7 +46,7 @@ class CartSellerItemCardWidget extends StatelessWidget {
                   if (isOutOfStock)
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
+                        color: Colors.black.withValues(alpha: 0.7),
                         borderRadius: const BorderRadius.horizontal(
                             left: Radius.circular(6), right: Radius.zero),
                       ),
@@ -87,8 +88,8 @@ class CartSellerItemCardWidget extends StatelessWidget {
                           Text(
                             SystemConfig.systemCurrency != null
                                 ? cartItem.price!.replaceAll(
-                                SystemConfig.systemCurrency!.code!,
-                                SystemConfig.systemCurrency!.symbol!)
+                                    SystemConfig.systemCurrency!.code!,
+                                    SystemConfig.systemCurrency!.symbol!)
                                 : cartItem.price!,
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
@@ -106,7 +107,6 @@ class CartSellerItemCardWidget extends StatelessWidget {
               ),
             ),
             const Spacer(),
-
             Container(
               width: 32,
               margin: showQuantityControls
@@ -155,7 +155,7 @@ class CartSellerItemCardWidget extends StatelessWidget {
                         width: 24,
                         height: 24,
                         decoration:
-                        BoxDecorations.buildCartCircularButtonDecoration(),
+                            BoxDecorations.buildCartCircularButtonDecoration(),
                         child: Icon(
                           Icons.add,
                           color: cartItem.auctionProduct == 0
@@ -184,7 +184,7 @@ class CartSellerItemCardWidget extends StatelessWidget {
                         width: 24,
                         height: 24,
                         decoration:
-                        BoxDecorations.buildCartCircularButtonDecoration(),
+                            BoxDecorations.buildCartCircularButtonDecoration(),
                         child: Icon(
                           Icons.remove,
                           color: cartItem.auctionProduct == 0

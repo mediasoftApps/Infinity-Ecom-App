@@ -117,8 +117,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   }
 
   fetchFilteredCategories() async {
-    var filteredCategoriesResponse = await CategoryRepository()
-        .getFilterPageCategories();
+    var filteredCategoriesResponse =
+        await CategoryRepository().getFilterPageCategories();
     _filterCategoryList.addAll(filteredCategoriesResponse.categories!);
     _filteredCategoriesCalled = true;
     setState(() {});
@@ -400,9 +400,8 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         endDrawer: buildFilterDrawer(),
         key: _scaffoldKey,
@@ -413,8 +412,8 @@ class _SearchWidgetState extends State<SearchWidget> {
             _selectedFilter!.option_key == 'product'
                 ? buildProductList()
                 : (_selectedFilter!.option_key == 'brands'
-                      ? buildBrandList()
-                      : buildShopList()),
+                    ? buildBrandList()
+                    : buildShopList()),
             Positioned(
               top: 0.0,
               left: 0.0,
@@ -426,8 +425,8 @@ class _SearchWidgetState extends State<SearchWidget> {
               child: _selectedFilter!.option_key == 'product'
                   ? buildProductLoadingContainer()
                   : (_selectedFilter!.option_key == 'brands'
-                        ? buildBrandLoadingContainer()
-                        : buildShopLoadingContainer()),
+                      ? buildBrandLoadingContainer()
+                      : buildShopLoadingContainer()),
             ),
           ],
         ),
@@ -437,7 +436,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: MyTheme.white.withOpacity(0.95),
+      backgroundColor: MyTheme.white.withValues(alpha: 0.95),
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0.0,
       actions: [Container()],
@@ -499,7 +498,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                 : ToastComponent.showDialog(
                     AppLocalizations.of(
                       context,
-                    )!.you_can_use_sorting_while_searching_for_products,
+                    )!
+                        .you_can_use_sorting_while_searching_for_products,
                   );
           },
           child: Container(
@@ -549,143 +549,150 @@ class _SearchWidgetState extends State<SearchWidget> {
                         content: StatefulBuilder(
                           builder:
                               (BuildContext context, StateSetter setState) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0,
-                                      ),
-                                      child: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.sort_products_by_ucf,
-                                      ),
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.def_ault_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "price_high_to_low",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.price_high_to_low,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "price_low_to_high",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.price_low_to_high,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "new_arrival",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.new_arrival_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "popularity",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.popularity_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "top_rated",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.top_rated_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .sort_products_by_ucf,
+                                  ),
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .def_ault_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "price_high_to_low",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .price_high_to_low,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "price_low_to_high",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .price_low_to_high,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "new_arrival",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .new_arrival_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "popularity",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .popularity_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "top_rated",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .top_rated_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
                         ),
                         actions: [
                           Btn.basic(
@@ -704,7 +711,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                 : ToastComponent.showDialog(
                     AppLocalizations.of(
                       context,
-                    )!.you_can_use_filters_while_searching_for_products,
+                    )!
+                        .you_can_use_filters_while_searching_for_products,
                   );
           },
           child: Container(
@@ -754,19 +762,18 @@ class _SearchWidgetState extends State<SearchWidget> {
             height: 58,
             //color: Colors.amber,
             child: Padding(
-              padding:
-                  MediaQuery.of(context).viewPadding.top >
+              padding: MediaQuery.of(context).viewPadding.top >
                       30 //MediaQuery.of(context).viewPadding.top is the statusbar height, with a notch phone it results almost 50, without a notch it shows 24.0.For safety we have checked if its greater than thirty
                   ? const EdgeInsets.fromLTRB(0, 14, 0, 10)
                   : const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
               child: TypeAheadField(
                 suggestionsCallback: (pattern) async {
                   //return await BackendService.getSuggestions(pattern);
-                  var suggestions = await SearchRepository()
-                      .getSearchSuggestionListResponse(
-                        query_key: pattern,
-                        type: _selectedFilter!.option_key,
-                      );
+                  var suggestions =
+                      await SearchRepository().getSearchSuggestionListResponse(
+                    query_key: pattern,
+                    type: _selectedFilter!.option_key,
+                  );
                   //print(suggestions.toString());
                   return suggestions;
                 },
@@ -829,7 +836,7 @@ class _SearchWidgetState extends State<SearchWidget> {
                             63,
                             63,
                             63,
-                          ).withOpacity(.12),
+                          ).withValues(alpha: .12),
                           blurRadius: 10,
                           spreadRadius: 0.4,
                           offset: Offset(0.0, 3.0),
@@ -860,9 +867,8 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   buildFilterDrawer() {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Drawer(
         child: Container(
           padding: EdgeInsets.only(top: 50),
@@ -901,7 +907,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(
                                     context,
-                                  )!.minimum_ucf,
+                                  )!
+                                      .minimum_ucf,
                                   hintStyle: TextStyle(
                                     fontSize: 12.0,
                                     color: MyTheme.textfield_grey,
@@ -942,7 +949,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(
                                     context,
-                                  )!.maximum_ucf,
+                                  )!
+                                      .maximum_ucf,
                                   hintStyle: TextStyle(
                                     fontSize: 12.0,
                                     color: MyTheme.textfield_grey,
@@ -998,7 +1006,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   child: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!.no_category_is_available,
+                                    )!
+                                        .no_category_is_available,
                                     style: TextStyle(color: MyTheme.font_grey),
                                   ),
                                 ),
@@ -1023,7 +1032,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                                   child: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!.no_brand_is_available,
+                                    )!
+                                        .no_brand_is_available,
                                     style: TextStyle(color: MyTheme.font_grey),
                                   ),
                                 ),
@@ -1068,7 +1078,8 @@ class _SearchWidgetState extends State<SearchWidget> {
                             ToastComponent.showDialog(
                               AppLocalizations.of(
                                 context,
-                              )!.filter_screen_min_max_warning,
+                              )!
+                                  .filter_screen_min_max_warning,
                             );
                             apply = false;
                           }

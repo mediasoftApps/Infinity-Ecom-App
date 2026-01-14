@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CommonWebviewScreen extends StatefulWidget {
-  String url;
-  String page_name;
+  final String url;
+  final String page_name;
 
-  CommonWebviewScreen({super.key, this.url = "", this.page_name = ""});
+  const CommonWebviewScreen({super.key, this.url = "", this.page_name = ""});
 
   @override
   State<CommonWebviewScreen> createState() => _CommonWebviewScreenState();
@@ -39,9 +39,8 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -52,7 +51,7 @@ class _CommonWebviewScreenState extends State<CommonWebviewScreen> {
 
   buildBody() {
     return SizedBox.expand(
-      child: Container(child: WebViewWidget(controller: _webViewController)),
+      child: WebViewWidget(controller: _webViewController),
     );
   }
 

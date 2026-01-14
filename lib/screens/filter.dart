@@ -22,10 +22,10 @@ import 'package:one_context/one_context.dart';
 import '../repositories/search_repository.dart';
 
 class WhichFilter {
-  String option_key;
-  String name;
+  final String option_key;
+  final String name;
 
-  WhichFilter(this.option_key, this.name);
+  const WhichFilter(this.option_key, this.name);
 
   static List<WhichFilter> getWhichFilterList() {
     return <WhichFilter>[
@@ -80,9 +80,7 @@ class _FilterState extends State<Filter> {
   final TextEditingController _maxPriceController = TextEditingController();
 
   final List<dynamic> _filterBrandList = [];
-  bool _filteredBrandsCalled = false;
   final List<dynamic> _filterCategoryList = [];
-  bool _filteredCategoriesCalled = false;
 
   final List<dynamic> _searchSuggestionList = [];
   String? _searchKey = "";
@@ -107,15 +105,13 @@ class _FilterState extends State<Filter> {
   fetchFilteredBrands() async {
     var filteredBrandResponse = await BrandRepository().getFilterPageBrands();
     _filterBrandList.addAll(filteredBrandResponse.brands!);
-    _filteredBrandsCalled = true;
     setState(() {});
   }
 
   fetchFilteredCategories() async {
-    var filteredCategoriesResponse = await CategoryRepository()
-        .getFilterPageCategories();
+    var filteredCategoriesResponse =
+        await CategoryRepository().getFilterPageCategories();
     _filterCategoryList.addAll(filteredCategoriesResponse.categories!);
-    _filteredCategoriesCalled = true;
     setState(() {});
   }
 
@@ -127,7 +123,6 @@ class _FilterState extends State<Filter> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _productScrollController.dispose();
     _brandScrollController.dispose();
     _shopScrollController.dispose();
@@ -393,9 +388,8 @@ class _FilterState extends State<Filter> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         endDrawer: buildFilterDrawer(),
         key: _scaffoldKey,
@@ -406,8 +400,8 @@ class _FilterState extends State<Filter> {
             _selectedFilter!.option_key == 'product'
                 ? buildProductList()
                 : (_selectedFilter!.option_key == 'brands'
-                      ? buildBrandList()
-                      : buildShopList()),
+                    ? buildBrandList()
+                    : buildShopList()),
             Positioned(
               top: 10.0,
               left: 0.0,
@@ -419,8 +413,8 @@ class _FilterState extends State<Filter> {
               child: _selectedFilter!.option_key == 'product'
                   ? buildProductLoadingContainer()
                   : (_selectedFilter!.option_key == 'brands'
-                        ? buildBrandLoadingContainer()
-                        : buildShopLoadingContainer()),
+                      ? buildBrandLoadingContainer()
+                      : buildShopLoadingContainer()),
             ),
           ],
         ),
@@ -430,7 +424,7 @@ class _FilterState extends State<Filter> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: MyTheme.mainColor.withOpacity(0.95),
+      backgroundColor: MyTheme.mainColor.withValues(alpha: 0.95),
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0.0,
       actions: [Container()],
@@ -494,7 +488,8 @@ class _FilterState extends State<Filter> {
                 : ToastComponent.showDialog(
                     AppLocalizations.of(
                       context,
-                    )!.you_can_use_sorting_while_searching_for_products,
+                    )!
+                        .you_can_use_sorting_while_searching_for_products,
                   );
           },
           child: Container(
@@ -543,143 +538,150 @@ class _FilterState extends State<Filter> {
                         content: StatefulBuilder(
                           builder:
                               (BuildContext context, StateSetter setState) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0,
-                                      ),
-                                      child: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.sort_products_by_ucf,
-                                      ),
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.def_ault_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "price_high_to_low",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.price_high_to_low,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "price_low_to_high",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.price_low_to_high,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "new_arrival",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.new_arrival_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "popularity",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.popularity_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    RadioListTile(
-                                      dense: true,
-                                      value: "top_rated",
-                                      groupValue: _selectedSort,
-                                      activeColor: MyTheme.font_grey,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      title: Text(
-                                        AppLocalizations.of(
-                                          context,
-                                        )!.top_rated_ucf,
-                                      ),
-                                      onChanged: (dynamic value) {
-                                        setState(() {
-                                          _selectedSort = value;
-                                        });
-                                        _onSortChange();
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .sort_products_by_ucf,
+                                  ),
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .def_ault_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "price_high_to_low",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .price_high_to_low,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "price_low_to_high",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .price_low_to_high,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "new_arrival",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .new_arrival_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "popularity",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .popularity_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                RadioListTile(
+                                  dense: true,
+                                  value: "top_rated",
+                                  groupValue: _selectedSort,
+                                  activeColor: MyTheme.font_grey,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .top_rated_ucf,
+                                  ),
+                                  onChanged: (dynamic value) {
+                                    setState(() {
+                                      _selectedSort = value;
+                                    });
+                                    _onSortChange();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
                         ),
                         actions: [
                           Btn.basic(
@@ -698,7 +700,8 @@ class _FilterState extends State<Filter> {
                 : ToastComponent.showDialog(
                     AppLocalizations.of(
                       context,
-                    )!.you_can_use_filters_while_searching_for_products,
+                    )!
+                        .you_can_use_filters_while_searching_for_products,
                   );
           },
           child: Container(
@@ -760,9 +763,9 @@ class _FilterState extends State<Filter> {
                   suggestionsCallback: (pattern) async {
                     var suggestions = await SearchRepository()
                         .getSearchSuggestionListResponse(
-                          query_key: pattern,
-                          type: _selectedFilter!.option_key,
-                        );
+                      query_key: pattern,
+                      type: _selectedFilter!.option_key,
+                    );
 
                     return suggestions;
                   },
@@ -866,9 +869,8 @@ class _FilterState extends State<Filter> {
 
   buildFilterDrawer() {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Drawer(
         backgroundColor: Colors.white,
         child: Container(
@@ -907,7 +909,8 @@ class _FilterState extends State<Filter> {
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(
                                     context,
-                                  )!.minimum_ucf,
+                                  )!
+                                      .minimum_ucf,
                                   hintStyle: TextStyle(
                                     fontSize: 12.0,
                                     color: MyTheme.textfield_grey,
@@ -948,7 +951,8 @@ class _FilterState extends State<Filter> {
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(
                                     context,
-                                  )!.maximum_ucf,
+                                  )!
+                                      .maximum_ucf,
                                   hintStyle: TextStyle(
                                     fontSize: 12.0,
                                     color: MyTheme.textfield_grey,
@@ -1004,7 +1008,8 @@ class _FilterState extends State<Filter> {
                                   child: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!.no_category_is_available,
+                                    )!
+                                        .no_category_is_available,
                                     style: TextStyle(color: MyTheme.font_grey),
                                   ),
                                 ),
@@ -1029,7 +1034,8 @@ class _FilterState extends State<Filter> {
                                   child: Text(
                                     AppLocalizations.of(
                                       context,
-                                    )!.no_brand_is_available,
+                                    )!
+                                        .no_brand_is_available,
                                     style: TextStyle(color: MyTheme.font_grey),
                                   ),
                                 ),
@@ -1077,7 +1083,8 @@ class _FilterState extends State<Filter> {
                             ToastComponent.showDialog(
                               AppLocalizations.of(
                                 context,
-                              )!.filter_screen_min_max_warning,
+                              )!
+                                  .filter_screen_min_max_warning,
                             );
                             apply = false;
                           }
@@ -1299,10 +1306,8 @@ class _FilterState extends State<Filter> {
     }
   }
 
-  Container buildShopList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildShopScrollableList())]),
-    );
+  Widget buildShopList() {
+    return Column(children: [Expanded(child: buildShopScrollableList())]);
   }
 
   buildShopScrollableList() {

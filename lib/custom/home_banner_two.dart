@@ -54,7 +54,7 @@ class HomeBannerTwo extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Color(0xff000000).withOpacity(0.1),
+                        color: Color(0xff000000).withValues(alpha: 0.1),
                         spreadRadius: 2,
                         blurRadius: 5,
                         offset: Offset(0, 2),
@@ -69,7 +69,6 @@ class HomeBannerTwo extends StatelessWidget {
                             i.url?.split(AppConfig.DOMAIN_PATH).last ?? "";
                         GoRouter.of(context).go(url);
                       },
-
                       child: Image.asset('assets/placeholder.png'),
                     ),
                   ),

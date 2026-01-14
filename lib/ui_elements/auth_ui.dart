@@ -11,9 +11,8 @@ class AuthScreen {
     Widget child,
   ) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
@@ -94,8 +93,8 @@ class AuthScreen {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(
-                      0.7,
+                    color: Colors.grey.withValues(
+                      alpha: 0.7,
                     ), // Optional background color
                     shape: BoxShape.circle,
                   ),

@@ -34,7 +34,6 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   final TextEditingController _chatTextController = TextEditingController();
   final ScrollController _chatScrollController = ScrollController();
-  final ScrollController _xcrollController = ScrollController();
   final lastKey = GlobalKey();
 
   var uid = user_id;
@@ -46,7 +45,6 @@ class _ChatState extends State<Chat> {
   bool _showLoadingContainer = false;
   int? _last_id = 0;
   Timer? timer;
-  final String _message = "";
 
   @override
   void initState() {
@@ -100,8 +98,8 @@ class _ChatState extends State<Chat> {
       final DateTime now = DateTime.now();
       final intl.DateFormat dateFormatter = intl.DateFormat('yyyy-MM-dd');
       final intl.DateFormat timeFormatter = intl.DateFormat('hh:ss');
-      final String formattedDate = dateFormatter.format(now);
-      final String formattedTime = timeFormatter.format(now);
+      dateFormatter.format(now);
+      timeFormatter.format(now);
 
       var messageResponse = await ChatRepository().getInserMessageResponse(
         conversation_id: widget.conversation_id,
@@ -138,9 +136,8 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar2(context),
@@ -476,39 +473,40 @@ class _ChatState extends State<Chat> {
     text,
     date,
     time,
-  ) => ChatBubble(
-    elevation: 0.0,
-    clipper: clipper,
-    backGroundColor: Color.fromRGBO(239, 239, 239, 1),
-    margin: EdgeInsets.only(top: 10),
-    child: Container(
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width * 0.6,
-        minWidth: MediaQuery.of(context).size.width * 0.6,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              text,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: MyTheme.font_grey,
-                fontSize: 13,
-                wordSpacing: 1,
+  ) =>
+      ChatBubble(
+        elevation: 0.0,
+        clipper: clipper,
+        backGroundColor: Color.fromRGBO(239, 239, 239, 1),
+        margin: EdgeInsets.only(top: 10),
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.6,
+            minWidth: MediaQuery.of(context).size.width * 0.6,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: Text(
+                  text,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: MyTheme.font_grey,
+                    fontSize: 13,
+                    wordSpacing: 1,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                date + " " + time,
+                style: TextStyle(color: MyTheme.medium_grey, fontSize: 10),
+              ),
+            ],
           ),
-          Text(
-            date + " " + time,
-            style: TextStyle(color: MyTheme.medium_grey, fontSize: 10),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
   conversations() {
     return SingleChildScrollView(
@@ -587,7 +585,7 @@ class _ChatState extends State<Chat> {
             : Colors.white),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(.08),
+            color: Colors.black.withValues(alpha: .08),
             blurRadius: 20,
             spreadRadius: 0.0,
             offset: Offset(0.0, 10.0),
@@ -634,7 +632,7 @@ class _ChatState extends State<Chat> {
         padding: const EdgeInsets.only(left: 20, bottom: 10, top: 10),
         height: 60,
         width: double.infinity,
-        color: Colors.white.withOpacity(0.95),
+        color: Colors.white.withValues(alpha: 0.95),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -710,9 +708,8 @@ class _ChatState extends State<Chat> {
                 bottom: 10,
               ),
               child: Align(
-                alignment: (index.isOdd
-                    ? Alignment.topRight
-                    : Alignment.topLeft),
+                alignment:
+                    (index.isOdd ? Alignment.topRight : Alignment.topLeft),
                 child: smsShimmer(index),
               ),
             );

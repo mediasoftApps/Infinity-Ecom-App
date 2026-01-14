@@ -1,4 +1,13 @@
 {
   "dart.flutterSdkPath": "C:/src/flutter_3.38.6",
+
+  "sonarlint.connectedMode.project": {
+        "fileExclusions": [
+            "**/*.g.dart",
+            "**/*.freezed.dart",
+            "**/*.config.dart",
+            "lib/generated/**/*" 
+        ]
+    }
   "cmake.sourceDirectory": "E:/Flutter Apps/MSDSL/CloudPos Management/CloudPosManagement/windows",
 }

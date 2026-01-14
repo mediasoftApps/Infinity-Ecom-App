@@ -1,55 +1,56 @@
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/enum_classes.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/cart_repository.dart';
-import 'package:infinity_ecom_app/repositories/coupon_repository.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/amarpay_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/bkash_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/flutterwave_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/iyzico_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/khalti_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/my_fatoora_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/nagad_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/offline_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/online_pay.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/payfast_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/paypal_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/paystack_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/paytm_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/razorpay_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/sslcommerz_screen.dart';
-import 'package:infinity_ecom_app/screens/payment_method_screen/stripe_screen.dart';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:one_context/one_context.dart';
 
+import '../../custom/btn.dart';
+import '../../custom/enum_classes.dart';
+import '../../custom/lang_text.dart';
 import '../../custom/loading.dart';
+import '../../custom/toast_component.dart';
 import '../../helpers/auth_helper.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../helpers/system_config.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/cart_repository.dart';
+import '../../repositories/coupon_repository.dart';
 import '../../repositories/guest_checkout_repository.dart';
+import '../../repositories/payment_repository.dart';
 import '../guest_checkout_pages/guest_checkout_address.dart';
 
+import '../orders/order_list.dart';
+import '../payment_method_screen/amarpay_screen.dart';
+import '../payment_method_screen/bkash_screen.dart';
 import '../payment_method_screen/cybersource_screen.dart';
+import '../payment_method_screen/flutterwave_screen.dart';
+import '../payment_method_screen/iyzico_screen.dart';
+import '../payment_method_screen/khalti_screen.dart';
+import '../payment_method_screen/my_fatoora_screen.dart';
+import '../payment_method_screen/nagad_screen.dart';
+import '../payment_method_screen/offline_screen.dart';
+import '../payment_method_screen/online_pay.dart';
+import '../payment_method_screen/payfast_screen.dart';
+import '../payment_method_screen/paypal_screen.dart';
+import '../payment_method_screen/paystack_screen.dart';
+import '../payment_method_screen/paytm_screen.dart';
 import '../payment_method_screen/phonepay_screen.dart';
+import '../payment_method_screen/razorpay_screen.dart';
+import '../payment_method_screen/sslcommerz_screen.dart';
+import '../payment_method_screen/stripe_screen.dart';
 
 class Checkout extends StatefulWidget {
-  int? order_id;
-  String list;
+  final int? order_id;
+  final String list;
   final PaymentFor? paymentFor;
   final double rechargeAmount;
   final String? title;
-  var packageId;
+  final int packageId;
   final String? guestCheckOutShippingAddress;
 
-  Checkout({
+  const Checkout({
     super.key,
     this.guestCheckOutShippingAddress,
     this.order_id = 0,
@@ -91,7 +92,7 @@ class _CheckoutState extends State<Checkout> {
   void initState() {
     super.initState();
     fetchAll();
-    print('recharge amount: ${widget.rechargeAmount}');
+    log('recharge amount: ${widget.rechargeAmount}');
   }
 
   @override
@@ -144,8 +145,7 @@ class _CheckoutState extends State<Checkout> {
   fetchAll() async {
     String mode = '';
     setState(() {
-      mode =
-          widget.paymentFor != PaymentFor.Order &&
+      mode = widget.paymentFor != PaymentFor.Order &&
               widget.paymentFor != PaymentFor.ManualPayment
           ? "wallet"
           : "order";
@@ -263,8 +263,8 @@ class _CheckoutState extends State<Checkout> {
   }
 
   onCouponRemove() async {
-    var couponRemoveResponse = await CouponRepository()
-        .getCouponRemoveResponse();
+    var couponRemoveResponse =
+        await CouponRepository().getCouponRemoveResponse();
 
     if (couponRemoveResponse.result == false) {
       ToastComponent.showDialog(couponRemoveResponse.message);
@@ -307,7 +307,7 @@ class _CheckoutState extends State<Checkout> {
       );
       return;
     }
-    print("Grand total value before check: $_grandTotalValue");
+    log("Grand total value before check: $_grandTotalValue");
     if (_grandTotalValue == null || _grandTotalValue! <= 0.00) {
       ToastComponent.showDialog(AppLocalizations.of(context)!.nothing_to_pay);
       return;
@@ -661,11 +661,11 @@ class _CheckoutState extends State<Checkout> {
 
   pay_by_wallet() async {
     loading();
-    var orderCreateResponse = await PaymentRepository()
-        .getOrderCreateResponseFromWallet(
-          _selected_payment_method_key,
-          _grandTotalValue,
-        );
+    var orderCreateResponse =
+        await PaymentRepository().getOrderCreateResponseFromWallet(
+      _selected_payment_method_key,
+      _grandTotalValue,
+    );
     Navigator.of(loadingcontext).pop();
 
     if (orderCreateResponse.result == false) {
@@ -939,9 +939,8 @@ class _CheckoutState extends State<Checkout> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: MyTheme.mainColor,
@@ -976,14 +975,12 @@ class _CheckoutState extends State<Checkout> {
             //Apply Coupon and order details container
             Align(
               alignment: Alignment.bottomCenter,
-              child:
-                  widget.paymentFor == PaymentFor.WalletRecharge ||
+              child: widget.paymentFor == PaymentFor.WalletRecharge ||
                       widget.paymentFor == PaymentFor.PackagePay
                   ? SizedBox.shrink()
                   : Container(
                       decoration: BoxDecoration(color: Colors.white),
-                      height:
-                          (widget.paymentFor == PaymentFor.ManualPayment) ||
+                      height: (widget.paymentFor == PaymentFor.ManualPayment) ||
                               (widget.paymentFor == PaymentFor.OrderRePayment)
                           ? 80
                           : 140,
@@ -1196,24 +1193,21 @@ class _CheckoutState extends State<Checkout> {
         children: [
           AnimatedContainer(
             duration: Duration(milliseconds: 400),
-            decoration:
-                BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(6),
-                ).copyWith(
-                  border: Border.all(
-                    color:
-                        _selected_payment_method_key ==
-                            _paymentTypeList[index].payment_type_key
-                        ? MyTheme.accent_color
-                        : MyTheme.light_grey,
-                    width:
-                        _selected_payment_method_key ==
-                            _paymentTypeList[index].payment_type_key
-                        ? 2.0
-                        : 0.0,
-                  ),
-                ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(6),
+            ).copyWith(
+              border: Border.all(
+                color: _selected_payment_method_key ==
+                        _paymentTypeList[index].payment_type_key
+                    ? MyTheme.accent_color
+                    : MyTheme.light_grey,
+                width: _selected_payment_method_key ==
+                        _paymentTypeList[index].payment_type_key
+                    ? 2.0
+                    : 0.0,
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -1224,8 +1218,7 @@ class _CheckoutState extends State<Checkout> {
                     padding: const EdgeInsets.all(8.0),
                     child: FadeInImage.assetNetwork(
                       placeholder: 'assets/placeholder.png',
-                      image:
-                          _paymentTypeList[index].payment_type ==
+                      image: _paymentTypeList[index].payment_type ==
                               "manual_payment"
                           ? _paymentTypeList[index].image
                           : _paymentTypeList[index].image,
@@ -1307,10 +1300,11 @@ class _CheckoutState extends State<Checkout> {
             widget.paymentFor == PaymentFor.WalletRecharge
                 ? AppLocalizations.of(context)!.recharge_wallet_ucf
                 : widget.paymentFor == PaymentFor.ManualPayment
-                ? AppLocalizations.of(context)!.proceed_all_caps
-                : widget.paymentFor == PaymentFor.PackagePay
-                ? AppLocalizations.of(context)!.buy_package_ucf
-                : AppLocalizations.of(context)!.place_my_order_all_capital,
+                    ? AppLocalizations.of(context)!.proceed_all_caps
+                    : widget.paymentFor == PaymentFor.PackagePay
+                        ? AppLocalizations.of(context)!.buy_package_ucf
+                        : AppLocalizations.of(context)!
+                            .place_my_order_all_capital,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,

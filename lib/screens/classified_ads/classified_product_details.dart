@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:infinity_ecom_app/app_config.dart';
 import 'package:infinity_ecom_app/custom/box_decorations.dart';
@@ -28,9 +29,9 @@ import '../../custom/lang_text.dart';
 import '../../repositories/classified_product_repository.dart';
 
 class ClassifiedAdsDetails extends StatefulWidget {
-  String slug;
+  final String slug;
 
-  ClassifiedAdsDetails({super.key, required this.slug});
+  const ClassifiedAdsDetails({super.key, required this.slug});
 
   @override
   State<ClassifiedAdsDetails> createState() => _ClassifiedAdsDetailsState();
@@ -45,21 +46,15 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
     initialScrollOffset: 0.0,
   );
 
-  final ScrollController _variantScrollController = ScrollController();
   final ScrollController _imageScrollController = ScrollController();
 
   double _scrollPosition = 0.0;
-
-  Animation? _colorTween;
-  late AnimationController _ColorAnimationController;
 
   final CarouselSliderController _carouselController =
       CarouselSliderController();
 
   //init values
 
-  final bool _isInWishList = false;
-  var _productDetailsFetched = false;
   ClassifiedProductDetailsResponseDatum? _productDetails;
 
   final _productImageList = [];
@@ -102,7 +97,6 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
     _currentImage = 0;
     _productImageList.clear();
     _relatedProducts.clear();
-    _productDetailsFetched = false;
     _productDetails = null;
     setState(() {});
   }
@@ -115,11 +109,6 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
   onCopyTap(setState) {
     setState(() {
       _showCopied = true;
-    });
-    Timer timer = Timer(Duration(seconds: 3), () {
-      setState(() {
-        _showCopied = false;
-      });
     });
   }
 
@@ -239,16 +228,6 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
 
   @override
   void initState() {
-    _ColorAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 0),
-    );
-
-    _colorTween = ColorTween(
-      begin: Colors.transparent,
-      end: Colors.white,
-    ).animate(_ColorAnimationController);
-
     _mainScrollController.addListener(() {
       _scrollPosition = _mainScrollController.position.pixels;
 
@@ -278,12 +257,9 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         extendBody: true,
         body: RefreshIndicator(
@@ -298,7 +274,7 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
             slivers: <Widget>[
               SliverAppBar(
                 elevation: 0,
-                backgroundColor: Colors.white.withOpacity(opacity),
+                backgroundColor: Colors.white.withValues(alpha: opacity),
                 pinned: true,
                 automaticallyImplyLeading: false,
                 title: Row(
@@ -481,7 +457,8 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                                     "${AppConfig.RAW_BASE_URL}/mobile-page/seller-policy",
                                 page_name: AppLocalizations.of(
                                   context,
-                                )!.seller_policy_ucf,
+                                )!
+                                    .seller_policy_ucf,
                               );
                             },
                           ),
@@ -530,7 +507,8 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                                     "${AppConfig.RAW_BASE_URL}/mobile-page/return-policy",
                                 page_name: AppLocalizations.of(
                                   context,
-                                )!.return_policy_ucf,
+                                )!
+                                    .return_policy_ucf,
                               );
                             },
                           ),
@@ -579,7 +557,8 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                                     "${AppConfig.RAW_BASE_URL}/mobile-page/support-policy",
                                 page_name: AppLocalizations.of(
                                   context,
-                                )!.support_policy_ucf,
+                                )!
+                                    .support_policy_ucf,
                               );
                             },
                           ),
@@ -600,7 +579,8 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                               Text(
                                 AppLocalizations.of(
                                   context,
-                                )!.support_policy_ucf,
+                                )!
+                                    .support_policy_ucf,
                                 style: TextStyle(
                                   color: MyTheme.dark_font_grey,
                                   fontSize: 13,
@@ -758,19 +738,17 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          Container(
-            child: Padding(
-              padding: app_language_rtl.$!
-                  ? EdgeInsets.only(left: 8.0)
-                  : EdgeInsets.only(right: 8.0),
-              child: SizedBox(
-                width: 75,
-                child: Text(
-                  AppLocalizations.of(context)!.total_price_ucf,
-                  style: TextStyle(
-                    color: Color.fromRGBO(153, 153, 153, 1),
-                    fontSize: 10,
-                  ),
+          Padding(
+            padding: app_language_rtl.$!
+                ? EdgeInsets.only(left: 8.0)
+                : EdgeInsets.only(right: 8.0),
+            child: SizedBox(
+              width: 75,
+              child: Text(
+                AppLocalizations.of(context)!.total_price_ucf,
+                style: TextStyle(
+                  color: Color.fromRGBO(153, 153, 153, 1),
+                  fontSize: 10,
                 ),
               ),
             ),
@@ -945,9 +923,7 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                 height: 50,
                 child: Html(data: _productDetails!.description),
               ),
-              expanded: Container(
-                child: Html(data: _productDetails!.description),
-              ),
+              expanded: Html(data: _productDetails!.description),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -1044,47 +1020,45 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
   }
 
   openPhotoDialog(BuildContext context, path) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-        child: Container(
-          child: Stack(
-            children: [
-              PhotoView(
-                enableRotation: true,
-                heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
-                imageProvider: NetworkImage(path),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: ShapeDecoration(
-                    color: MyTheme.medium_grey_50,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25),
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Stack(
+              children: [
+                PhotoView(
+                  enableRotation: true,
+                  heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+                  imageProvider: NetworkImage(path),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      color: MyTheme.medium_grey_50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                        ),
                       ),
                     ),
-                  ),
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                    icon: Icon(Icons.clear, color: MyTheme.white),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      icon: Icon(Icons.clear, color: MyTheme.white),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        },
       );
-    },
-  );
 
   buildProductImageSection() {
     if (_productImageList.isEmpty) {
@@ -1158,7 +1132,7 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                     return GestureDetector(
                       onTap: () {
                         _currentImage = itemIndex;
-                        print(_currentImage);
+                        log(_currentImage.toString());
                         setState(() {});
                       },
                       child: Container(
@@ -1184,10 +1158,10 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
                               /*Image.asset(
                                         singleProduct.product_images[index])*/
                               FadeInImage.assetNetwork(
-                                placeholder: 'assets/placeholder.png',
-                                image: _productImageList[index],
-                                fit: BoxFit.contain,
-                              ),
+                            placeholder: 'assets/placeholder.png',
+                            image: _productImageList[index],
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     );
@@ -1203,12 +1177,10 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
             child: SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder_rectangle.png',
-                  image: _productImageList[_currentImage],
-                  fit: BoxFit.scaleDown,
-                ),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/placeholder_rectangle.png',
+                image: _productImageList[_currentImage],
+                fit: BoxFit.scaleDown,
               ),
             ),
           ),
@@ -1234,7 +1206,7 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
           enlargeCenterPage: false,
           scrollDirection: Axis.horizontal,
           onPageChanged: (index, reason) {
-            print(index);
+            log(index.toString());
             setState(() {
               _currentImage = index;
             });
@@ -1243,51 +1215,49 @@ class _ClassifiedAdsDetailsState extends State<ClassifiedAdsDetails>
         items: _productImageList.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return Container(
-                child: Stack(
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () {
-                        openPhotoDialog(
-                          context,
-                          _productImageList[_currentImage],
-                        );
-                      },
-                      child: SizedBox(
-                        height: double.infinity,
-                        width: double.infinity,
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/placeholder_rectangle.png',
-                          image: i,
-                          fit: BoxFit.fitHeight,
-                        ),
+              return Stack(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {
+                      openPhotoDialog(
+                        context,
+                        _productImageList[_currentImage],
+                      );
+                    },
+                    child: SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder_rectangle.png',
+                        image: i,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          _productImageList.length,
-                          (index) => Container(
-                            width: 7.0,
-                            height: 7.0,
-                            margin: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 4.0,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentImage == index
-                                  ? MyTheme.font_grey
-                                  : Colors.grey.withOpacity(0.2),
-                            ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        _productImageList.length,
+                        (index) => Container(
+                          width: 7.0,
+                          height: 7.0,
+                          margin: EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 4.0,
+                          ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentImage == index
+                                ? MyTheme.font_grey
+                                : Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           );

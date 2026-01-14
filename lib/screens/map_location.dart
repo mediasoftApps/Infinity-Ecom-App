@@ -6,17 +6,16 @@
 ///
 library;
 
-import 'dart:async';
-
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/other_config.dart';
-import 'package:infinity_ecom_app/repositories/address_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+
+import '../custom/btn.dart';
+import '../custom/toast_component.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../other_config.dart';
+import '../repositories/address_repository.dart';
 
 class MapLocation extends StatefulWidget {
   MapLocation({super.key, this.address});
@@ -34,17 +33,15 @@ class MapLocationState extends State<MapLocation>
     -0.12637399200000668,
   );
 
-  GoogleMapController? _controller;
-
+  /* GoogleMapController? _controller;
   Future<void> _onMapCreated(GoogleMapController controller) async {
     _controller = controller;
 
     setState(() {});
-  }
+  } */
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.address.location_available) {
@@ -68,12 +65,12 @@ class MapLocationState extends State<MapLocation>
   }
 
   onTapPickHere(selectedPlace) async {
-    var addressUpdateLocationResponse = await AddressRepository()
-        .getAddressUpdateLocationResponse(
-          widget.address.id,
-          selectedPlace.geometry.location.lat,
-          selectedPlace.geometry.location.lng,
-        );
+    var addressUpdateLocationResponse =
+        await AddressRepository().getAddressUpdateLocationResponse(
+      widget.address.id,
+      selectedPlace.geometry.location.lat,
+      selectedPlace.geometry.location.lng,
+    );
 
     if (addressUpdateLocationResponse.result == false) {
       ToastComponent.showDialog(addressUpdateLocationResponse.message);
@@ -90,20 +87,18 @@ class MapLocationState extends State<MapLocation>
       apiKey: OtherConfig.GOOGLE_MAP_API_KEY,
       initialPosition: kInitialPosition,
       useCurrentLocation: false,
-
       onPlacePicked: (result) {
         selectedPlace = result;
 
         setState(() {});
       },
-
-      selectedPlaceWidgetBuilder: (_, selectedPlace, state, isSearchBarFocused) {
+      selectedPlaceWidgetBuilder:
+          (_, selectedPlace, state, isSearchBarFocused) {
         return isSearchBarFocused
             ? Container()
             : FloatingCard(
                 height: 50,
                 bottomPosition: 120.0,
-
                 leftPosition: 0.0,
                 rightPosition: 0.0,
                 width: 500,
@@ -126,19 +121,17 @@ class MapLocationState extends State<MapLocation>
                           children: [
                             Expanded(
                               flex: 2,
-                              child: Container(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 2.0,
-                                      right: 2.0,
-                                    ),
-                                    child: Text(
-                                      selectedPlace!.formattedAddress!,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                        color: MyTheme.medium_grey,
-                                      ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 2.0,
+                                    right: 2.0,
+                                  ),
+                                  child: Text(
+                                    selectedPlace!.formattedAddress!,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      color: MyTheme.medium_grey,
                                     ),
                                   ),
                                 ),

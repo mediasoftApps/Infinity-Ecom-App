@@ -174,8 +174,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   }
 
   fetchRelatedProducts() async {
-    var relatedProductResponse = await ProductRepository()
-        .getFrequentlyBoughProducts(slug: widget.slug);
+    var relatedProductResponse =
+        await ProductRepository().getFrequentlyBoughProducts(slug: widget.slug);
     _relatedProducts.addAll(relatedProductResponse.products!);
     _relatedProductInit = true;
 
@@ -552,9 +552,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
     return showDialog(
       context: context,
       builder: (_) => Directionality(
-        textDirection: app_language_rtl.$!
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
         child: AlertDialog(
           insetPadding: EdgeInsets.symmetric(horizontal: 10),
           contentPadding: EdgeInsets.only(
@@ -587,7 +586,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(
                             context,
-                          )!.enter_title_ucf,
+                          )!
+                              .enter_title_ucf,
                           hintStyle: TextStyle(
                             fontSize: 12.0,
                             color: MyTheme.textfield_grey,
@@ -634,7 +634,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(
                             context,
-                          )!.enter_message_ucf,
+                          )!
+                              .enter_message_ucf,
                           hintStyle: TextStyle(
                             fontSize: 12.0,
                             color: MyTheme.textfield_grey,
@@ -767,12 +768,12 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
       return;
     }
 
-    var conversationCreateResponse = await ChatRepository()
-        .getCreateConversationResponse(
-          product_id: _productDetails!.id,
-          title: title,
-          message: message,
-        );
+    var conversationCreateResponse =
+        await ChatRepository().getCreateConversationResponse(
+      product_id: _productDetails!.id,
+      title: title,
+      message: message,
+    );
 
     Navigator.of(loadingcontext).pop();
 
@@ -834,9 +835,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
     );
 
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         extendBody: true,
         backgroundColor: MyTheme.mainColor,
@@ -898,8 +898,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                                   return Navigator.of(context).pop();
                                 },
                                 child: Container(
-                                  decoration:
-                                      BoxDecorations.buildCircularButtonDecoration_for_productDetails(),
+                                  decoration: BoxDecorations
+                                      .buildCircularButtonDecoration_for_productDetails(),
                                   width: 36,
                                   height: 36,
                                   child: Center(
@@ -930,8 +930,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                                 });
                               },
                               child: Container(
-                                decoration:
-                                    BoxDecorations.buildCircularButtonDecoration_for_productDetails(),
+                                decoration: BoxDecorations
+                                    .buildCircularButtonDecoration_for_productDetails(),
                                 width: 32,
                                 height: 32,
                                 padding: EdgeInsets.all(2),
@@ -1012,7 +1012,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(.08),
+                          color: Colors.black.withValues(alpha: .08),
                           blurRadius: 20,
                           spreadRadius: 0.0,
                           offset: Offset(0.0, 0.0),
@@ -1094,8 +1094,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
 
                               _productDetails != null
                                   ? (_colorList.isNotEmpty
-                                        ? buildColorRow()
-                                        : Container())
+                                      ? buildColorRow()
+                                      : Container())
                                   : ShimmerHelper().buildBasicShimmer(
                                       height: 30.0,
                                     ),
@@ -1106,8 +1106,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                                 visible: whole_sale_addon_installed.$,
                                 child: _productDetails != null
                                     ? _productDetails!.wholesale!.isNotEmpty
-                                          ? buildWholeSaleQuantityPrice()
-                                          : SizedBox.shrink()
+                                        ? buildWholeSaleQuantityPrice()
+                                        : SizedBox.shrink()
                                     : ShimmerHelper().buildBasicShimmer(
                                         height: 30.0,
                                       ),
@@ -1145,14 +1145,13 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
+                            color: Colors.black.withValues(alpha: 0.08),
                             spreadRadius: 0,
                             blurRadius: 16,
                             offset: Offset(0, 0),
                           ),
                         ],
                       ),
-
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -1226,7 +1225,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                                     Text(
                                       AppLocalizations.of(
                                         context,
-                                      )!.downloads_ucf,
+                                      )!
+                                          .downloads_ucf,
                                       style: TextStyle(
                                         color: MyTheme.dark_font_grey,
                                         fontSize: 13,
@@ -1276,7 +1276,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
+                              color: Colors.black.withValues(alpha: 0.08),
                               spreadRadius: 0,
                               blurRadius: 16,
                               offset: Offset(
@@ -1336,7 +1336,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
+                              color: Colors.black.withValues(alpha: 0.08),
                               spreadRadius: 0,
                               blurRadius: 16,
                               offset: Offset(
@@ -1504,7 +1504,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(.08),
+                    color: Colors.black.withValues(alpha: .08),
                     blurRadius: 20,
                     spreadRadius: 0.0,
                     offset: Offset(0.0, 10.0),
@@ -1566,11 +1566,11 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
             child: Text(
               SystemConfig.systemCurrency != null
                   ? _totalPrice.toString().replaceAll(
-                      SystemConfig.systemCurrency!.code!,
-                      SystemConfig.systemCurrency!.symbol!,
-                    )
+                        SystemConfig.systemCurrency!.code!,
+                        SystemConfig.systemCurrency!.symbol!,
+                      )
                   : SystemConfig.systemCurrency!.symbol! +
-                        _totalPrice.toString(),
+                      _totalPrice.toString(),
               style: TextStyle(
                 color: MyTheme.accent_color,
                 fontSize: 16.0,
@@ -1764,7 +1764,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
             color: MyTheme.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: Colors.black.withValues(alpha: 0.12),
                 blurRadius: 6,
                 spreadRadius: 1,
                 offset: Offset(0.0, 3.0),
@@ -1852,16 +1852,16 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
           boxShadow: [
             _selectedColorIndex == index
                 ? BoxShadow(
-                    color: Colors.black.withOpacity(
-                      _selectedColorIndex == index ? 0.25 : 0.12,
+                    color: Colors.black.withValues(
+                      alpha: _selectedColorIndex == index ? 0.25 : 0.12,
                     ),
                     blurRadius: 10,
                     spreadRadius: 2.0,
                     offset: Offset(0.0, 6.0),
                   )
                 : BoxShadow(
-                    color: Colors.black.withOpacity(
-                      _selectedColorIndex == index ? 0.25 : 0.16,
+                    color: Colors.black.withValues(
+                      alpha: _selectedColorIndex == index ? 0.25 : 0.16,
                     ),
                     blurRadius: 6,
                     spreadRadius: 0.0,
@@ -1886,7 +1886,6 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   Widget buildWholeSaleQuantityPrice() {
     return DataTable(
       columnSpacing: DeviceInfo(context).width! * 0.125,
-
       columns: [
         DataColumn(
           label: Text(
@@ -1948,7 +1947,6 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   Widget buildClubPointRow() {
     return Container(
       constraints: BoxConstraints(maxWidth: 120),
-
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6.0),
         color: Color(0xffFFF4E8),
@@ -1993,7 +1991,6 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                   SystemConfig.systemCurrency!.symbol,
                 )
               : _singlePriceString,
-
           style: TextStyle(
             color: Color(0xffE62E04),
             fontFamily: 'Public Sans',
@@ -2059,11 +2056,9 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
         ),
       ),
       title: SizedBox(
-        height:
-            kToolbarHeight +
+        height: kToolbarHeight +
             statusBarHeight -
             (MediaQuery.of(context).viewPadding.top > 40 ? 32.0 : 16.0),
-
         child: SizedBox(
           width: 300,
           child: Padding(
@@ -2093,7 +2088,7 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
 
   Widget buildBottomAppBar(BuildContext context, addedToCartSnackbar) {
     return BottomNavigationBar(
-      backgroundColor: MyTheme.white.withOpacity(0.9),
+      backgroundColor: MyTheme.white.withValues(alpha: 0.9),
       items: [
         BottomNavigationBarItem(
           backgroundColor: Colors.transparent,
@@ -2294,7 +2289,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
                 webViewHeight = double.parse(
                   (await controller.runJavaScriptReturningResult(
                     "document.getElementById('scaled-frame').clientHeight",
-                  )).toString(),
+                  ))
+                      .toString(),
                 );
 
                 print(webViewHeight);
@@ -2362,7 +2358,8 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
           child: Text(
             AppLocalizations.of(
               context,
-            )!.no_top_selling_products_from_this_seller,
+            )!
+                .no_top_selling_products_from_this_seller,
             style: TextStyle(color: MyTheme.font_grey),
           ),
         ),
@@ -2440,60 +2437,60 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   }
 
   buildQuantityUpButton() => Container(
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(.16),
-          blurRadius: 6,
-          spreadRadius: 0.0,
-          offset: Offset(0.0, 3.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .16),
+              blurRadius: 6,
+              spreadRadius: 0.0,
+              offset: Offset(0.0, 3.0),
+            ),
+          ],
         ),
-      ],
-    ),
-    width: 36,
-    child: IconButton(
-      icon: Icon(Icons.add, size: 16, color: MyTheme.dark_grey),
-      onPressed: () {
-        if (_quantity! < _stock!) {
-          _quantity = (_quantity!) + 1;
-          setState(() {});
+        width: 36,
+        child: IconButton(
+          icon: Icon(Icons.add, size: 16, color: MyTheme.dark_grey),
+          onPressed: () {
+            if (_quantity! < _stock!) {
+              _quantity = (_quantity!) + 1;
+              setState(() {});
 
-          fetchAndSetVariantWiseInfo();
-        }
-      },
-    ),
-  );
+              fetchAndSetVariantWiseInfo();
+            }
+          },
+        ),
+      );
 
   buildQuantityDownButton() => Container(
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(.16),
-          blurRadius: 6,
-          spreadRadius: 0.0,
-          offset: Offset(0.0, 3.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: .16),
+              blurRadius: 6,
+              spreadRadius: 0.0,
+              offset: Offset(0.0, 3.0),
+            ),
+          ],
         ),
-      ],
-    ),
-    width: 30,
-    child: IconButton(
-      icon: Center(
-        child: Icon(Icons.remove, size: 16, color: Color(0xff707070)),
-      ),
-      onPressed: () {
-        if (_quantity! > 1) {
-          _quantity = _quantity! - 1;
-          setState(() {});
+        width: 30,
+        child: IconButton(
+          icon: Center(
+            child: Icon(Icons.remove, size: 16, color: Color(0xff707070)),
+          ),
+          onPressed: () {
+            if (_quantity! > 1) {
+              _quantity = _quantity! - 1;
+              setState(() {});
 
-          fetchAndSetVariantWiseInfo();
-        }
-      },
-    ),
-  );
+              fetchAndSetVariantWiseInfo();
+            }
+          },
+        ),
+      );
 
   buildProductImageSection() {
     if (_productImageList.isEmpty) {
@@ -2622,47 +2619,48 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   }
 
   openPhotoDialog(BuildContext context, path) => showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Dialog(
-        child: Container(
-          child: Stack(
-            children: [
-              PhotoView(
-                enableRotation: true,
-                heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
-                imageProvider: NetworkImage(path),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: ShapeDecoration(
-                    color: MyTheme.medium_grey_50,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25),
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              child: Stack(
+                children: [
+                  PhotoView(
+                    enableRotation: true,
+                    heroAttributes:
+                        const PhotoViewHeroAttributes(tag: "someTag"),
+                    imageProvider: NetworkImage(path),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        color: MyTheme.medium_grey_50,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                            topLeft: Radius.circular(25),
+                          ),
+                        ),
+                      ),
+                      width: 40,
+                      height: 40,
+                      child: IconButton(
+                        icon: Icon(Icons.clear, color: MyTheme.white),
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
                       ),
                     ),
                   ),
-                  width: 40,
-                  height: 40,
-                  child: IconButton(
-                    icon: Icon(Icons.clear, color: MyTheme.white),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                  ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
-    },
-  );
 
   String makeHtml(String string) {
     return """

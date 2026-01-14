@@ -14,7 +14,8 @@ class HomeSearchBox extends StatelessWidget {
         color: Color(0xfff3f3f3),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 226, 226, 226).withOpacity(.12),
+            color:
+                const Color.fromARGB(255, 226, 226, 226).withValues(alpha: .12),
             blurRadius: 15,
             spreadRadius: 0.4,
             offset: Offset(0.0, 5.0),

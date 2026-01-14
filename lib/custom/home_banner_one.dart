@@ -61,7 +61,7 @@ class HomeBannerOne extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Color(0xff000000).withOpacity(0.1),
+                        color: Color(0xff000000).withValues(alpha: 0.1),
                         spreadRadius: 2,
                         blurRadius: 5,
                         offset: Offset(0, 3),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
+
+import '../helpers/shared_value_helper.dart';
 
 class LocaleProvider with ChangeNotifier {
   Locale? _locale;
   Locale get locale {
-    return _locale = Locale(
+    _locale ??= Locale(
       app_mobile_language.$ == '' ? "en" : app_mobile_language.$!,
       '',
     );
+    return _locale!;
   }
 
   void setLocale(String code) {

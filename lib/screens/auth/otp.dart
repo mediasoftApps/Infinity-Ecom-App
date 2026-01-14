@@ -1,21 +1,23 @@
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/input_decorations.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/auth_helper.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/auth_repository.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../custom/btn.dart';
+import '../../custom/input_decorations.dart';
+import '../../custom/toast_component.dart';
+import '../../helpers/auth_helper.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/system_config.dart';
+import '../../l10n/app_localizations.dart';
 import '../../main.dart';
+import '../../my_theme.dart';
+import '../../repositories/auth_repository.dart';
 
 class Otp extends StatefulWidget {
-  String? title;
-  Otp({super.key, this.title});
+  final String? title;
+  const Otp({super.key, this.title});
 
   @override
   State<Otp> createState() => _OtpState();
@@ -83,9 +85,8 @@ class _OtpState extends State<Otp> {
   Widget build(BuildContext context) {
     final screen_width = MediaQuery.of(context).size.width;
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
@@ -139,8 +140,8 @@ class _OtpState extends State<Otp> {
                                     autofocus: false,
                                     decoration:
                                         InputDecorations.buildInputDecoration_1(
-                                          hint_text: "A X B 4 J H",
-                                        ),
+                                      hint_text: "A X B 4 J H",
+                                    ),
                                   ),
                                 ),
                               ],
@@ -234,7 +235,7 @@ class _OtpState extends State<Otp> {
       AuthHelper().clearUserData();
       routes.push("/");
     } catch (e) {
-      print('Error navigating to Main: $e');
+      log('Error navigating to Main: $e');
     }
   }
 }

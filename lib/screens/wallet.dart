@@ -1,23 +1,23 @@
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/enum_classes.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/helpers/reg_ex_inpur_formatter.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/wallet_repository.dart';
-import 'package:infinity_ecom_app/screens/checkout/checkout.dart';
-import 'package:infinity_ecom_app/screens/main.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 
+import '../custom/btn.dart';
+import '../custom/device_info.dart';
+import '../custom/enum_classes.dart';
+import '../custom/toast_component.dart';
+import '../custom/useful_elements.dart';
 import '../helpers/main_helpers.dart';
+import '../helpers/reg_ex_inpur_formatter.dart';
+import '../helpers/shared_value_helper.dart';
+import '../helpers/shimmer_helper.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../repositories/wallet_repository.dart';
+import 'checkout/checkout.dart';
+import 'main.dart';
 
 class Wallet extends StatefulWidget {
-  const Wallet({super.key, this.from_recharge = false});
   final bool from_recharge;
+  const Wallet({super.key, this.from_recharge = false});
 
   @override
   State<Wallet> createState() => _WalletState();
@@ -28,7 +28,6 @@ class _WalletState extends State<Wallet> {
     '^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$',
   );
   final ScrollController _mainScrollController = ScrollController();
-  final ScrollController _scrollController = ScrollController();
   final TextEditingController _amountController = TextEditingController();
 
   GlobalKey appBarKey = GlobalKey();
@@ -152,9 +151,8 @@ class _WalletState extends State<Wallet> {
         return Future.delayed(Duration.zero);
       },
       child: Directionality(
-        textDirection: app_language_rtl.$!
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
           backgroundColor: Color(0xffF2F1F6),
           appBar: buildAppBar(context),
@@ -469,7 +467,7 @@ class _WalletState extends State<Wallet> {
             ), // Clip the child to the same border radius
             child: Btn.basic(
               minWidth: MediaQuery.of(context).size.width,
-              color: MyTheme.accent_color.withOpacity(0.2),
+              color: MyTheme.accent_color.withValues(alpha: 0.2),
               shape: RoundedRectangleBorder(
                 borderRadius: const BorderRadius.all(
                   Radius.circular(5.0),
@@ -506,9 +504,8 @@ class _WalletState extends State<Wallet> {
     return showDialog(
       context: context,
       builder: (_) => Directionality(
-        textDirection: app_language_rtl.$!
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
         child: AlertDialog(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
@@ -555,7 +552,8 @@ class _WalletState extends State<Wallet> {
                           filled: true,
                           hintText: AppLocalizations.of(
                             context,
-                          )!.enter_amount_ucf,
+                          )!
+                              .enter_amount_ucf,
                           hintStyle: TextStyle(
                             fontSize: 12.0,
                             color: MyTheme.textfield_grey,

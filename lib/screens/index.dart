@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Index extends StatefulWidget {
-  Index({super.key, this.goBack = true});
-  bool? goBack;
+  final bool? goBack;
+  const Index({super.key, this.goBack = true});
 
   @override
   State<Index> createState() => _IndexState();
@@ -36,7 +36,6 @@ class _IndexState extends State<Index> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getSharedValueHelperData().then((value) {
       Future.delayed(Duration(seconds: 3)).then((value) {
         SystemConfig.isShownSplashScreed = true;

@@ -176,9 +176,8 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
     mHeight = MediaQuery.of(context).size.height;
     mWidht = MediaQuery.of(context).size.width;
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
@@ -322,7 +321,7 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   spreadRadius: 0.5,
                   blurRadius: 20,
                   offset: Offset(0, 10),
@@ -380,7 +379,7 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
                 borderRadius: BorderRadius.circular(6),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     spreadRadius: 0.5,
                     blurRadius: 20,
                     offset: Offset(0, 10),
@@ -486,7 +485,7 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               //   spreadRadius: 0.5,
               blurRadius: 20,
               offset: Offset(0, 10),

@@ -10,7 +10,7 @@ class MyTheme {
       Color.fromRGBO(229, 65, 28, .40); // this color is a dropshadow of
   static Color soft_accent_color = Color.fromRGBO(254, 234, 209, 1);
   static Color splash_screen_color = Color(0xff0066CC);
-  static Color price_color =Colors.black;
+  static Color price_color = Colors.black;
 
   /*configurable colors ends*/
   /*If you are not a developer, do not change the bottom colors*/
@@ -29,8 +29,8 @@ class MyTheme {
   static Color golden = Color.fromRGBO(255, 168, 0, 1);
   static Color amber = Color.fromRGBO(254, 234, 209, 1);
   static Color amber_medium = Color.fromRGBO(254, 240, 215, 1);
-  static Color golden_shadow = Color(0xff0066CC).withOpacity(0.15);
-  static Color black_shadow=Colors.black.withOpacity(0.15);
+  static Color golden_shadow = Color(0xff0066CC).withValues(alpha: 0.15);
+  static Color black_shadow = Colors.black.withValues(alpha: 0.15);
   static Color green = Colors.green;
   static Color? green_light = Colors.green[200];
   static Color shimmer_base = Colors.grey.shade50;
@@ -78,7 +78,7 @@ class MyTheme {
 
   static BoxShadow commonShadow() {
     return BoxShadow(
-      color: Colors.black.withOpacity(0.08),
+      color: Colors.black.withValues(alpha: 0.08),
       blurRadius: 20,
       spreadRadius: 0.0,
       offset: Offset(0.0, 10.0),
