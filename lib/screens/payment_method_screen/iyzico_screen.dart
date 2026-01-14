@@ -42,7 +42,6 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.payment_type == "cart_payment") {
       createOrder();
@@ -89,9 +88,8 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -106,29 +104,29 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
 
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            paymentDetails = responseJSON['payment_details'];
-            onPaymentSuccess(paymentDetails);
-          }
-        });
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
+      }
+    });
   }
 
   onPaymentSuccess(paymentDetails) async {
-    var iyzicoPaymentSuccessResponse = await PaymentRepository()
-        .getIyzicoPaymentSuccessResponse(
-          widget.payment_type,
-          widget.amount,
-          _combined_order_id,
-          paymentDetails,
-        );
+    var iyzicoPaymentSuccessResponse =
+        await PaymentRepository().getIyzicoPaymentSuccessResponse(
+      widget.payment_type,
+      widget.amount,
+      _combined_order_id,
+      paymentDetails,
+    );
     if (iyzicoPaymentSuccessResponse.result == false) {
       ToastComponent.showDialog(iyzicoPaymentSuccessResponse.message!);
       Navigator.pop(context);
@@ -182,14 +180,12 @@ class _IyzicoScreenState extends State<IyzicoScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else {
       return SizedBox.expand(
-        child: Container(child: WebViewWidget(controller: _webViewController)),
+        child: WebViewWidget(controller: _webViewController),
       );
     }
   }

@@ -102,7 +102,7 @@ class CartRepository {
       body: postBody,
       middleware: BannedUser(),
     );
-    print("cart_body -----------------${postBody}");
+    print("cart_body -----------------$postBody");
     print("cart response___________${response.body}");
     return cartProcessResponseFromJson(response.body);
   }

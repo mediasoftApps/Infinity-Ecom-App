@@ -44,7 +44,6 @@ class _TopSellersState extends State<TopSellers> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getTopSellers();
     super.initState();
   }

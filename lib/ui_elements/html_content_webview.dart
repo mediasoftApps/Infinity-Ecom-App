@@ -1,11 +1,12 @@
-import 'package:infinity_ecom_app/app_config.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../app_config.dart';
+import '../custom/device_info.dart';
+
 class HtmlContentWebView extends StatefulWidget {
-  HtmlContentWebView({super.key, required this.html});
-  String html;
+  final String html;
+  const HtmlContentWebView({super.key, required this.html});
 
   @override
   State<HtmlContentWebView> createState() => _HtmlContentWebViewState();
@@ -27,7 +28,6 @@ class _HtmlContentWebViewState extends State<HtmlContentWebView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     viewController.setJavaScriptMode(JavaScriptMode.unrestricted);
     viewController.enableZoom(false);
     viewController.loadHtmlString(makeHtml()).then((value) {

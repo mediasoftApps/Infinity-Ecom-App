@@ -206,29 +206,27 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
         resetAll();
         // Future.delayed(Duration(seconds: 1));
       },
-      child: Container(
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          controller: _scrollController,
-          child: Column(
-            children: [
-              buildTop2BoxContainer(context),
-              SizedBox(height: 16),
-              Visibility(
-                visible: classified_product_status.$,
-                child: buildPackageUpgradeContainer(context),
-              ),
-              SizedBox(height: 15),
-              Container(
-                child: _isProductInit
-                    ? productsContainer()
-                    : ShimmerHelper().buildListShimmer(
-                        item_count: 20,
-                        item_height: 80.0,
-                      ),
-              ),
-            ],
-          ),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        controller: _scrollController,
+        child: Column(
+          children: [
+            buildTop2BoxContainer(context),
+            SizedBox(height: 16),
+            Visibility(
+              visible: classified_product_status.$,
+              child: buildPackageUpgradeContainer(context),
+            ),
+            SizedBox(height: 15),
+            Container(
+              child: _isProductInit
+                  ? productsContainer()
+                  : ShimmerHelper().buildListShimmer(
+                      item_count: 20,
+                      item_height: 80.0,
+                    ),
+            ),
+          ],
         ),
       ),
     );
@@ -331,22 +329,20 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
             ),
             height: 75,
             width: mWidht / 2 - 23,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    LangText(context).local.remaining_uploads,
-                    style: CommonFunctions.dashboardBoxText(context),
-                  ),
-                  SizedBox(height: 2),
-                  Text(
-                    _remainingProduct,
-                    style: CommonFunctions.dashboardBoxNumber(context),
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  LangText(context).local.remaining_uploads,
+                  style: CommonFunctions.dashboardBoxText(context),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  _remainingProduct,
+                  style: CommonFunctions.dashboardBoxNumber(context),
+                ),
+              ],
             ),
           ),
           // if(false)
@@ -390,28 +386,26 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
               ),
               height: 75,
               width: mWidht / 2 - 23,
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      LangText(context).local.add_new_products_ucf,
-                      style: CommonFunctions.dashboardBoxText(context).copyWith(
-                        color: MyTheme.accent_color,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Image.asset(
-                      "assets/add.png",
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    LangText(context).local.add_new_products_ucf,
+                    style: CommonFunctions.dashboardBoxText(context).copyWith(
                       color: MyTheme.accent_color,
-                      height: 18,
-                      width: 18,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 5),
+                  Image.asset(
+                    "assets/add.png",
+                    color: MyTheme.accent_color,
+                    height: 18,
+                    width: 18,
+                  ),
+                ],
               ),
             ),
           ),
@@ -513,34 +507,32 @@ class _MyClassifiedAdsState extends State<MyClassifiedAds> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Center(
-                                child: Text(
-                                  textAlign: TextAlign.start,
-                                  productTitle,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Color(0xff3E4447),
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                textAlign: TextAlign.start,
+                                productTitle,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Color(0xff3E4447),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
                             ),
-                            Container(
-                              child: showOptions(
-                                listIndex: index,
-                                productId: productId,
-                              ),
+                          ),
+                          Container(
+                            child: showOptions(
+                              listIndex: index,
+                              productId: productId,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

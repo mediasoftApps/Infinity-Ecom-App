@@ -192,46 +192,43 @@ class _BlogListScreenState extends State<BlogListScreen> {
                               ),
                             ),
                             // Centering the text content
-                            Container(
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  10,
-                                  113,
-                                  10,
-                                  18,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      blogProvider.blogs[index].title,
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                10,
+                                113,
+                                10,
+                                18,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    blogProvider.blogs[index].title,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      blogProvider.blogs[index].title,
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontStyle: FontStyle.italic,
-                                        color: Colors.white70,
-                                      ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    blogProvider.blogs[index].title,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontStyle: FontStyle.italic,
+                                      color: Colors.white70,
                                     ),
-                                    Text(
-                                      blogProvider
-                                          .blogs[index].shortDescription,
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.white,
-                                      ),
-                                      maxLines: 3,
+                                  ),
+                                  Text(
+                                    blogProvider.blogs[index].shortDescription,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
                                     ),
-                                  ],
-                                ),
+                                    maxLines: 3,
+                                  ),
+                                ],
                               ),
                             ),
                           ],

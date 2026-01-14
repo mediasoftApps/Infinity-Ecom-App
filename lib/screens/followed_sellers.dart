@@ -170,26 +170,24 @@ class _FollowedSellersState extends State<FollowedSellers> {
                   fit: BoxFit.scaleDown,
                   imageErrorBuilder:
                       (BuildContext errorContext, Object obj, StackTrace? st) {
-                        return Image.asset('assets/placeholder.png');
-                      },
+                    return Image.asset('assets/placeholder.png');
+                  },
                 ),
               ),
             ),
           ),
-          Container(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-              child: Text(
-                sellerInfo.shopName!,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(
-                  color: MyTheme.dark_font_grey,
-                  fontSize: 13,
-                  height: 1.6,
-                  fontWeight: FontWeight.bold,
-                ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Text(
+              sellerInfo.shopName!,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: TextStyle(
+                color: MyTheme.dark_font_grey,
+                fontSize: 13,
+                height: 1.6,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -220,20 +218,18 @@ class _FollowedSellersState extends State<FollowedSellers> {
             onTap: () {
               removedFollow(sellerInfo.shopId);
             },
-            child: Container(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-                child: Text(
-                  LangText(context).local.unfollow_ucf,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(
-                    color: Color.fromRGBO(230, 46, 4, 1),
-                    fontSize: 13,
-                    height: 1.6,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text(
+                LangText(context).local.unfollow_ucf,
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                  color: Color.fromRGBO(230, 46, 4, 1),
+                  fontSize: 13,
+                  height: 1.6,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),

@@ -5,7 +5,6 @@ import 'package:infinity_ecom_app/custom/toast_component.dart';
 import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
 import 'package:infinity_ecom_app/my_theme.dart';
 import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/repositories/profile_repository.dart';
 import 'package:infinity_ecom_app/screens/orders/order_list.dart';
 import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,13 +16,13 @@ import '../../helpers/main_helpers.dart';
 import '../profile.dart';
 
 class ProxypayScreen extends StatefulWidget {
-  double? amount;
-  String payment_type;
-  String? payment_method_key;
-  String package_id;
-  int? orderId;
+  final double? amount;
+  final String payment_type;
+  final String? payment_method_key;
+  final String package_id;
+  final int? orderId;
 
-  ProxypayScreen({
+  const ProxypayScreen({
     super.key,
     this.amount = 0.00,
     this.orderId = 0,
@@ -44,7 +43,6 @@ class _ProxypayScreenState extends State<ProxypayScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.payment_type == "cart_payment") {
@@ -103,9 +101,8 @@ class _ProxypayScreenState extends State<ProxypayScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -118,47 +115,47 @@ class _ProxypayScreenState extends State<ProxypayScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          // var decodedJSON = jsonDecode(data);
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          //print(data.toString());
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            if (widget.payment_type == "cart_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "wallet_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Wallet(from_recharge: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "customer_package_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Profile();
-                  },
-                ),
-              );
-            }
-          }
-        });
+      // var decodedJSON = jsonDecode(data);
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      //print(data.toString());
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        if (widget.payment_type == "cart_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "wallet_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Wallet(from_recharge: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "customer_package_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Profile();
+              },
+            ),
+          );
+        }
+      }
+    });
   }
 
   buildBody() {
@@ -168,10 +165,8 @@ class _ProxypayScreenState extends State<ProxypayScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else {
       return SingleChildScrollView(

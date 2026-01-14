@@ -196,7 +196,7 @@ class _OfflineState extends State<OfflineScreen> {
   @override
   void initState() {
     _amountController.text = widget.rechargeAmount.toString();
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -233,7 +233,7 @@ class _OfflineState extends State<OfflineScreen> {
   }
 
   buildBody(context) {
-    if (is_logged_in == false) {
+    if (is_logged_in.$ == false) {
       return SizedBox(
         height: 100,
         child: Center(
@@ -284,199 +284,197 @@ class _OfflineState extends State<OfflineScreen> {
         left: 16.0,
         right: 16.0,
       ),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                AppLocalizations.of(context)!.all_marked_fields_are_mandatory,
-                style: TextStyle(
-                  color: MyTheme.grey_153,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              AppLocalizations.of(context)!.all_marked_fields_are_mandatory,
+              style: TextStyle(
+                color: MyTheme.grey_153,
+                fontWeight: FontWeight.w600,
+                fontSize: 14.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              AppLocalizations.of(
+                context,
+              )!
+                  .correctly_fill_up_the_necessary_information,
+              style: TextStyle(color: MyTheme.grey_153, fontSize: 14.0),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              "${AppLocalizations.of(context)!.amount_ucf}*",
+              style: TextStyle(
+                color: MyTheme.accent_color,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: SizedBox(
+              height: 36,
+              child: TextField(
+                controller: _amountController,
+                autofocus: false,
+                decoration: InputDecorations.buildInputDecoration_1(
+                  hint_text: "12,000 or Tweleve Thousand Only",
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .correctly_fill_up_the_necessary_information,
-                style: TextStyle(color: MyTheme.grey_153, fontSize: 14.0),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              "${AppLocalizations.of(context)!.name_ucf}*",
+              style: TextStyle(
+                color: MyTheme.accent_color,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "${AppLocalizations.of(context)!.amount_ucf}*",
-                style: TextStyle(
-                  color: MyTheme.accent_color,
-                  fontWeight: FontWeight.w600,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: SizedBox(
+              height: 36,
+              child: TextField(
+                controller: _nameController,
+                autofocus: false,
+                decoration: InputDecorations.buildInputDecoration_1(
+                  hint_text: "John Doe",
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: SizedBox(
-                height: 36,
-                child: TextField(
-                  controller: _amountController,
-                  autofocus: false,
-                  decoration: InputDecorations.buildInputDecoration_1(
-                    hint_text: "12,000 or Tweleve Thousand Only",
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              "${AppLocalizations.of(context)!.transaction_id_ucf}*",
+              style: TextStyle(
+                color: MyTheme.accent_color,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: SizedBox(
+              height: 36,
+              child: TextField(
+                controller: _trxIdController,
+                autofocus: false,
+                decoration: InputDecorations.buildInputDecoration_1(
+                  hint_text: "BNI-4654321354",
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              "${AppLocalizations.of(context)!.photo_proof_ucf}* (${AppLocalizations.of(context)!.only_image_file_allowed})",
+              style: TextStyle(
+                color: MyTheme.accent_color,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Container(
+                  width: 180,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: MyTheme.textfield_grey,
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8.0),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "${AppLocalizations.of(context)!.name_ucf}*",
-                style: TextStyle(
-                  color: MyTheme.accent_color,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: SizedBox(
-                height: 36,
-                child: TextField(
-                  controller: _nameController,
-                  autofocus: false,
-                  decoration: InputDecorations.buildInputDecoration_1(
-                    hint_text: "John Doe",
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "${AppLocalizations.of(context)!.transaction_id_ucf}*",
-                style: TextStyle(
-                  color: MyTheme.accent_color,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: SizedBox(
-                height: 36,
-                child: TextField(
-                  controller: _trxIdController,
-                  autofocus: false,
-                  decoration: InputDecorations.buildInputDecoration_1(
-                    hint_text: "BNI-4654321354",
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "${AppLocalizations.of(context)!.photo_proof_ucf}* (${AppLocalizations.of(context)!.only_image_file_allowed})",
-                style: TextStyle(
-                  color: MyTheme.accent_color,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: Container(
-                    width: 180,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: MyTheme.textfield_grey,
-                        width: 1,
-                      ),
+                  child: Btn.basic(
+                    minWidth: MediaQuery.of(context).size.width,
+                    color: MyTheme.medium_grey,
+                    shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(8.0),
                       ),
                     ),
-                    child: Btn.basic(
-                      minWidth: MediaQuery.of(context).size.width,
-                      color: MyTheme.medium_grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
+                    child: Text(
+                      AppLocalizations.of(context)!.photo_proof_ucf,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                       ),
-                      child: Text(
-                        AppLocalizations.of(context)!.photo_proof_ucf,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () {
-                        onPickPhoto(context);
-                      },
                     ),
+                    onPressed: () {
+                      onPickPhoto(context);
+                    },
                   ),
                 ),
-                _photo_path != ""
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(AppLocalizations.of(context)!.selected_ucf),
-                      )
-                    : Container(),
-              ],
-            ),
-            Row(
-              children: [
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Container(
-                    width: 120,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: MyTheme.textfield_grey,
-                        width: 1,
-                      ),
+              ),
+              _photo_path != ""
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(AppLocalizations.of(context)!.selected_ucf),
+                    )
+                  : Container(),
+            ],
+          ),
+          Row(
+            children: [
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Container(
+                  width: 120,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: MyTheme.textfield_grey,
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8.0),
+                    ),
+                  ),
+                  child: Btn.basic(
+                    minWidth: MediaQuery.of(context).size.width,
+                    color: MyTheme.accent_color,
+                    shape: RoundedRectangleBorder(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(8.0),
                       ),
                     ),
-                    child: Btn.basic(
-                      minWidth: MediaQuery.of(context).size.width,
-                      color: MyTheme.accent_color,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
+                    child: Text(
+                      AppLocalizations.of(context)!.submit_ucf,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                       ),
-                      child: Text(
-                        "${AppLocalizations.of(context)!.submit_ucf}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () {
-                        onPressSubmit();
-                      },
                     ),
+                    onPressed: () {
+                      onPressSubmit();
+                    },
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

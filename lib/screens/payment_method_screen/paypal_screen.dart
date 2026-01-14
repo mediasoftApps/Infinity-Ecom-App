@@ -1,18 +1,19 @@
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../custom/toast_component.dart';
 import '../../helpers/main_helpers.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/payment_repository.dart';
+import '../orders/order_list.dart';
 import '../profile.dart';
+import '../wallet.dart';
 
 class PaypalScreen extends StatefulWidget {
   double? amount;
@@ -44,7 +45,6 @@ class _PaypalScreenState extends State<PaypalScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.payment_type == "cart_payment") {
       createOrder();
@@ -93,8 +93,8 @@ class _PaypalScreenState extends State<PaypalScreen> {
     _initial_url_fetched = true;
     setState(() {});
     paypal();
-    // print(_initial_url);
-    // print(_initial_url_fetched);
+    // log(_initial_url);
+    // log(_initial_url_fetched);
   }
 
   paypal() {
@@ -121,9 +121,8 @@ class _PaypalScreenState extends State<PaypalScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -136,77 +135,73 @@ class _PaypalScreenState extends State<PaypalScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
+      var responseJSON = jsonDecode(data as String);
 
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
 
-          print("responseJSON");
-          print('order type${widget.payment_type}');
-          print(responseJSON);
+      log("responseJSON");
+      log('order type${widget.payment_type}');
+      log(responseJSON);
 
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            ToastComponent.showDialog(responseJSON["message"]);
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        ToastComponent.showDialog(responseJSON["message"]);
 
-            if (widget.payment_type == "cart_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "order_re_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "wallet_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Wallet(from_recharge: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "customer_package_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Profile();
-                  },
-                ),
-              );
-            }
-          }
-        });
+        if (widget.payment_type == "cart_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "order_re_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "wallet_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Wallet(from_recharge: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "customer_package_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Profile();
+              },
+            ),
+          );
+        }
+      }
+    });
   }
 
   buildBody() {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else if (_initial_url_fetched == false) {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.fetching_paypal_url),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.fetching_paypal_url),
       );
     } else {
       return SingleChildScrollView(

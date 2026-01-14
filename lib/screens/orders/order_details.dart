@@ -1,43 +1,45 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:infinity_ecom_app/app_config.dart';
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/confirm_dialog.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/enum_classes.dart';
-import 'package:infinity_ecom_app/custom/info_dialog.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/loading.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/data_model/order_detail_response.dart';
-import 'package:infinity_ecom_app/helpers/main_helpers.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/order_repository.dart';
-import 'package:infinity_ecom_app/repositories/refund_request_repository.dart';
-import 'package:infinity_ecom_app/screens/checkout/checkout.dart';
-import 'package:infinity_ecom_app/screens/main.dart';
-import 'package:infinity_ecom_app/screens/refund_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-class OrderDetails extends StatefulWidget {
-  int? id;
-  final bool from_notification;
-  bool go_back;
+import '../../app_config.dart';
+import '../../custom/box_decorations.dart';
+import '../../custom/btn.dart';
+import '../../custom/confirm_dialog.dart';
+import '../../custom/device_info.dart';
+import '../../custom/enum_classes.dart';
+import '../../custom/info_dialog.dart';
+import '../../custom/lang_text.dart';
+import '../../custom/loading.dart';
+import '../../custom/toast_component.dart';
+import '../../data_model/order_detail_response.dart';
+import '../../helpers/main_helpers.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../helpers/system_config.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/order_repository.dart';
+import '../../repositories/refund_request_repository.dart';
+import '../checkout/checkout.dart';
+import '../main.dart';
+import '../refund_request.dart';
 
-  OrderDetails({
+class OrderDetails extends StatefulWidget {
+  final int? id;
+  final bool from_notification;
+  final bool go_back;
+
+  const OrderDetails({
     super.key,
     this.id,
     this.from_notification = false,
@@ -81,10 +83,10 @@ class _OrderDetailsState extends State<OrderDetails> {
   void initState() {
     fetchAll();
 
-    var k = IsolateNameServer.registerPortWithName(
+    /* var k = IsolateNameServer.registerPortWithName(
       _port.sendPort,
       'downloader_send_port',
-    );
+    ); */
 
     _port.listen((dynamic data) {
       if (data[2] >= 100) {
@@ -97,7 +99,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
     super.initState();
 
-    print(widget.id);
+    log(widget.id.toString());
   }
 
   @override
@@ -116,16 +118,15 @@ class _OrderDetailsState extends State<OrderDetails> {
         headers: {
           "Authorization": "Bearer ${access_token.$}",
           "Currency-Code": SystemConfig.systemCurrency!.code!,
-          "Currency-Exchange-Rate": SystemConfig.systemCurrency!.exchangeRate
-              .toString(),
+          "Currency-Exchange-Rate":
+              SystemConfig.systemCurrency!.exchangeRate.toString(),
           "App-Language": app_language.$!,
           "System-Key": AppConfig.system_key,
         },
       );
+      log(taskid.toString());
     } on Exception catch (e) {
-      print("e.toString()");
-      print(e.toString());
-      // TODO
+      log(e.toString());
     }
   }
 
@@ -211,8 +212,8 @@ class _OrderDetailsState extends State<OrderDetails> {
     var response = await OrderRepository().reOrder(id: id);
     Loading.close();
     Widget success = SizedBox.shrink(), failed = SizedBox.shrink();
-    print(response.successMsgs.toString());
-    print(response.failedMsgs.toString());
+    log(response.successMsgs.toString());
+    log(response.failedMsgs.toString());
     if (response.successMsgs!.isNotEmpty) {
       success = Text(
         response.successMsgs?.join("\n") ?? "",
@@ -251,12 +252,12 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  _make_re_payment(amount) {
+  _makeRePayment(amount) {
     String currencyPattern = r"^[A-Z]{3}(?:[,.]?)";
-    String amountWithoutCountryCode = amount.replaceAll(
+    /* String amountWithoutCountryCode = amount.replaceAll(
       RegExp(currencyPattern),
       "",
-    );
+    ); */
 
     double convertToDouble(String amountStr) {
       String amountWithoutCurrency = amountStr.replaceAll(
@@ -269,13 +270,13 @@ class _OrderDetailsState extends State<OrderDetails> {
           amountWithoutCurrency.replaceAll(",", ""),
         ); // Replace comma with empty string
       } on FormatException catch (e) {
-        print("Invalid double format: $e");
+        log("Invalid double format: $e");
         return double.nan; // Or throw an exception if preferred
       }
     }
 
     double convertedAmount = convertToDouble(amount);
-    print(convertedAmount);
+    log(convertedAmount.toString());
     return Navigator.push(
       context,
       MaterialPageRoute(
@@ -403,7 +404,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     child: Text(
                                       AppLocalizations.of(
                                         context,
-                                      )!.reason_cannot_be_empty,
+                                      )!
+                                          .reason_cannot_be_empty,
                                       style: TextStyle(
                                         color: Colors.red,
                                         fontSize: 12,
@@ -426,7 +428,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(
                                 context,
-                              )!.enter_reason_ucf,
+                              )!
+                                  .enter_reason_ucf,
                               hintStyle: TextStyle(
                                 fontSize: 12.0,
                                 color: MyTheme.textfield_grey,
@@ -530,11 +533,11 @@ class _OrderDetailsState extends State<OrderDetails> {
     setState(() {
       _showReasonWarning = true;
     });
-    Timer timer = Timer(Duration(seconds: 2), () {
+    /* Timer timer = Timer(Duration(seconds: 2), () {
       setState(() {
         _showReasonWarning = false;
       });
-    });
+    }); */
   }
 
   onPressSubmitRefund(itemId, setState) async {
@@ -613,9 +616,8 @@ class _OrderDetailsState extends State<OrderDetails> {
         }
       },
       child: Directionality(
-        textDirection: app_language_rtl.$!
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: buildAppBar(context),
@@ -675,18 +677,19 @@ class _OrderDetailsState extends State<OrderDetails> {
                       child: _orderedItemList.isEmpty && _orderItemsInit
                           ? ShimmerHelper().buildBasicShimmer(height: 100.0)
                           : (_orderedItemList.isNotEmpty
-                                ? buildOrderdProductList()
-                                : SizedBox(
-                                    height: 100,
-                                    child: Text(
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.ordered_product_ucf,
-                                      style: TextStyle(
-                                        color: MyTheme.font_grey,
-                                      ),
+                              ? buildOrderdProductList()
+                              : SizedBox(
+                                  height: 100,
+                                  child: Text(
+                                    AppLocalizations.of(
+                                      context,
+                                    )!
+                                        .ordered_product_ucf,
+                                    style: TextStyle(
+                                      color: MyTheme.font_grey,
                                     ),
-                                  )),
+                                  ),
+                                )),
                     ),
                   ]),
                 ),
@@ -787,7 +790,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                         child: Text(
                           AppLocalizations.of(
                             context,
-                          )!.shipping_cost_all_capital,
+                          )!
+                              .shipping_cost_all_capital,
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: MyTheme.font_grey,
@@ -921,12 +925,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: _orderDetails!.delivery_status == "pending"
-                        ? 36
-                        : 30,
-                    height: _orderDetails!.delivery_status == "pending"
-                        ? 36
-                        : 30,
+                    width:
+                        _orderDetails!.delivery_status == "pending" ? 36 : 30,
+                    height:
+                        _orderDetails!.delivery_status == "pending" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.redAccent, width: 2),
@@ -981,12 +983,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: _orderDetails!.delivery_status == "confirmed"
-                        ? 36
-                        : 30,
-                    height: _orderDetails!.delivery_status == "confirmed"
-                        ? 36
-                        : 30,
+                    width:
+                        _orderDetails!.delivery_status == "confirmed" ? 36 : 30,
+                    height:
+                        _orderDetails!.delivery_status == "confirmed" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.blue, width: 2),
@@ -1108,12 +1108,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: _orderDetails!.delivery_status == "delivered"
-                        ? 36
-                        : 30,
-                    height: _orderDetails!.delivery_status == "delivered"
-                        ? 36
-                        : 30,
+                    width:
+                        _orderDetails!.delivery_status == "delivered" ? 36 : 30,
+                    height:
+                        _orderDetails!.delivery_status == "delivered" ? 36 : 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.purple, width: 2),
@@ -1500,7 +1498,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 color: MyTheme.accent_color,
                 onPressed: () {
                   // _showCancelDialog(_orderDetails!.id);
-                  _make_re_payment(_orderDetails!.grand_total);
+                  _makeRePayment(_orderDetails!.grand_total);
                 },
                 child: Text(
                   LangText(context).local.make_payment_ucf,
@@ -1514,125 +1512,123 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   buildOrderedProductItemsCard(index) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                _orderedItemList[index].product_name,
-                maxLines: 2,
-                style: TextStyle(color: MyTheme.font_grey),
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              _orderedItemList[index].product_name,
+              maxLines: 2,
+              style: TextStyle(color: MyTheme.font_grey),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Row(
-                children: [
-                  Text(
-                    "${_orderedItemList[index].quantity} x ",
-                    style: TextStyle(
-                      color: MyTheme.font_grey,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  "${_orderedItemList[index].quantity} x ",
+                  style: TextStyle(
+                    color: MyTheme.font_grey,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
                   ),
-                  _orderedItemList[index].variation != "" &&
-                          _orderedItemList[index].variation != null
-                      ? Text(
-                          _orderedItemList[index].variation,
+                ),
+                _orderedItemList[index].variation != "" &&
+                        _orderedItemList[index].variation != null
+                    ? Text(
+                        _orderedItemList[index].variation,
+                        style: TextStyle(
+                          color: MyTheme.font_grey,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )
+                    : Text(
+                        "item",
+                        style: TextStyle(
+                          color: MyTheme.font_grey,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                Spacer(),
+                Text(
+                  convertPrice(_orderedItemList[index].price),
+                  style: TextStyle(
+                    color: MyTheme.accent_color,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          _orderedItemList[index].refund_section &&
+                  _orderedItemList[index].refund_button
+              ? InkWell(
+                  onTap: () {
+                    onTapAskRefund(
+                      _orderedItemList[index].id,
+                      _orderedItemList[index].product_name,
+                      _orderDetails!.code,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.ask_for_refund_ucf,
                           style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 13,
+                            color: MyTheme.accent_color,
                             fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      : Text(
-                          "item",
-                          style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
-                  Spacer(),
-                  Text(
-                    convertPrice(_orderedItemList[index].price),
-                    style: TextStyle(
-                      color: MyTheme.accent_color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2.0),
+                          child: Icon(
+                            Icons.rotate_left,
+                            color: MyTheme.accent_color,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            _orderedItemList[index].refund_section &&
-                    _orderedItemList[index].refund_button
-                ? InkWell(
-                    onTap: () {
-                      onTapAskRefund(
-                        _orderedItemList[index].id,
-                        _orderedItemList[index].product_name,
-                        _orderDetails!.code,
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.ask_for_refund_ucf,
-                            style: TextStyle(
-                              color: MyTheme.accent_color,
-                              fontWeight: FontWeight.w600,
-                              decoration: TextDecoration.underline,
+                )
+              : Container(),
+          _orderedItemList[index].refund_section &&
+                  _orderedItemList[index].refund_label != ""
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.refund_status_ucf,
+                          style: TextStyle(color: MyTheme.font_grey),
+                        ),
+                        Text(
+                          _orderedItemList[index].refund_label,
+                          style: TextStyle(
+                            color: getRefundRequestLabelColor(
+                              _orderedItemList[index].refund_request_status,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2.0),
-                            child: Icon(
-                              Icons.rotate_left,
-                              color: MyTheme.accent_color,
-                              size: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )
-                : Container(),
-            _orderedItemList[index].refund_section &&
-                    _orderedItemList[index].refund_label != ""
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.refund_status_ucf,
-                            style: TextStyle(color: MyTheme.font_grey),
-                          ),
-                          Text(
-                            _orderedItemList[index].refund_label,
-                            style: TextStyle(
-                              color: getRefundRequestLabelColor(
-                                _orderedItemList[index].refund_request_status,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                : Container(),
-          ],
-        ),
+                  ],
+                )
+              : Container(),
+        ],
       ),
     );
   }

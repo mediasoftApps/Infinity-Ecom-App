@@ -114,7 +114,6 @@ class FlutterSummernoteState extends State<FlutterSummernote> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     getText().then((value) {
       htmlContent = value;
     });

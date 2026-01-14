@@ -144,263 +144,259 @@ class _PasswordOtpState extends State<PasswordOtp> {
       flipOnTouch: false,
       controller: cardController,
       direction: FlipDirection.HORIZONTAL,
-      front: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: SizedBox(
-                width: screenWidth * (3 / 4),
-                child: verifyBy == "email"
-                    ? Text(
-                        AppLocalizations.of(
-                          context,
-                        )!
-                            .enter_the_verification_code_that_sent_to_your_email_recently,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: MyTheme.dark_grey,
-                          fontSize: 14,
-                        ),
-                      )
-                    : Text(
-                        AppLocalizations.of(
-                          context,
-                        )!
-                            .enter_the_verification_code_that_sent_to_your_phone_recently,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: MyTheme.dark_grey,
-                          fontSize: 14,
-                        ),
-                      ),
-              ),
-            ),
-            SizedBox(
+      front: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: SizedBox(
               width: screenWidth * (3 / 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.enter_the_code,
+              child: verifyBy == "email"
+                  ? Text(
+                      AppLocalizations.of(
+                        context,
+                      )!
+                          .enter_the_verification_code_that_sent_to_your_email_recently,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: MyTheme.accent_color,
-                        fontWeight: FontWeight.w600,
+                        color: MyTheme.dark_grey,
+                        fontSize: 14,
+                      ),
+                    )
+                  : Text(
+                      AppLocalizations.of(
+                        context,
+                      )!
+                          .enter_the_verification_code_that_sent_to_your_phone_recently,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: MyTheme.dark_grey,
+                        fontSize: 14,
                       ),
                     ),
+            ),
+          ),
+          SizedBox(
+            width: screenWidth * (3 / 4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.enter_the_code,
+                    style: TextStyle(
+                      color: MyTheme.accent_color,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 36,
-                          child: TextField(
-                            controller: _codeController,
-                            autofocus: false,
-                            decoration: InputDecorations.buildInputDecoration_1(
-                              hint_text: "A X B 4 J H",
-                            ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 36,
+                        child: TextField(
+                          controller: _codeController,
+                          autofocus: false,
+                          decoration: InputDecorations.buildInputDecoration_1(
+                            hint_text: "A X B 4 J H",
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.password_ucf,
-                      style: TextStyle(
-                        color: MyTheme.accent_color,
-                        fontWeight: FontWeight.w600,
                       ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.password_ucf,
+                    style: TextStyle(
+                      color: MyTheme.accent_color,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 36,
-                          child: TextField(
-                            controller: _passwordController,
-                            autofocus: false,
-                            obscureText: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            decoration: InputDecorations.buildInputDecoration_1(
-                              hint_text: "• • • • • • • •",
-                            ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 36,
+                        child: TextField(
+                          controller: _passwordController,
+                          autofocus: false,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: InputDecorations.buildInputDecoration_1(
+                            hint_text: "• • • • • • • •",
                           ),
                         ),
-                        Text(
-                          AppLocalizations.of(
-                            context,
-                          )!
-                              .password_must_contain_at_least_6_characters,
-                          style: TextStyle(
-                            color: MyTheme.textfield_grey,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 4.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.retype_password_ucf,
-                      style: TextStyle(
-                        color: MyTheme.accent_color,
-                        fontWeight: FontWeight.w600,
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: SizedBox(
-                      height: 36,
-                      child: TextField(
-                        controller: _passwordConfirmController,
-                        autofocus: false,
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: InputDecorations.buildInputDecoration_1(
-                          hint_text: "• • • • • • • •",
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
-                    child: Container(
-                      height: 45,
-                      decoration: BoxDecoration(
-                        border: Border.all(
+                      Text(
+                        AppLocalizations.of(
+                          context,
+                        )!
+                            .password_must_contain_at_least_6_characters,
+                        style: TextStyle(
                           color: MyTheme.textfield_grey,
-                          width: 1,
+                          fontStyle: FontStyle.italic,
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.retype_password_ucf,
+                    style: TextStyle(
+                      color: MyTheme.accent_color,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: SizedBox(
+                    height: 36,
+                    child: TextField(
+                      controller: _passwordConfirmController,
+                      autofocus: false,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecorations.buildInputDecoration_1(
+                        hint_text: "• • • • • • • •",
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 40.0),
+                  child: Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: MyTheme.textfield_grey,
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(12.0),
+                      ),
+                    ),
+                    child: Btn.basic(
+                      minWidth: MediaQuery.of(context).size.width,
+                      color: MyTheme.accent_color,
+                      shape: RoundedRectangleBorder(
                         borderRadius: const BorderRadius.all(
                           Radius.circular(12.0),
                         ),
                       ),
-                      child: Btn.basic(
-                        minWidth: MediaQuery.of(context).size.width,
-                        color: MyTheme.accent_color,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(12.0),
-                          ),
+                      child: Text(
+                        AppLocalizations.of(context)!.confirm_ucf,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                         ),
-                        child: Text(
-                          AppLocalizations.of(context)!.confirm_ucf,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        onPressed: () {
-                          onPressConfirm();
-                        },
                       ),
+                      onPressed: () {
+                        onPressConfirm();
+                      },
                     ),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: InkWell(
-                onTap: () {
-                  onTapResend();
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.resend_code_ucf,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: MyTheme.accent_color,
-                    decoration: TextDecoration.underline,
-                    fontSize: 13,
-                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-      back: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: SizedBox(
-                width: screenWidth * (3 / 4),
-                child: Text(
-                  LangText(context).local.congratulations_ucf,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: MyTheme.accent_color,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: SizedBox(
-                width: screenWidth * (3 / 4),
-                child: Text(
-                  LangText(
-                    context,
-                  ).local.you_have_successfully_changed_your_password,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: MyTheme.accent_color, fontSize: 13),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: Image.asset(
-                'assets/changed_password.png',
-                width: DeviceInfo(context).width! / 2,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 45,
-                child: Btn.basic(
-                  minWidth: MediaQuery.of(context).size.width,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: InkWell(
+              onTap: () {
+                onTapResend();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.resend_code_ucf,
+                textAlign: TextAlign.center,
+                style: TextStyle(
                   color: MyTheme.accent_color,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(6.0)),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.back_to_Login_ucf,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  onPressed: () {
-                    gotoLoginScreen();
-                  },
+                  decoration: TextDecoration.underline,
+                  fontSize: 13,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      back: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: SizedBox(
+              width: screenWidth * (3 / 4),
+              child: Text(
+                LangText(context).local.congratulations_ucf,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: MyTheme.accent_color,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: SizedBox(
+              width: screenWidth * (3 / 4),
+              child: Text(
+                LangText(
+                  context,
+                ).local.you_have_successfully_changed_your_password,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: MyTheme.accent_color, fontSize: 13),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Image.asset(
+              'assets/changed_password.png',
+              width: DeviceInfo(context).width! / 2,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              height: 45,
+              child: Btn.basic(
+                minWidth: MediaQuery.of(context).size.width,
+                color: MyTheme.accent_color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+                ),
+                child: Text(
+                  AppLocalizations.of(context)!.back_to_Login_ucf,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  gotoLoginScreen();
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

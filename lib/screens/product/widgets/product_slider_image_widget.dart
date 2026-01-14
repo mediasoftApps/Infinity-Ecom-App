@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../../helpers/shimmer_helper.dart';
@@ -42,7 +43,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
             enlargeCenterPage: false,
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
-              print(index);
+              log(index.toString());
               setState(() {
                 widget.currentImage = index;
               });
@@ -51,47 +52,45 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
           (i) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  child: Stack(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          openPhotoDialog(context,
-                              widget.productImageList![widget.currentImage!]);
-                        },
-                        child: SizedBox(
-                          height: double.infinity,
-                          width: double.infinity,
-                          child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
-                            image: i,
-                            fit: BoxFit.fitHeight,
-                          ),
+                return Stack(
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        openPhotoDialog(context,
+                            widget.productImageList![widget.currentImage!]);
+                      },
+                      child: SizedBox(
+                        height: double.infinity,
+                        width: double.infinity,
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/placeholder_rectangle.png',
+                          image: i,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment(0.0, 0.9),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                            widget.productImageList!.length,
-                            (index) => Container(
-                              width: 8.0,
-                              height: 8.0,
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 4.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: widget.currentImage == index
-                                    ? Colors.black.withValues(alpha: 0.5)
-                                    : Color(0xff484848).withValues(alpha: 0.5),
-                              ),
+                    ),
+                    Align(
+                      alignment: Alignment(0.0, 0.9),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          widget.productImageList!.length,
+                          (index) => Container(
+                            width: 8.0,
+                            height: 8.0,
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 4.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: widget.currentImage == index
+                                  ? Colors.black.withValues(alpha: 0.5)
+                                  : Color(0xff484848).withValues(alpha: 0.5),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 );
               },
             );
@@ -105,8 +104,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            child: Container(
-                child: Stack(
+            child: Stack(
               children: [
                 PhotoView(
                   enableRotation: true,
@@ -138,7 +136,7 @@ class _ProductSliderImageWidgetState extends State<ProductSliderImageWidget> {
                   ),
                 ),
               ],
-            )),
+            ),
           );
         },
       );

@@ -1,8 +1,9 @@
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/screens/classified_ads/classified_product_details.dart';
 import 'package:flutter/material.dart';
+
+import '../custom/box_decorations.dart';
+import '../helpers/system_config.dart';
+import '../my_theme.dart';
+import '../screens/classified_ads/classified_product_details.dart';
 
 class ClassifiedMiniProductCard extends StatefulWidget {
   int? id;

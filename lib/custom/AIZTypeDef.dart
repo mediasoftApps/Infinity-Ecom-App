@@ -1,4 +1,1 @@
-
-
-
-typedef OnPress= void Function();
+typedef OnPress = void Function();

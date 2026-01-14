@@ -1,30 +1,5 @@
 import 'dart:async';
 
-import 'package:infinity_ecom_app/custom/aiz_route.dart';
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/auth_helper.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/presenter/unRead_notification_counter.dart';
-import 'package:infinity_ecom_app/repositories/profile_repository.dart';
-import 'package:infinity_ecom_app/screens/address.dart';
-import 'package:infinity_ecom_app/screens/auction/auction_products.dart';
-import 'package:infinity_ecom_app/screens/blog_list_screen.dart';
-import 'package:infinity_ecom_app/screens/classified_ads/classified_ads.dart';
-import 'package:infinity_ecom_app/screens/classified_ads/my_classified_ads.dart';
-import 'package:infinity_ecom_app/screens/coupon/coupons.dart';
-import 'package:infinity_ecom_app/screens/digital_product/digital_products.dart';
-import 'package:infinity_ecom_app/screens/filter.dart';
-import 'package:infinity_ecom_app/screens/product/last_view_product.dart';
-import 'package:infinity_ecom_app/screens/product/top_selling_products.dart';
-import 'package:infinity_ecom_app/screens/refund_request.dart';
-import 'package:infinity_ecom_app/screens/settings.dart';
-import 'package:infinity_ecom_app/screens/wholesales_screen.dart';
-import 'package:infinity_ecom_app/screens/wishlist/widgets/page_animation.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
@@ -33,27 +8,52 @@ import 'package:one_context/one_context.dart';
 import 'package:provider/provider.dart';
 import 'package:route_transitions/route_transitions.dart';
 
+import '../custom/aiz_route.dart';
+import '../custom/box_decorations.dart';
+import '../custom/device_info.dart';
+import '../custom/lang_text.dart';
+import '../custom/toast_component.dart';
+import '../helpers/auth_helper.dart';
+import '../helpers/shared_value_helper.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../presenter/unRead_notification_counter.dart';
 import '../repositories/auth_repository.dart';
+import '../repositories/profile_repository.dart';
+import 'address.dart';
 import 'auction/auction_bidded_products.dart';
+import 'auction/auction_products.dart';
 import 'auction/auction_purchase_history.dart';
+import 'blog_list_screen.dart';
 import 'change_language.dart';
 import 'chat/messenger_list.dart';
+import 'classified_ads/classified_ads.dart';
+import 'classified_ads/my_classified_ads.dart';
 import 'club_point.dart';
+import 'coupon/coupons.dart';
 import 'currency_change.dart';
+import 'digital_product/digital_products.dart';
 import 'digital_product/purchased_digital_produts.dart';
 
+import 'filter.dart';
 import 'followed_sellers.dart';
 import 'notification/notification_list.dart';
 import 'orders/order_list.dart';
+import 'product/last_view_product.dart';
+import 'product/top_selling_products.dart';
 import 'profile_edit.dart';
+import 'refund_request.dart';
+import 'settings.dart';
 import 'uploads/upload_file.dart';
 import 'wallet.dart';
+import 'wholesales_screen.dart';
+import 'wishlist/widgets/page_animation.dart';
 import 'wishlist/wishlist.dart';
 
 class Profile extends StatefulWidget {
-  Profile({super.key, this.show_back_button = false});
+  final bool show_back_button;
 
-  bool show_back_button;
+  const Profile({super.key, this.show_back_button = false});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -61,7 +61,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final ScrollController _mainScrollController = ScrollController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _auctionExpand = false;
   int? _cartCounter = 0;
@@ -133,8 +132,8 @@ class _ProfileState extends State<Profile> {
   }
 
   fetchCounters() async {
-    var profileCountersResponse = await ProfileRepository()
-        .getProfileCountersResponse();
+    var profileCountersResponse =
+        await ProfileRepository().getProfileCountersResponse();
 
     _cartCounter = profileCountersResponse.cart_item_count;
     _wishlistCounter = profileCountersResponse.wishlist_item_count;
@@ -208,9 +207,8 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: buildView(context),
     );
   }
@@ -278,29 +276,27 @@ class _ProfileState extends State<Profile> {
   PreferredSize buildCustomAppBar(context) {
     return PreferredSize(
       preferredSize: Size(DeviceInfo(context).width!, 80),
-      child: Container(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  margin: EdgeInsets.only(right: 18),
-                  height: 30,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.close, color: MyTheme.white, size: 20),
-                  ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                margin: EdgeInsets.only(right: 18),
+                height: 30,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.close, color: MyTheme.white, size: 20),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                child: buildAppbarSection(),
-              ),
-            ],
-          ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              child: buildAppbarSection(),
+            ),
+          ],
         ),
       ),
     );
@@ -410,7 +406,7 @@ class _ProfileState extends State<Profile> {
             },
           ),
           Divider(thickness: 1, color: MyTheme.light_grey),
-          if (false)
+/*           if (false)
             Column(
               children: [
                 buildBottomVerticalCardListItem(
@@ -429,7 +425,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Divider(thickness: 1, color: MyTheme.light_grey),
               ],
-            ),
+            ), */
           if (classified_product_status.$)
             Column(
               children: [
@@ -490,7 +486,7 @@ class _ProfileState extends State<Profile> {
                 Divider(thickness: 1, color: MyTheme.light_grey),
               ],
             ),
-          if (false)
+/*           if (false)
             Column(
               children: [
                 buildBottomVerticalCardListItem(
@@ -509,15 +505,15 @@ class _ProfileState extends State<Profile> {
                 ),
                 Divider(thickness: 1, color: MyTheme.light_grey),
               ],
-            ),
+            ), */
           if (auction_addon_installed.$)
             Column(
               children: [
                 Container(
                   height: _auctionExpand
                       ? is_logged_in.$
-                            ? 140
-                            : 77
+                          ? 140
+                          : 77
                       : 40,
                   alignment: Alignment.topCenter,
                   padding: const EdgeInsets.only(top: 10.0),
@@ -1296,7 +1292,6 @@ class _ProfileState extends State<Profile> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(6),
       ),
-
       child: LayoutBuilder(
         builder: (context, constraints) {
           const int crossAxisCount = 3;
@@ -1305,8 +1300,7 @@ class _ProfileState extends State<Profile> {
 
           const double childAspectRatio = 1.4;
 
-          double itemWidth =
-              (constraints.maxWidth -
+          double itemWidth = (constraints.maxWidth -
                   (crossAxisSpacing * (crossAxisCount - 1))) /
               crossAxisCount;
 
@@ -1366,37 +1360,35 @@ class _ProfileState extends State<Profile> {
                       : () => null,
                 ),
               ),
-            Container(
-              child: badges.Badge(
-                position: badges.BadgePosition.topEnd(top: 8, end: 20),
-                badgeStyle: badges.BadgeStyle(
-                  shape: badges.BadgeShape.circle,
-                  badgeColor: MyTheme.accent_color,
-                  borderRadius: BorderRadius.circular(10),
-                  padding: EdgeInsets.all(5),
-                ),
-                badgeContent: Consumer<UnReadNotificationCounter>(
-                  builder: (context, notification, child) {
-                    return Text(
-                      "${notification.unReadNotificationCounter}",
-                      style: TextStyle(fontSize: 10, color: Colors.white),
-                    );
-                  },
-                ),
-                child: buildSettingAndAddonsHorizontalMenuItem(
-                  "assets/notification.png",
-                  "Notifications",
-                  is_logged_in.$
-                      ? () {
-                          Navigator.push(
-                            context,
-                            PageAnimation.fadeRoute(NotificationList()),
-                          ).then((value) {
-                            onPopped(value);
-                          });
-                        }
-                      : () => null,
-                ),
+            badges.Badge(
+              position: badges.BadgePosition.topEnd(top: 8, end: 20),
+              badgeStyle: badges.BadgeStyle(
+                shape: badges.BadgeShape.circle,
+                badgeColor: MyTheme.accent_color,
+                borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.all(5),
+              ),
+              badgeContent: Consumer<UnReadNotificationCounter>(
+                builder: (context, notification, child) {
+                  return Text(
+                    "${notification.unReadNotificationCounter}",
+                    style: TextStyle(fontSize: 10, color: Colors.white),
+                  );
+                },
+              ),
+              child: buildSettingAndAddonsHorizontalMenuItem(
+                "assets/notification.png",
+                "Notifications",
+                is_logged_in.$
+                    ? () {
+                        Navigator.push(
+                          context,
+                          PageAnimation.fadeRoute(NotificationList()),
+                        ).then((value) {
+                          onPopped(value);
+                        });
+                      }
+                    : () => null,
               ),
             ),
             if (refund_addon_installed.$)
@@ -1429,7 +1421,7 @@ class _ProfileState extends State<Profile> {
                       : () => null,
                 ),
               ),
-            if (false)
+/*             if (false)
               if (classified_product_status.$)
                 Container(
                   child: buildSettingAndAddonsHorizontalMenuItem(
@@ -1444,7 +1436,7 @@ class _ProfileState extends State<Profile> {
                           }
                         : () => null,
                   ),
-                ),
+                ), */
             Container(
               child: buildSettingAndAddonsHorizontalMenuItem(
                 "assets/download.png",
@@ -1495,7 +1487,6 @@ class _ProfileState extends State<Profile> {
               return SizedBox(
                 width: itemWidth,
                 height: itemHeight,
-
                 child: Center(child: item),
               );
             }).toList(),
@@ -1706,8 +1697,8 @@ class _ProfileState extends State<Profile> {
                   user_email.$ != ""
                       ? user_email.$
                       : user_phone.$ != ""
-                      ? user_phone.$
-                      : '',
+                          ? user_phone.$
+                          : '',
                   style: TextStyle(color: MyTheme.light_grey),
                 ),
               ),

@@ -1,14 +1,15 @@
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class VideoDescription extends StatefulWidget {
-  String? url;
+import '../helpers/shared_value_helper.dart';
+import '../my_theme.dart';
 
-  VideoDescription({super.key, this.url});
+class VideoDescription extends StatefulWidget {
+  final String? url;
+
+  const VideoDescription({super.key, this.url});
 
   @override
   State<VideoDescription> createState() => _VideoDescriptionState();
@@ -19,7 +20,6 @@ class _VideoDescriptionState extends State<VideoDescription> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -55,9 +55,8 @@ class _VideoDescriptionState extends State<VideoDescription> {
         return Future.value(true);
       },
       child: Directionality(
-        textDirection: app_language_rtl.$!
-            ? TextDirection.rtl
-            : TextDirection.ltr,
+        textDirection:
+            app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
         child: Scaffold(backgroundColor: Colors.white, body: buildBody()),
       ),
     );
@@ -65,43 +64,41 @@ class _VideoDescriptionState extends State<VideoDescription> {
 
   buildBody() {
     return SizedBox.expand(
-      child: Container(
-        child: Stack(
-          children: [
-            WebViewWidget(controller: _webViewController),
-            Align(
-              alignment: app_language_rtl.$!
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              child: Container(
-                decoration: ShapeDecoration(
-                  color: MyTheme.medium_grey_50,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(25),
-                      bottomRight: Radius.circular(25),
-                    ),
+      child: Stack(
+        children: [
+          WebViewWidget(controller: _webViewController),
+          Align(
+            alignment: app_language_rtl.$!
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: Container(
+              decoration: ShapeDecoration(
+                color: MyTheme.medium_grey_50,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
                   ),
                 ),
-                width: 40,
-                height: 40,
-                child: IconButton(
-                  icon: Icon(CupertinoIcons.arrow_left, color: MyTheme.white),
-                  onPressed: () {
-                    if (MediaQuery.of(context).orientation ==
-                        Orientation.landscape) {
-                      SystemChrome.setPreferredOrientations([
-                        DeviceOrientation.portraitUp,
-                        DeviceOrientation.portraitDown,
-                      ]);
-                    }
-                    return Navigator.of(context).pop();
-                  },
-                ),
+              ),
+              width: 40,
+              height: 40,
+              child: IconButton(
+                icon: Icon(CupertinoIcons.arrow_left, color: MyTheme.white),
+                onPressed: () {
+                  if (MediaQuery.of(context).orientation ==
+                      Orientation.landscape) {
+                    SystemChrome.setPreferredOrientations([
+                      DeviceOrientation.portraitUp,
+                      DeviceOrientation.portraitDown,
+                    ]);
+                  }
+                  return Navigator.of(context).pop();
+                },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

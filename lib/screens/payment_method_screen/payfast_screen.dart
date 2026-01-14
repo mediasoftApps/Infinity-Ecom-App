@@ -42,7 +42,6 @@ class _PayfastScreenState extends State<PayfastScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // ToastContext().init(context);
 
@@ -101,9 +100,8 @@ class _PayfastScreenState extends State<PayfastScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -116,55 +114,55 @@ class _PayfastScreenState extends State<PayfastScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
 
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            if (widget.payment_type == "cart_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "order_re_payment") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return OrderList(from_checkout: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "wallet_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Wallet(from_recharge: true);
-                  },
-                ),
-              );
-            } else if (widget.payment_type == "customer_package_payment") {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return Profile();
-                  },
-                ),
-              );
-            }
-          }
-        });
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        if (widget.payment_type == "cart_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "order_re_payment") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return OrderList(from_checkout: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "wallet_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Wallet(from_recharge: true);
+              },
+            ),
+          );
+        } else if (widget.payment_type == "customer_package_payment") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return Profile();
+              },
+            ),
+          );
+        }
+      }
+    });
   }
 
   buildBody() {

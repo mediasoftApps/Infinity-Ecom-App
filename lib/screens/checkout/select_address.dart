@@ -6,13 +6,12 @@ import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
 import 'package:infinity_ecom_app/my_theme.dart';
 import 'package:infinity_ecom_app/presenter/select_address_provider.dart';
 import 'package:infinity_ecom_app/screens/address.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SelectAddress extends StatefulWidget {
   final int? owner_id;
-  const SelectAddress({Key? key, this.owner_id}) : super(key: key);
+  const SelectAddress({super.key, this.owner_id});
 
   @override
   State<SelectAddress> createState() => _SelectAddressState();
@@ -31,9 +30,8 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Consumer<SelectAddressProvider>(
         builder: (context, selectAddressProvider, _) {
           return Directionality(
-            textDirection: app_language_rtl.$!
-                ? TextDirection.rtl
-                : TextDirection.ltr,
+            textDirection:
+                app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
             child: Scaffold(
               appBar: AppBar(
                 elevation: 0,
@@ -51,28 +49,26 @@ class _SelectAddressState extends State<SelectAddress> {
                 backgroundColor: Colors.white,
                 onRefresh: () => selectAddressProvider.onRefresh(context),
                 displacement: 0,
-                child: Container(
-                  child: CustomScrollView(
-                    controller: selectAddressProvider.mainScrollController,
-                    physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics(),
-                    ),
-                    slivers: [
-                      SliverList(
-                        delegate: SliverChildListDelegate([
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: buildShippingInfoList(
-                              selectAddressProvider,
-                              context,
-                            ),
-                          ),
-                          buildAddOrEditAddress(context, selectAddressProvider),
-                          const SizedBox(height: 100),
-                        ]),
-                      ),
-                    ],
+                child: CustomScrollView(
+                  controller: selectAddressProvider.mainScrollController,
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
                   ),
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: buildShippingInfoList(
+                            selectAddressProvider,
+                            context,
+                          ),
+                        ),
+                        buildAddOrEditAddress(context, selectAddressProvider),
+                        const SizedBox(height: 100),
+                      ]),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -83,7 +79,7 @@ class _SelectAddressState extends State<SelectAddress> {
   }
 
   Widget buildAddOrEditAddress(BuildContext context, provider) {
-    return Container(
+    return SizedBox(
       height: 40,
       child: Center(
         child: InkWell(
@@ -119,7 +115,7 @@ class _SelectAddressState extends State<SelectAddress> {
 
   buildShippingInfoList(selectAddressProvider, BuildContext context) {
     if (is_logged_in.$ == false) {
-      return Container(
+      return SizedBox(
         height: 100,
         child: Center(
           child: Text(
@@ -157,7 +153,7 @@ class _SelectAddressState extends State<SelectAddress> {
       );
     } else if (selectAddressProvider.faceData &&
         selectAddressProvider.shippingAddressList.isEmpty) {
-      return Container(
+      return SizedBox(
         height: 100,
         child: Center(
           child: Text(
@@ -259,14 +255,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.phone_ucf,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].phone ?? "",
@@ -288,14 +284,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.postal_code,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].postal_code ??
@@ -318,14 +314,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.country_ucf,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].country_name ??
@@ -348,14 +344,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.state_ucf,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].state_name ?? "",
@@ -381,14 +377,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: const Text(
               "Area",
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].area_name ?? "",
@@ -410,14 +406,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.city_ucf,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 200,
             child: Text(
               selectAddressProvider.shippingAddressList[index].city_name ?? "",
@@ -439,14 +435,14 @@ class _SelectAddressState extends State<SelectAddress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 75,
             child: Text(
               LangText(context).local.address_ucf,
               style: TextStyle(color: MyTheme.grey_153),
             ),
           ),
-          Container(
+          SizedBox(
             width: 175,
             child: Text(
               selectAddressProvider.shippingAddressList[index].address ?? "",
@@ -504,7 +500,7 @@ class _SelectAddressState extends State<SelectAddress> {
     return BottomAppBar(
       color: Colors.transparent,
       elevation: 0.0,
-      child: Container(
+      child: SizedBox(
         height: 50,
         child: Btn.minWidthFixHeight(
           minWidth: MediaQuery.of(context).size.width,
@@ -531,8 +527,8 @@ class _SelectAddressState extends State<SelectAddress> {
     );
   }
 
-  Container buildAppbarTitle(BuildContext context) {
-    return Container(
+  Widget buildAppbarTitle(BuildContext context) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width - 40,
       child: Text(
         LangText(context).local.shipping_info,

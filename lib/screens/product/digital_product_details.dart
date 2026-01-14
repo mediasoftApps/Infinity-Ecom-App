@@ -20,7 +20,6 @@ import '../../custom/box_decorations.dart';
 import '../../custom/btn.dart';
 import '../../custom/device_info.dart';
 import '../../custom/lang_text.dart';
-import '../../custom/quantity_input.dart';
 import '../../custom/toast_component.dart';
 import '../../data_model/product_details_response.dart';
 import '../../helpers/color_helper.dart';
@@ -1547,17 +1546,15 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          Container(
-            child: Padding(
-              padding: app_language_rtl.$!
-                  ? EdgeInsets.only(left: 8.0)
-                  : EdgeInsets.only(right: 8.0),
-              child: SizedBox(
-                width: 75,
-                child: Text(
-                  AppLocalizations.of(context)!.total_price_ucf,
-                  style: TextStyle(color: Color(0xff6B7377), fontSize: 10),
-                ),
+          Padding(
+            padding: app_language_rtl.$!
+                ? EdgeInsets.only(left: 8.0)
+                : EdgeInsets.only(right: 8.0),
+            child: SizedBox(
+              width: 75,
+              child: Text(
+                AppLocalizations.of(context)!.total_price_ucf,
+                style: TextStyle(color: Color(0xff6B7377), fontSize: 10),
               ),
             ),
           ),
@@ -2274,40 +2271,38 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
   }
 
   buildExpandableDescription() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            width: DeviceInfo(context).width,
-            height: webViewHeight,
-            child: WebViewWidget(controller: controller),
-          ),
-          Btn.basic(
-            onPressed: () async {
-              if (webViewHeight == 50) {
-                webViewHeight = double.parse(
-                  (await controller.runJavaScriptReturningResult(
-                    "document.getElementById('scaled-frame').clientHeight",
-                  ))
-                      .toString(),
-                );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: DeviceInfo(context).width,
+          height: webViewHeight,
+          child: WebViewWidget(controller: controller),
+        ),
+        Btn.basic(
+          onPressed: () async {
+            if (webViewHeight == 50) {
+              webViewHeight = double.parse(
+                (await controller.runJavaScriptReturningResult(
+                  "document.getElementById('scaled-frame').clientHeight",
+                ))
+                    .toString(),
+              );
 
-                print(webViewHeight);
-              } else {
-                webViewHeight = 50;
-              }
-              setState(() {});
-            },
-            child: Text(
-              webViewHeight == 50
-                  ? LangText(context).local.view_more
-                  : LangText(context).local.less,
-              style: TextStyle(color: Color(0xff0077B6)),
-            ),
+              print(webViewHeight);
+            } else {
+              webViewHeight = 50;
+            }
+            setState(() {});
+          },
+          child: Text(
+            webViewHeight == 50
+                ? LangText(context).local.view_more
+                : LangText(context).local.less,
+            style: TextStyle(color: Color(0xff0077B6)),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -2604,12 +2599,10 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
             child: SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder_rectangle.png',
-                  image: _productImageList[_currentImage],
-                  fit: BoxFit.scaleDown,
-                ),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/placeholder_rectangle.png',
+                image: _productImageList[_currentImage],
+                fit: BoxFit.scaleDown,
               ),
             ),
           ),
@@ -2622,41 +2615,38 @@ class _DigitalProductDetailsState extends State<DigitalProductDetails>
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            child: Container(
-              child: Stack(
-                children: [
-                  PhotoView(
-                    enableRotation: true,
-                    heroAttributes:
-                        const PhotoViewHeroAttributes(tag: "someTag"),
-                    imageProvider: NetworkImage(path),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        color: MyTheme.medium_grey_50,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            topRight: Radius.circular(25),
-                            topLeft: Radius.circular(25),
-                          ),
+            child: Stack(
+              children: [
+                PhotoView(
+                  enableRotation: true,
+                  heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+                  imageProvider: NetworkImage(path),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      color: MyTheme.medium_grey_50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
                         ),
                       ),
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        icon: Icon(Icons.clear, color: MyTheme.white),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      ),
+                    ),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      icon: Icon(Icons.clear, color: MyTheme.white),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

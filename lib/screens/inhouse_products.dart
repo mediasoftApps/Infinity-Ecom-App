@@ -72,7 +72,6 @@ class _InhouseProductsState extends State<InhouseProducts> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _scrollController.dispose();
     _xcrollController.dispose();
     super.dispose();

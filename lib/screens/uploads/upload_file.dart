@@ -194,7 +194,6 @@ class _UploadFileState extends State<UploadFile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.canMultiSelect && widget.prevData != null) {
       _selectedImages = widget.prevData;
       setState(() {});
@@ -248,12 +247,12 @@ class _UploadFileState extends State<UploadFile> {
             children: [
               _faceData
                   ? _images.isEmpty
-                        ? Center(
-                            child: Text(
-                              LangText(context).local.no_data_is_available,
-                            ),
-                          )
-                        : buildImageListView()
+                      ? Center(
+                          child: Text(
+                            LangText(context).local.no_data_is_available,
+                          ),
+                        )
+                      : buildImageListView()
                   : buildShimmerList(context),
               Container(child: buildFilterSection(context)),
             ],

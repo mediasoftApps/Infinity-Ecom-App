@@ -1,13 +1,14 @@
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/helpers/main_helpers.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/refund_request_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
+
+import '../custom/box_decorations.dart';
+import '../custom/device_info.dart';
+import '../custom/useful_elements.dart';
+import '../helpers/main_helpers.dart';
+import '../helpers/shared_value_helper.dart';
+import '../helpers/shimmer_helper.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../repositories/refund_request_repository.dart';
 
 class RefundRequest extends StatefulWidget {
   const RefundRequest({super.key});
@@ -19,7 +20,7 @@ class RefundRequest extends StatefulWidget {
 class _RefundRequestState extends State<RefundRequest> {
   final ScrollController _xcrollController = ScrollController();
   List<dynamic> _list = [];
-  List<dynamic> _converted_ids = [];
+  // List<dynamic> _converted_ids = [];
   bool _isInitial = true;
   int _page = 1;
   int? _totalData = 0;
@@ -27,7 +28,6 @@ class _RefundRequestState extends State<RefundRequest> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     fetchData();
@@ -57,7 +57,7 @@ class _RefundRequestState extends State<RefundRequest> {
 
   reset() {
     _list = [];
-    _converted_ids = [];
+    // _converted_ids = [];
     _isInitial = true;
     _totalData = 0;
     _page = 1;
@@ -78,9 +78,8 @@ class _RefundRequestState extends State<RefundRequest> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar(context),
@@ -226,7 +225,7 @@ class _RefundRequestState extends State<RefundRequest> {
                     ),
                   ),
                   Text(
-                    "Date: " + _list[index].date,
+                    "Date: +${_list[index].date}",
                     style: TextStyle(color: MyTheme.dark_font_grey),
                   ),
                   SizedBox(height: 10),

@@ -42,7 +42,6 @@ class _NagadScreenState extends State<NagadScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.payment_type == "cart_payment") {
       createOrder();
@@ -135,37 +134,37 @@ class _NagadScreenState extends State<NagadScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            Navigator.pop(context);
-          } else if (widget.payment_type == "order_re_payment") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return OrderList(from_checkout: true);
-                },
-              ),
-            );
-          } else if (responseJSON["result"] == true) {
-            paymentDetails = responseJSON['payment_details'];
-            onPaymentSuccess(paymentDetails);
-          }
-        });
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        Navigator.pop(context);
+      } else if (widget.payment_type == "order_re_payment") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return OrderList(from_checkout: true);
+            },
+          ),
+        );
+      } else if (responseJSON["result"] == true) {
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
+      }
+    });
   }
 
   onPaymentSuccess(paymentDetails) async {
-    var nagadPaymentProcessResponse = await PaymentRepository()
-        .getNagadPaymentProcessResponse(
-          widget.payment_type,
-          widget.amount,
-          _combined_order_id,
-          paymentDetails,
-        );
+    var nagadPaymentProcessResponse =
+        await PaymentRepository().getNagadPaymentProcessResponse(
+      widget.payment_type,
+      widget.amount,
+      _combined_order_id,
+      paymentDetails,
+    );
 
     if (nagadPaymentProcessResponse.result == false) {
       ToastComponent.showDialog(nagadPaymentProcessResponse.message!);
@@ -208,16 +207,12 @@ class _NagadScreenState extends State<NagadScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else if (_initial_url_fetched == false) {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.fetching_nagad_url),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.fetching_nagad_url),
       );
     } else {
       return SingleChildScrollView(

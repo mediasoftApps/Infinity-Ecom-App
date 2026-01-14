@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'package:infinity_ecom_app/screens/product/product_details/product_media.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
@@ -15,7 +14,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../../app_config.dart';
+
 import '../../../custom/box_decorations.dart';
 import '../../../custom/btn.dart';
 import '../../../custom/device_info.dart';
@@ -28,6 +27,7 @@ import '../../../helpers/main_helpers.dart';
 import '../../../helpers/shared_value_helper.dart';
 import '../../../helpers/shimmer_helper.dart';
 import '../../../helpers/system_config.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../my_theme.dart';
 import '../../../presenter/cart_counter.dart';
 import '../../../repositories/cart_repository.dart';
@@ -40,15 +40,14 @@ import '../../brand_products.dart';
 import '../../chat/chat.dart';
 import '../../checkout/cart.dart';
 import '../../seller_details.dart';
-import '../../video_description_screen.dart';
 import '../product_reviews.dart';
 import '../widgets/tappable_icon_widget.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'product_media.dart';
 
 class ProductDetails extends StatefulWidget {
-  String slug;
+  final String slug;
 
-  ProductDetails({super.key, required this.slug});
+  const ProductDetails({super.key, required this.slug});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -70,8 +69,6 @@ class _ProductDetailsState extends State<ProductDetails>
 
   double _scrollPosition = 0.0;
 
-  Animation? _colorTween;
-  late AnimationController _ColorAnimationController;
   WebViewController controller = WebViewController()
     ..setJavaScriptMode(JavaScriptMode.unrestricted)
     ..enableZoom(false);
@@ -86,7 +83,6 @@ class _ProductDetailsState extends State<ProductDetails>
   //init values
 
   bool _isInWishList = false;
-  var _productDetailsFetched = false;
   DetailedProduct? _productDetails;
   final _productImageList = [];
   final _colorList = [];
@@ -95,7 +91,6 @@ class _ProductDetailsState extends State<ProductDetails>
   var _choiceString = "";
   String? _variant = "";
   String? _totalPrice = "...";
-  var _singlePrice;
   var _singlePriceString;
   int? _quantity = 1;
   int? _stock = 0;
@@ -112,15 +107,6 @@ class _ProductDetailsState extends State<ProductDetails>
   void initState() {
     quantityText.text = "${_quantity ?? 0}";
     controller;
-    _ColorAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 0),
-    );
-
-    _colorTween = ColorTween(
-      begin: Colors.transparent,
-      end: Colors.white,
-    ).animate(_ColorAnimationController);
 
     _mainScrollController.addListener(() {
       _scrollPosition = _mainScrollController.position.pixels;
@@ -195,7 +181,6 @@ class _ProductDetailsState extends State<ProductDetails>
     if (_productDetails != null) {
       controller.loadHtmlString(makeHtml(_productDetails!.description!));
       _appbarPriceString = _productDetails!.price_high_low;
-      _singlePrice = _productDetails!.calculable_price;
       _singlePriceString = _productDetails!.main_price;
       _stock = _productDetails!.current_stock;
       _mediaList.clear();
@@ -245,7 +230,6 @@ class _ProductDetailsState extends State<ProductDetails>
       }
       setChoiceString();
       fetchAndSetVariantWiseInfo(change_appbar_string: true);
-      _productDetailsFetched = true;
 
       setState(() {});
     }
@@ -357,7 +341,6 @@ class _ProductDetailsState extends State<ProductDetails>
     _variant = "";
     _selectedColorIndex = 0;
     _quantity = 1;
-    _productDetailsFetched = false;
     _isInWishList = false;
     sellerChatTitleController.clear();
     setState(() {});
@@ -452,11 +435,11 @@ class _ProductDetailsState extends State<ProductDetails>
     setState(() {
       _showCopied = true;
     });
-    Timer timer = Timer(Duration(seconds: 3), () {
+    /* Timer timer = Timer(Duration(seconds: 3), () {
       setState(() {
         _showCopied = false;
       });
-    });
+    }); */
   }
 
   onPressShare(context) {
@@ -1517,17 +1500,15 @@ class _ProductDetailsState extends State<ProductDetails>
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          Container(
-            child: Padding(
-              padding: app_language_rtl.$!
-                  ? EdgeInsets.only(left: 8.0)
-                  : EdgeInsets.only(right: 8.0),
-              child: SizedBox(
-                width: 75,
-                child: Text(
-                  AppLocalizations.of(context)!.total_price_ucf,
-                  style: TextStyle(color: Color(0xff6B7377), fontSize: 10),
-                ),
+          Padding(
+            padding: app_language_rtl.$!
+                ? EdgeInsets.only(left: 8.0)
+                : EdgeInsets.only(right: 8.0),
+            child: SizedBox(
+              width: 75,
+              child: Text(
+                AppLocalizations.of(context)!.total_price_ucf,
+                style: TextStyle(color: Color(0xff6B7377), fontSize: 10),
               ),
             ),
           ),
@@ -2341,46 +2322,44 @@ class _ProductDetailsState extends State<ProductDetails>
   }
 
   buildExpandableDescription() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            width: DeviceInfo(context).width,
-            height: webViewHeight,
-            child: WebViewWidget(controller: controller),
-          ),
-          Btn.basic(
-            onPressed: () async {
-              if (webViewHeight == 50) {
-                try {
-                  var result = await controller.runJavaScriptReturningResult(
-                    "document.body.scrollHeight",
-                  );
-                  double? newHeight = double.tryParse(result.toString());
-                  if (newHeight != null && newHeight > 50) {
-                    webViewHeight = newHeight;
-                  }
-                } catch (e) {
-                  print("Error getting webview height: $e");
-                  // Optional: handle error, e.g., by setting a default expanded height
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: DeviceInfo(context).width,
+          height: webViewHeight,
+          child: WebViewWidget(controller: controller),
+        ),
+        Btn.basic(
+          onPressed: () async {
+            if (webViewHeight == 50) {
+              try {
+                var result = await controller.runJavaScriptReturningResult(
+                  "document.body.scrollHeight",
+                );
+                double? newHeight = double.tryParse(result.toString());
+                if (newHeight != null && newHeight > 50) {
+                  webViewHeight = newHeight;
                 }
-              } else {
-                webViewHeight = 50;
+              } catch (e) {
+                print("Error getting webview height: $e");
+                // Optional: handle error, e.g., by setting a default expanded height
               }
-              if (mounted) {
-                setState(() {});
-              }
-            },
-            child: Text(
-              webViewHeight == 50
-                  ? LangText(context).local.view_more
-                  : LangText(context).local.less,
-              style: TextStyle(color: Color(0xff0077B6)),
-            ),
+            } else {
+              webViewHeight = 50;
+            }
+            if (mounted) {
+              setState(() {});
+            }
+          },
+          child: Text(
+            webViewHeight == 50
+                ? LangText(context).local.view_more
+                : LangText(context).local.less,
+            style: TextStyle(color: Color(0xff0077B6)),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -2684,12 +2663,10 @@ class _ProductDetailsState extends State<ProductDetails>
             child: SizedBox(
               height: 250,
               width: MediaQuery.of(context).size.width - 96,
-              child: Container(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder_rectangle.png',
-                  image: _productImageList[_currentImage],
-                  fit: BoxFit.scaleDown,
-                ),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/placeholder_rectangle.png',
+                image: _productImageList[_currentImage],
+                fit: BoxFit.scaleDown,
               ),
             ),
           ),
@@ -2702,41 +2679,38 @@ class _ProductDetailsState extends State<ProductDetails>
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            child: Container(
-              child: Stack(
-                children: [
-                  PhotoView(
-                    enableRotation: true,
-                    heroAttributes:
-                        const PhotoViewHeroAttributes(tag: "someTag"),
-                    imageProvider: NetworkImage(path),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        color: MyTheme.medium_grey_50,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(25),
-                            bottomRight: Radius.circular(25),
-                            topRight: Radius.circular(25),
-                            topLeft: Radius.circular(25),
-                          ),
+            child: Stack(
+              children: [
+                PhotoView(
+                  enableRotation: true,
+                  heroAttributes: const PhotoViewHeroAttributes(tag: "someTag"),
+                  imageProvider: NetworkImage(path),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      color: MyTheme.medium_grey_50,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
                         ),
                       ),
-                      width: 40,
-                      height: 40,
-                      child: IconButton(
-                        icon: Icon(Icons.clear, color: MyTheme.white),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                      ),
+                    ),
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      icon: Icon(Icons.clear, color: MyTheme.white),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -2868,35 +2842,33 @@ class _ProductMediaSliderState extends State<ProductMediaSlider> {
                 );
               }
 
-              return Container(
-                child: Stack(
-                  children: <Widget>[
-                    child,
-                    Align(
-                      alignment: const Alignment(0.0, 0.9),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                          widget.mediaList.length,
-                          (index) => Container(
-                            width: 8.0,
-                            height: 8.0,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 4.0,
-                            ),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentImage == index
-                                  ? MyTheme.white
-                                  : Colors.white.withValues(alpha: 0.5),
-                            ),
+              return Stack(
+                children: <Widget>[
+                  child,
+                  Align(
+                    alignment: const Alignment(0.0, 0.9),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        widget.mediaList.length,
+                        (index) => Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 4.0,
+                          ),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentImage == index
+                                ? MyTheme.white
+                                : Colors.white.withValues(alpha: 0.5),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           );

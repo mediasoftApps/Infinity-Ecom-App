@@ -141,7 +141,6 @@ class _AmarpayScreenState extends State<AmarpayScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (widget.payment_type == "cart_payment") {

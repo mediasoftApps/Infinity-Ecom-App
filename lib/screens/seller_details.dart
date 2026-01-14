@@ -1,36 +1,39 @@
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/data_model/shop_details_response.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/helpers/system_config.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/product_repository.dart';
-import 'package:infinity_ecom_app/repositories/shop_repository.dart';
-import 'package:infinity_ecom_app/screens/auction/auction_products_details.dart';
-import 'package:infinity_ecom_app/screens/auth/login.dart';
-import 'package:infinity_ecom_app/screens/product/product_details/product_details.dart';
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class SellerDetails extends StatefulWidget {
-  String slug;
+import '../custom/box_decorations.dart';
+import '../custom/btn.dart';
+import '../custom/device_info.dart';
+import '../custom/lang_text.dart';
+import '../custom/toast_component.dart';
+import '../custom/useful_elements.dart';
+import '../data_model/shop_details_response.dart';
+import '../helpers/shared_value_helper.dart';
+import '../helpers/shimmer_helper.dart';
+import '../helpers/system_config.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../repositories/product_repository.dart';
+import '../repositories/shop_repository.dart';
+import 'auction/auction_products_details.dart';
+import 'auth/login.dart';
+import 'product/product_details/product_details.dart';
 
-  SellerDetails({super.key, required this.slug});
+class SellerDetails extends StatefulWidget {
+  final String slug;
+
+  const SellerDetails({super.key, required this.slug});
 
   @override
   State<SellerDetails> createState() => _SellerDetailsState();
 }
 
 class _SellerDetailsState extends State<SellerDetails> {
-  final ScrollController _mainScrollController = ScrollController();
+  final _mainScrollController = ScrollController();
   // ScrollController _scrollController = ScrollController();
 
   //init
@@ -109,7 +112,6 @@ class _SellerDetailsState extends State<SellerDetails> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _mainScrollController.dispose();
     super.dispose();
   }
@@ -263,47 +265,43 @@ class _SellerDetailsState extends State<SellerDetails> {
         : buildStoreHomeShimmer(context);
   }
 
-  Container buildTopSelling(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18.0, 20.0, 18.0, 0.0),
-            child: Text(
-              AppLocalizations.of(context)!.top_selling_products_ucf,
-              style: TextStyle(
-                color: MyTheme.font_grey,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+  Widget buildTopSelling(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18.0, 20.0, 18.0, 0.0),
+          child: Text(
+            AppLocalizations.of(context)!.top_selling_products_ucf,
+            style: TextStyle(
+              color: MyTheme.font_grey,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          buildTopSellingProducts(),
-        ],
-      ),
+        ),
+        buildTopSellingProducts(),
+      ],
     );
   }
 
-  Container buildAllProducts(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18.0, 20.0, 18.0, 0.0),
-            child: Text(
-              AppLocalizations.of(context)!.all_products_ucf,
-              style: TextStyle(
-                color: MyTheme.font_grey,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+  Widget buildAllProducts(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(18.0, 20.0, 18.0, 0.0),
+          child: Text(
+            AppLocalizations.of(context)!.all_products_ucf,
+            style: TextStyle(
+              color: MyTheme.font_grey,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          buildAllProductList(),
-        ],
-      ),
+        ),
+        buildAllProductList(),
+      ],
     );
   }
 
@@ -463,67 +461,63 @@ class _SellerDetailsState extends State<SellerDetails> {
   }
 
   Widget buildTabOption(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildTabOptionItem(
-            context,
-            0,
-            LangText(context).local.store_home_ucf,
-          ),
-          buildTabOptionItem(
-            context,
-            1,
-            LangText(context).local.top_selling_products_ucf,
-          ),
-          buildTabOptionItem(
-            context,
-            2,
-            LangText(context).local.all_products_ucf,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        buildTabOptionItem(
+          context,
+          0,
+          LangText(context).local.store_home_ucf,
+        ),
+        buildTabOptionItem(
+          context,
+          1,
+          LangText(context).local.top_selling_products_ucf,
+        ),
+        buildTabOptionItem(
+          context,
+          2,
+          LangText(context).local.all_products_ucf,
+        ),
+      ],
     );
   }
 
   Widget buildTabOptionShimmer(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AnimatedContainer(
-            duration: Duration(milliseconds: 800),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        AnimatedContainer(
+          duration: Duration(milliseconds: 800),
+          height: 30,
+          width: DeviceInfo(context).width! / 4,
+          decoration: BoxDecorations.buildBoxDecoration_1(),
+          child: ShimmerHelper().buildBasicShimmer(
             height: 30,
             width: DeviceInfo(context).width! / 4,
-            decoration: BoxDecorations.buildBoxDecoration_1(),
-            child: ShimmerHelper().buildBasicShimmer(
-              height: 30,
-              width: DeviceInfo(context).width! / 4,
-            ),
           ),
-          AnimatedContainer(
-            duration: Duration(milliseconds: 800),
+        ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 800),
+          height: 30,
+          width: DeviceInfo(context).width! / 4,
+          decoration: BoxDecorations.buildBoxDecoration_1(),
+          child: ShimmerHelper().buildBasicShimmer(
             height: 30,
             width: DeviceInfo(context).width! / 4,
-            decoration: BoxDecorations.buildBoxDecoration_1(),
-            child: ShimmerHelper().buildBasicShimmer(
-              height: 30,
-              width: DeviceInfo(context).width! / 4,
-            ),
           ),
-          AnimatedContainer(
-            duration: Duration(milliseconds: 800),
+        ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 800),
+          height: 30,
+          width: DeviceInfo(context).width! / 4,
+          decoration: BoxDecorations.buildBoxDecoration_1(),
+          child: ShimmerHelper().buildBasicShimmer(
             height: 30,
             width: DeviceInfo(context).width! / 4,
-            decoration: BoxDecorations.buildBoxDecoration_1(),
-            child: ShimmerHelper().buildBasicShimmer(
-              height: 30,
-              width: DeviceInfo(context).width! / 4,
-            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -784,139 +778,134 @@ class _SellerDetailsState extends State<SellerDetails> {
 
   //Shop details
   Widget buildShopDetails() {
-    return Container(
-      //color: Colors.red,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: 60,
-            height: 60,
-            //  decoration: BoxDecorations.buildBoxDecoration_1(),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(6),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
-                  blurRadius: 20,
-                  spreadRadius: 0.0,
-                  offset: Offset(0.0, 10.0), // shadow direction: bottom right
-                ),
-              ],
-            ),
-            padding: EdgeInsets.all(8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: FadeInImage.assetNetwork(
-                placeholder: 'assets/placeholder.png',
-                image: _shopDetails?.logo ?? "",
-                fit: BoxFit.cover,
-                imageErrorBuilder: (BuildContext, Object, StackTrace) {
-                  return Image.asset('assets/placeholder_rectangle.png');
-                },
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          width: 60,
+          height: 60,
+          //  decoration: BoxDecorations.buildBoxDecoration_1(),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(6),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: .08),
+                blurRadius: 20,
+                spreadRadius: 0.0,
+                offset: Offset(0.0, 10.0), // shadow direction: bottom right
               ),
-            ),
+            ],
           ),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            width: DeviceInfo(context).width! / 2.5,
-            height: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _shopDetails?.name ?? "",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                buildRatingWithCountRow(),
-                Text(
-                  _shopDetails?.address ?? "",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: Color(0xff6B7377),
-                    fontSize: 10,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Spacer(),
-          Container(
-            height: 28,
-            width: 91,
-            decoration: BoxDecoration(
-              color: Color(0xffFEF0D7),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: .08),
-                  blurRadius: 20,
-                  spreadRadius: 0.0,
-                  offset: Offset(0.0, 10.0), // shadow direction: bottom right
-                ),
-              ],
-              borderRadius: BorderRadius.circular(3.0),
-            ),
-            child: Btn.basic(
-              padding: EdgeInsets.zero,
-              color: _isThisSellerFollowed != null && _isThisSellerFollowed!
-                  ? MyTheme.green_light
-                  : MyTheme.amber,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-                side: BorderSide(
-                  color: _isThisSellerFollowed != null && _isThisSellerFollowed!
-                      ? MyTheme.green
-                      : MyTheme.golden,
-                ),
-              ),
-              onPressed: () {
-                if (!is_logged_in.$) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Login();
-                      },
-                    ),
-                  );
-                  return;
-                }
-                if (_isThisSellerFollowed != null) {
-                  if (_isThisSellerFollowed!) {
-                    removedFollow(_shopDetails?.id);
-                  } else {
-                    addFollow(_shopDetails?.id);
-                  }
-                }
-
-                ///TODO Seller
+          padding: EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: FadeInImage.assetNetwork(
+              placeholder: 'assets/placeholder.png',
+              image: _shopDetails?.logo ?? "",
+              fit: BoxFit.cover,
+              imageErrorBuilder: (BuildContext, Object, StackTrace) {
+                return Image.asset('assets/placeholder_rectangle.png');
               },
-              child: Text(
-                _isThisSellerFollowed != null && _isThisSellerFollowed!
-                    ? LangText(context).local.followed_ucf
-                    : LangText(context).local.follow_ucf,
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(left: 10),
+          width: DeviceInfo(context).width! / 2.5,
+          height: 60,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _shopDetails?.name ?? "",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
                 style: TextStyle(
-                  fontSize: 10,
-                  color: _isThisSellerFollowed != null && _isThisSellerFollowed!
-                      ? MyTheme.green
-                      : MyTheme.golden,
+                  color: Colors.black,
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+              buildRatingWithCountRow(),
+              Text(
+                _shopDetails?.address ?? "",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Color(0xff6B7377),
+                  fontSize: 10,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Spacer(),
+        Container(
+          height: 28,
+          width: 91,
+          decoration: BoxDecoration(
+            color: Color(0xffFEF0D7),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: .08),
+                blurRadius: 20,
+                spreadRadius: 0.0,
+                offset: Offset(0.0, 10.0), // shadow direction: bottom right
+              ),
+            ],
+            borderRadius: BorderRadius.circular(3.0),
+          ),
+          child: Btn.basic(
+            padding: EdgeInsets.zero,
+            color: _isThisSellerFollowed != null && _isThisSellerFollowed!
+                ? MyTheme.green_light
+                : MyTheme.amber,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+              side: BorderSide(
+                color: _isThisSellerFollowed != null && _isThisSellerFollowed!
+                    ? MyTheme.green
+                    : MyTheme.golden,
+              ),
+            ),
+            onPressed: () {
+              if (!is_logged_in.$) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Login();
+                    },
+                  ),
+                );
+                return;
+              }
+              if (_isThisSellerFollowed != null) {
+                if (_isThisSellerFollowed!) {
+                  removedFollow(_shopDetails?.id);
+                } else {
+                  addFollow(_shopDetails?.id);
+                }
+              }
+            },
+            child: Text(
+              _isThisSellerFollowed != null && _isThisSellerFollowed!
+                  ? LangText(context).local.followed_ucf
+                  : LangText(context).local.follow_ucf,
+              style: TextStyle(
+                fontSize: 10,
+                color: _isThisSellerFollowed != null && _isThisSellerFollowed!
+                    ? MyTheme.green
+                    : MyTheme.golden,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -1010,7 +999,7 @@ class _SellerDetailsState extends State<SellerDetails> {
           ),
           //  itemPadding: EdgeInsets.only(right: 4.0),
           onRatingUpdate: (rating) {
-            print(rating);
+            log(rating.toString());
           },
         ),
       ],
@@ -1066,164 +1055,126 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
           ),
         );
       },
-      child: Container(
-        //decoration: BoxDecorations.buildBoxDecoration_1(),
-        //decoration: BoxDecoration(color: Color(0xffF6F5FA)),
-        child: Stack(
-          children: [
-            Column(
-              children: <Widget>[
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ClipRRect(
-                      clipBehavior: Clip.hardEdge,
-                      borderRadius: BorderRadius.circular(10),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/placeholder.png',
-                        image: widget.image ?? 'assets/placeholder.png',
-                        fit: BoxFit.cover,
-                      ),
+      child: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 1,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ClipRRect(
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.circular(10),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/placeholder.png',
+                      image: widget.image ?? 'assets/placeholder.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      child: Text(
+                        widget.name ?? 'No Name',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: MyTheme.font_grey,
+                          fontSize: 14,
+                          height: 1.2,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    if (widget.has_discount)
                       Padding(
                         padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
                         child: Text(
-                          widget.name ?? 'No Name',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: MyTheme.font_grey,
-                            fontSize: 14,
-                            height: 1.2,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      if (widget.has_discount)
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(16, 8, 16, 0),
-                          child: Text(
-                            SystemConfig.systemCurrency != null
-                                ? widget.stroked_price?.replaceAll(
-                                      SystemConfig.systemCurrency!.code!,
-                                      SystemConfig.systemCurrency!.symbol!,
-                                    ) ??
-                                    ''
-                                : widget.stroked_price ?? '',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              color: MyTheme.medium_grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        )
-                      else
-                        SizedBox(height: 4.0),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        child: Text(
                           SystemConfig.systemCurrency != null
-                              ? widget.main_price?.replaceAll(
+                              ? widget.stroked_price?.replaceAll(
                                     SystemConfig.systemCurrency!.code!,
                                     SystemConfig.systemCurrency!.symbol!,
                                   ) ??
                                   ''
-                              : widget.main_price ?? '',
+                              : widget.stroked_price ?? '',
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            decoration: TextDecoration.lineThrough,
+                            color: MyTheme.medium_grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.normal,
                           ),
                         ),
+                      )
+                    else
+                      SizedBox(height: 4.0),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Text(
+                        SystemConfig.systemCurrency != null
+                            ? widget.main_price?.replaceAll(
+                                  SystemConfig.systemCurrency!.code!,
+                                  SystemConfig.systemCurrency!.symbol!,
+                                ) ??
+                                ''
+                            : widget.main_price ?? '',
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    if (widget.has_discount)
-                      Container(
-                        // padding:
-                        //     EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                        height: 20,
-                        width: 48,
-                        margin: EdgeInsets.only(
-                          top: 8,
-                          right: 8,
-                          bottom: 15,
-                        ), // Adjusted margin
-                        decoration: BoxDecoration(
-                          color: const Color(0xffe62e04),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0x14000000),
-                              offset: Offset(-1, 1),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            widget.discount ?? '',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              height: 1.8,
-                            ),
-                            textHeightBehavior: TextHeightBehavior(
-                              applyHeightToFirstAscent: false,
-                            ),
-                            softWrap: false,
+              ),
+            ],
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (widget.has_discount)
+                    Container(
+                      // padding:
+                      //     EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      height: 20,
+                      width: 48,
+                      margin: EdgeInsets.only(
+                        top: 8,
+                        right: 8,
+                        bottom: 15,
+                      ), // Adjusted margin
+                      decoration: BoxDecoration(
+                        color: const Color(0xffe62e04),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0x14000000),
+                            offset: Offset(-1, 1),
+                            blurRadius: 1,
                           ),
-                        ),
+                        ],
                       ),
-                    if (whole_sale_addon_installed.$ && widget.isWholesale!)
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(6),
-                            bottomLeft: Radius.circular(6),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0x14000000),
-                              offset: Offset(-1, 1),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
+                      child: Center(
                         child: Text(
-                          "Wholesale",
+                          widget.discount ?? '',
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.white,
@@ -1236,12 +1187,46 @@ class _FeaturedProductCardState extends State<FeaturedProductCard> {
                           softWrap: false,
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                  if (whole_sale_addon_installed.$ && widget.isWholesale!)
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(6),
+                          bottomLeft: Radius.circular(6),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0x14000000),
+                            offset: Offset(-1, 1),
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        "Wholesale",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          height: 1.8,
+                        ),
+                        textHeightBehavior: TextHeightBehavior(
+                          applyHeightToFirstAscent: false,
+                        ),
+                        softWrap: false,
+                      ),
+                    ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -18,7 +18,6 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
 
   @override
   void initState() {
-
     widget.scrollController!.addListener(() {
       if (widget.scrollController!.position.userScrollDirection ==
               ScrollDirection.forward ||
@@ -30,7 +29,7 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
       }
       setState(() {});
     });
-    // TODO: implement initState
+
     super.initState();
   }
 

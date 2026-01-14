@@ -1,5 +1,5 @@
-import 'package:infinity_ecom_app/repositories/notification_repository.dart';
 import 'package:flutter/material.dart';
+import '../repositories/notification_repository.dart';
 
 class UnReadNotificationCounter extends ChangeNotifier {
   int unReadNotificationCounter = 0;

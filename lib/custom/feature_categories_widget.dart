@@ -50,46 +50,43 @@ class FeaturedCategoriesWidget extends StatelessWidget {
                 ),
               );
             },
-            child: Container(
-              child: Row(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xff000000).withValues(alpha: 0.1),
-                            spreadRadius: 1,
-                            blurRadius: 15,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/placeholder.png',
-                          image:
-                              homeData.featuredCategoryList[index].coverImage!,
-                          fit: BoxFit.cover,
+            child: Row(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff000000).withValues(alpha: 0.1),
+                          spreadRadius: 1,
+                          blurRadius: 15,
+                          offset: Offset(0, 6),
                         ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/placeholder.png',
+                        image: homeData.featuredCategoryList[index].coverImage!,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
-                  Flexible(
-                    child: Text(
-                      homeData.featuredCategoryList[index].name,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      softWrap: true,
-                      style: TextStyle(fontSize: 12, color: MyTheme.font_grey),
-                    ),
+                ),
+                SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    homeData.featuredCategoryList[index].name,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    softWrap: true,
+                    style: TextStyle(fontSize: 12, color: MyTheme.font_grey),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

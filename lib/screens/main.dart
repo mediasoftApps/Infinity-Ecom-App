@@ -1,20 +1,23 @@
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/main.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/presenter/bottom_appbar_index.dart';
-import 'package:infinity_ecom_app/presenter/cart_counter.dart';
-import 'package:infinity_ecom_app/screens/auth/login.dart';
-import 'package:infinity_ecom_app/screens/category_list_n_product/category_list.dart';
-import 'package:infinity_ecom_app/screens/checkout/cart.dart';
-import 'package:infinity_ecom_app/screens/home.dart';
-import 'package:infinity_ecom_app/screens/profile.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+
+import '../helpers/shared_value_helper.dart';
+import '../l10n/app_localizations.dart';
+import '../main.dart';
+import '../my_theme.dart';
+import '../presenter/bottom_appbar_index.dart';
+import '../presenter/cart_counter.dart';
+
+import 'auth/login.dart';
+import 'category_list_n_product/category_list.dart';
+import 'checkout/cart.dart';
+import 'home.dart';
+import 'profile.dart';
 
 class Main extends StatefulWidget {
   Main({super.key, go_back = true});
@@ -65,7 +68,6 @@ class _MainState extends State<Main> {
       Profile(),
     ];
     fetchAll();
-    // TODO: implement initState
     //re appear statusbar in case it was not there in the previous page
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
@@ -132,7 +134,7 @@ class _MainState extends State<Main> {
   bool _dialogShowing = false;
 
   Future<bool> willPop() async {
-    print(_currentIndex);
+    log(_currentIndex.toString());
     if (_currentIndex != 0) {
       fetchAll();
       setState(() {

@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/input_decorations.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/file_helper.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/profile_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+import '../custom/box_decorations.dart';
+import '../custom/btn.dart';
+import '../custom/input_decorations.dart';
+import '../custom/lang_text.dart';
+import '../custom/toast_component.dart';
+import '../helpers/file_helper.dart';
+import '../helpers/shared_value_helper.dart';
+import '../l10n/app_localizations.dart';
+import '../my_theme.dart';
+import '../repositories/profile_repository.dart';
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key});
@@ -115,8 +115,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     var postBody = jsonEncode({"name": name, "phone": phone});
 
-    var profileUpdateResponse = await ProfileRepository()
-        .getProfileUpdateResponse(post_body: postBody);
+    var profileUpdateResponse =
+        await ProfileRepository().getProfileUpdateResponse(post_body: postBody);
 
     if (profileUpdateResponse.result == false) {
       ToastComponent.showDialog(profileUpdateResponse.message);
@@ -149,7 +149,8 @@ class _ProfileEditState extends State<ProfileEdit> {
       ToastComponent.showDialog(
         AppLocalizations.of(
           context,
-        )!.password_must_contain_at_least_6_characters,
+        )!
+            .password_must_contain_at_least_6_characters,
       );
       return;
     }
@@ -162,8 +163,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     var postBody = jsonEncode({"password": password});
 
-    var profileUpdateResponse = await ProfileRepository()
-        .getProfileUpdateResponse(post_body: postBody);
+    var profileUpdateResponse =
+        await ProfileRepository().getProfileUpdateResponse(post_body: postBody);
 
     if (profileUpdateResponse.result == false) {
       ToastComponent.showDialog(profileUpdateResponse.message);
@@ -176,9 +177,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: MyTheme.mainColor,
         appBar: buildAppBar(context),
@@ -367,30 +367,29 @@ class _ProfileEditState extends State<ProfileEdit> {
                   obscureText: !_showPassword,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration:
-                      InputDecorations.buildInputDecoration_1(
-                        hint_text: "• • • • • • • •",
-                      ).copyWith(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: MyTheme.accent_color),
-                        ),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          child: Icon(
-                            _showPassword
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: MyTheme.accent_color,
-                          ),
-                        ),
+                  decoration: InputDecorations.buildInputDecoration_1(
+                    hint_text: "• • • • • • • •",
+                  ).copyWith(
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: MyTheme.accent_color),
+                    ),
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _showPassword = !_showPassword;
+                        });
+                      },
+                      child: Icon(
+                        _showPassword
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: MyTheme.accent_color,
                       ),
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -398,7 +397,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                 child: Text(
                   AppLocalizations.of(
                     context,
-                  )!.password_must_contain_at_least_6_characters,
+                  )!
+                      .password_must_contain_at_least_6_characters,
                   style: const TextStyle(
                     color: Color(0xffE62E04),
                     fontStyle: FontStyle.italic,
@@ -430,30 +430,29 @@ class _ProfileEditState extends State<ProfileEdit> {
               obscureText: !_showConfirmPassword,
               enableSuggestions: false,
               autocorrect: false,
-              decoration:
-                  InputDecorations.buildInputDecoration_1(
-                    hint_text: "• • • • • • • •",
-                  ).copyWith(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: MyTheme.accent_color),
-                    ),
-                    suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _showConfirmPassword = !_showConfirmPassword;
-                        });
-                      },
-                      child: Icon(
-                        _showConfirmPassword
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: MyTheme.accent_color,
-                      ),
-                    ),
+              decoration: InputDecorations.buildInputDecoration_1(
+                hint_text: "• • • • • • • •",
+              ).copyWith(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: MyTheme.accent_color),
+                ),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _showConfirmPassword = !_showConfirmPassword;
+                    });
+                  },
+                  child: Icon(
+                    _showConfirmPassword
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: MyTheme.accent_color,
                   ),
+                ),
+              ),
             ),
           ),
         ),
@@ -526,17 +525,16 @@ class _ProfileEditState extends State<ProfileEdit> {
               controller: _nameController,
               autofocus: false,
               style: const TextStyle(color: Color(0xff999999), fontSize: 12),
-              decoration:
-                  InputDecorations.buildInputDecoration_1(
-                    hint_text: "John Doe",
-                  ).copyWith(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: MyTheme.accent_color),
-                    ),
-                  ),
+              decoration: InputDecorations.buildInputDecoration_1(
+                hint_text: "John Doe",
+              ).copyWith(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: MyTheme.accent_color),
+                ),
+              ),
             ),
           ),
         ),
@@ -565,17 +563,16 @@ class _ProfileEditState extends State<ProfileEdit> {
               autofocus: false,
               keyboardType: TextInputType.phone,
               style: const TextStyle(color: Color(0xff999999), fontSize: 12),
-              decoration:
-                  InputDecorations.buildInputDecoration_1(
-                    hint_text: "+01xxxxxxxxxx",
-                  ).copyWith(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: MyTheme.accent_color),
-                    ),
-                  ),
+              decoration: InputDecorations.buildInputDecoration_1(
+                hint_text: "+01xxxxxxxxxx",
+              ).copyWith(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: MyTheme.accent_color),
+                ),
+              ),
             ),
           ),
         ),

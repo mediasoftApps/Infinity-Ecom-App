@@ -1,15 +1,16 @@
-import 'package:infinity_ecom_app/my_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/screens/brand_products.dart';
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
+
+import '../custom/box_decorations.dart';
+import '../my_theme.dart';
+import '../screens/brand_products.dart';
 
 class BrandSquareCard extends StatefulWidget {
-  int? id;
-  String slug;
-  String? image;
-  String? name;
+  final int? id;
+  final String slug;
+  final String? image;
+  final String? name;
 
-  BrandSquareCard({
+  const BrandSquareCard({
     super.key,
     this.id,
     this.image,

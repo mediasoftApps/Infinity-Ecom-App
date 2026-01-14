@@ -13,7 +13,7 @@ class ListProductCard extends StatefulWidget {
   final String? stroked_price;
   final bool? has_discount;
 
-  ListProductCard({
+  const ListProductCard({
     super.key,
     this.id,
     required this.slug,

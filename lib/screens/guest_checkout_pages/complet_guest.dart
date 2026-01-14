@@ -75,7 +75,6 @@ class _GuestCheckoutAddressState extends State<GuestCheckoutAddress> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     if (is_logged_in.$ == true) {

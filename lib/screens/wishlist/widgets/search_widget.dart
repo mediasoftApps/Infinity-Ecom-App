@@ -45,9 +45,9 @@ class WhichFilter {
 }
 
 class SearchWidget extends StatefulWidget {
-  const SearchWidget({super.key, this.selected_filter = "product"});
-
   final String selected_filter;
+
+  const SearchWidget({super.key, this.selected_filter = "product"});
 
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
@@ -80,9 +80,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   //--------------------
   final List<dynamic> _filterBrandList = [];
-  bool _filteredBrandsCalled = false;
   final List<dynamic> _filterCategoryList = [];
-  bool _filteredCategoriesCalled = false;
 
   final List<dynamic> _searchSuggestionList = [];
 
@@ -112,7 +110,6 @@ class _SearchWidgetState extends State<SearchWidget> {
   fetchFilteredBrands() async {
     var filteredBrandResponse = await BrandRepository().getFilterPageBrands();
     _filterBrandList.addAll(filteredBrandResponse.brands!);
-    _filteredBrandsCalled = true;
     setState(() {});
   }
 
@@ -120,7 +117,6 @@ class _SearchWidgetState extends State<SearchWidget> {
     var filteredCategoriesResponse =
         await CategoryRepository().getFilterPageCategories();
     _filterCategoryList.addAll(filteredCategoriesResponse.categories!);
-    _filteredCategoriesCalled = true;
     setState(() {});
   }
 
@@ -132,7 +128,6 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _productScrollController.dispose();
     _brandScrollController.dispose();
     _shopScrollController.dispose();
@@ -1166,10 +1161,8 @@ class _SearchWidgetState extends State<SearchWidget> {
     );
   }
 
-  Container buildProductList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildProductScrollableList())]),
-    );
+  Widget buildProductList() {
+    return Column(children: [Expanded(child: buildProductScrollableList())]);
   }
 
   buildProductScrollableList() {
@@ -1239,10 +1232,8 @@ class _SearchWidgetState extends State<SearchWidget> {
     }
   }
 
-  Container buildBrandList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildBrandScrollableList())]),
-    );
+  Widget buildBrandList() {
+    return Column(children: [Expanded(child: buildBrandScrollableList())]);
   }
 
   buildBrandScrollableList() {
@@ -1310,10 +1301,8 @@ class _SearchWidgetState extends State<SearchWidget> {
     }
   }
 
-  Container buildShopList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildShopScrollableList())]),
-    );
+  Widget buildShopList() {
+    return Column(children: [Expanded(child: buildShopScrollableList())]);
   }
 
   buildShopScrollableList() {

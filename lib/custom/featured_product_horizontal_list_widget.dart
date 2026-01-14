@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../helpers/shimmer_helper.dart';
+import '../l10n/app_localizations.dart';
 import '../my_theme.dart';
 import '../presenter/home_presenter.dart';
 import '../ui_elements/mini_product_card.dart';
@@ -64,13 +64,11 @@ class FeaturedProductHorizontalListWidget extends StatelessWidget {
             child: ListView.separated(
               padding: const EdgeInsets.all(0.0),
               separatorBuilder: (context, index) => SizedBox(width: 12),
-              itemCount:
-                  homeData.totalFeaturedProductData! >
+              itemCount: homeData.totalFeaturedProductData! >
                       homeData.featuredProductList.length
                   ? homeData.featuredProductList.length + 1
                   : homeData.featuredProductList.length,
               scrollDirection: Axis.horizontal,
-
               physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics(),
               ),

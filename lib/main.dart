@@ -1,9 +1,5 @@
 import 'dart:async';
 
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
-import 'package:infinity_ecom_app/middlewares/auth_middleware.dart';
-import 'package:infinity_ecom_app/screens/auth/login.dart';
-import 'package:infinity_ecom_app/screens/filter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +15,9 @@ import 'app_config.dart';
 import 'custom/aiz_route.dart';
 
 import 'helpers/main_helpers.dart';
+import 'l10n/app_localizations.dart';
 import 'lang_config.dart';
+import 'middlewares/auth_middleware.dart';
 import 'my_theme.dart';
 import 'other_config.dart';
 import 'presenter/cart_counter.dart';
@@ -34,6 +32,7 @@ import 'screens/auction/auction_bidded_products.dart';
 import 'screens/auction/auction_products.dart';
 import 'screens/auction/auction_products_details.dart';
 import 'screens/auction/auction_purchase_history.dart';
+import 'screens/auth/login.dart';
 import 'screens/auth/registration.dart';
 import 'screens/brand_products.dart';
 import 'screens/category_list_n_product/category_list.dart';
@@ -44,6 +43,7 @@ import 'screens/classified_ads/classified_product_details.dart';
 import 'screens/classified_ads/classified_provider.dart';
 import 'screens/classified_ads/my_classified_ads.dart';
 import 'screens/coupon/coupons.dart';
+import 'screens/filter.dart';
 import 'screens/flash_deal/flash_deal_list.dart';
 import 'screens/flash_deal/flash_deal_products.dart';
 import 'screens/followed_sellers.dart';

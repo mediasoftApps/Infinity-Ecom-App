@@ -1,26 +1,23 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/my_widget.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-// NEW IMPORTS
-import 'package:infinity_ecom_app/data_model/uploaded_file_list_response.dart';
-import 'package:infinity_ecom_app/screens/uploads/upload_file.dart';
-
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/review_repositories.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'dart:io';
 
+import '../../custom/btn.dart';
 import '../../custom/lang_text.dart';
+import '../../custom/my_widget.dart';
+import '../../custom/toast_component.dart';
+import '../../data_model/uploaded_file_list_response.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/review_repositories.dart';
+import '../uploads/upload_file.dart';
 
 class ProductReviews extends StatefulWidget {
   final int? id;

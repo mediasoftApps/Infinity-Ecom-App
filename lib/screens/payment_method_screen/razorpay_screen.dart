@@ -82,8 +82,8 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
           "System-Key": AppConfig.system_key,
           "Authorization": "Bearer ${access_token.$}",
           "Currency-Code": SystemConfig.systemCurrency!.code!,
-          "Currency-Exchange-Rate": SystemConfig.systemCurrency!.exchangeRate
-              .toString(),
+          "Currency-Exchange-Rate":
+              SystemConfig.systemCurrency!.exchangeRate.toString(),
         },
       );
   }
@@ -117,9 +117,8 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: app_language_rtl.$!
-          ? TextDirection.rtl
-          : TextDirection.ltr,
+      textDirection:
+          app_language_rtl.$! ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: buildAppBar(context),
@@ -133,32 +132,32 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
 
-          // print('responseJSON');
-          // print(responseJSON);
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
+      // print('responseJSON');
+      // print(responseJSON);
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
 
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            paymentDetails = responseJSON['payment_details'];
-            onPaymentSuccess(paymentDetails);
-          }
-        });
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(paymentDetails);
+      }
+    });
   }
 
   onPaymentSuccess(paymentDetails) async {
-    var razorpayPaymentSuccessResponse = await PaymentRepository()
-        .getRazorpayPaymentSuccessResponse(
-          widget.payment_type,
-          widget.amount,
-          _combined_order_id,
-          paymentDetails,
-        );
+    var razorpayPaymentSuccessResponse =
+        await PaymentRepository().getRazorpayPaymentSuccessResponse(
+      widget.payment_type,
+      widget.amount,
+      _combined_order_id,
+      paymentDetails,
+    );
 
     if (razorpayPaymentSuccessResponse.result == false) {
       ToastComponent.showDialog(razorpayPaymentSuccessResponse.message!);
@@ -213,14 +212,12 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else {
       return SizedBox.expand(
-        child: Container(child: WebViewWidget(controller: _webViewController)),
+        child: WebViewWidget(controller: _webViewController),
       );
     }
   }

@@ -495,7 +495,7 @@ packages:
     source: hosted
     version: "3.4.1"
   flutter_chat_bubble:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: flutter_chat_bubble
       sha256: ede33df7237fea3d89464c8493bfa0bee2f94f50fd097ebd30c517c3c0d4fcf9
@@ -812,7 +812,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_spinkit:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: flutter_spinkit
       sha256: "77850df57c00dc218bfe96071d576a8babec24cf58b2ed121c83cca4a2fdce7f"
@@ -1374,7 +1374,7 @@ packages:
     source: hosted
     version: "3.2.1"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "75cca69d1490965be98c73ceaea117e8a04dd21217b37b292c9ddbec0d955bc5"
@@ -1494,7 +1494,7 @@ packages:
     source: hosted
     version: "7.0.1"
   phonepe_payment_sdk:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: phonepe_payment_sdk
       sha256: "5381365fb5a4acac8ed6980201c6ff0d354352089f17d9cc521dadd85eee930f"
@@ -1614,7 +1614,7 @@ packages:
     source: hosted
     version: "3.1.0"
   route_transitions:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: route_transitions
       sha256: "42f89f161b6c8ab4b497f23af3d684985b2bfd5c73e1a0240e8b5a2aca7b3812"
@@ -1907,7 +1907,7 @@ packages:
     source: hosted
     version: "0.1.1"
   timeline_tile:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: timeline_tile
       sha256: "85ec2023c67137397c2812e3e848b2fb20b410b67cd9aff304bb5480c376fc0c"

@@ -43,8 +43,8 @@ class ProductRepository {
       headers: {
         "App-Language": app_language.$!,
         "Currency-Code": SystemConfig.systemCurrency!.code!,
-        "Currency-Exchange-Rate": SystemConfig.systemCurrency!.exchangeRate
-            .toString(),
+        "Currency-Exchange-Rate":
+            SystemConfig.systemCurrency!.exchangeRate.toString(),
       },
     );
     return productMiniResponseFromJson(response.body);
@@ -84,7 +84,7 @@ class ProductRepository {
     page = 1,
   }) async {
     String url =
-        ("${AppConfig.BASE_URL}/products/category/$id?page=${page}&name=${name}");
+        ("${AppConfig.BASE_URL}/products/category/$id?page=$page&name=$name");
     final response = await ApiRequest.get(
       url: url,
       headers: {"App-Language": app_language.$!},
@@ -99,7 +99,7 @@ class ProductRepository {
     page = 1,
   }) async {
     String url =
-        ("${AppConfig.BASE_URL}/products/seller/$id?page=${page}&name=${name}");
+        ("${AppConfig.BASE_URL}/products/seller/$id?page=$page&name=$name");
 
     final response = await ApiRequest.get(
       url: url,
@@ -132,8 +132,7 @@ class ProductRepository {
     min = "",
     max = "",
   }) async {
-    String url =
-        ("${AppConfig.BASE_URL}/products/search"
+    String url = ("${AppConfig.BASE_URL}/products/search"
         "?page=$page&name=$name&sort_key=$sort_key&brands=$brands&categories=$categories&min=$min&max=$max");
 
     final response = await ApiRequest.get(

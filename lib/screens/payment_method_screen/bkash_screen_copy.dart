@@ -1,17 +1,18 @@
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/helpers/main_helpers.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/payment_repository.dart';
-import 'package:infinity_ecom_app/screens/orders/order_list.dart';
-import 'package:infinity_ecom_app/screens/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../custom/toast_component.dart';
+import '../../helpers/main_helpers.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/payment_repository.dart';
+import '../orders/order_list.dart';
 import '../profile.dart';
+import '../wallet.dart';
 
 class BkashScreen extends StatefulWidget {
   double? amount;
@@ -19,6 +20,7 @@ class BkashScreen extends StatefulWidget {
   String? payment_method_key;
   var package_id;
   int? orderId;
+
   BkashScreen({
     super.key,
     this.amount = 0.00,
@@ -45,7 +47,6 @@ class _BkashScreenState extends State<BkashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.payment_type == "cart_payment") {
       createOrder();
@@ -132,38 +133,39 @@ class _BkashScreenState extends State<BkashScreen> {
   }
 
   void getData() {
-    String? paymentDetails = '';
+    String? paymentDetails;
     _webViewController
         .runJavaScriptReturningResult("document.body.innerText")
         .then((data) {
-          var responseJSON = jsonDecode(data as String);
-          if (responseJSON.runtimeType == String) {
-            responseJSON = jsonDecode(responseJSON);
-          }
-          print(data);
-          if (responseJSON["result"] == false) {
-            ToastComponent.showDialog(responseJSON["message"]);
-            Navigator.pop(context);
-          } else if (responseJSON["result"] == true) {
-            paymentDetails = responseJSON['payment_details'];
-            onPaymentSuccess(responseJSON);
-          }
-        });
+      var responseJSON = jsonDecode(data as String);
+      if (responseJSON.runtimeType == String) {
+        responseJSON = jsonDecode(responseJSON);
+      }
+      log(data);
+      if (responseJSON["result"] == false) {
+        ToastComponent.showDialog(responseJSON["message"]);
+        Navigator.pop(context);
+      } else if (responseJSON["result"] == true) {
+        paymentDetails = responseJSON['payment_details'];
+        onPaymentSuccess(responseJSON);
+      }
+    });
+    log(paymentDetails!);
   }
 
   onPaymentSuccess(paymentDetails) async {
     showLoading = true;
     setState(() {});
 
-    var bkashPaymentProcessResponse = await PaymentRepository()
-        .getBkashPaymentProcessResponse(
-          amount: widget.amount,
-          token: _token,
-          payment_type: widget.payment_type,
-          combined_order_id: _combined_order_id,
-          package_id: widget.package_id,
-          payment_id: paymentDetails['paymentID'],
-        );
+    var bkashPaymentProcessResponse =
+        await PaymentRepository().getBkashPaymentProcessResponse(
+      amount: widget.amount,
+      token: _token,
+      payment_type: widget.payment_type,
+      combined_order_id: _combined_order_id,
+      package_id: widget.package_id,
+      payment_id: paymentDetails['paymentID'],
+    );
 
     if (bkashPaymentProcessResponse.result == false) {
       ToastComponent.showDialog(bkashPaymentProcessResponse.message!);
@@ -215,16 +217,12 @@ class _BkashScreenState extends State<BkashScreen> {
     if (_order_init == false &&
         _combined_order_id == 0 &&
         widget.payment_type == "cart_payment") {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.creating_order),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.creating_order),
       );
     } else if (_initial_url_fetched == false) {
-      return Container(
-        child: Center(
-          child: Text(AppLocalizations.of(context)!.fetching_bkash_url),
-        ),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.fetching_bkash_url),
       );
     } else {
       return SingleChildScrollView(

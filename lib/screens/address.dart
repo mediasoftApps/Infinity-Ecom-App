@@ -1,21 +1,22 @@
-import 'package:infinity_ecom_app/custom/box_decorations.dart';
-import 'package:infinity_ecom_app/custom/btn.dart';
-import 'package:infinity_ecom_app/custom/lang_text.dart';
-import 'package:infinity_ecom_app/custom/toast_component.dart';
-import 'package:infinity_ecom_app/data_model/business_setting_response.dart';
-import 'package:infinity_ecom_app/data_model/city_response.dart';
-import 'package:infinity_ecom_app/data_model/country_response.dart';
-import 'package:infinity_ecom_app/data_model/state_response.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/address_repository.dart';
-import 'package:infinity_ecom_app/repositories/business_setting_repository.dart';
-import 'package:infinity_ecom_app/screens/map_location.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+
+import '../custom/box_decorations.dart';
+import '../custom/btn.dart';
+import '../custom/lang_text.dart';
+import '../custom/toast_component.dart';
+import '../data_model/business_setting_response.dart';
+import '../data_model/city_response.dart';
+import '../data_model/country_response.dart';
+import '../data_model/state_response.dart';
+import '../helpers/shared_value_helper.dart';
+import '../helpers/shimmer_helper.dart';
+import '../my_theme.dart';
+import '../repositories/address_repository.dart';
+import '../repositories/business_setting_repository.dart';
+import 'map_location.dart';
 
 class Address extends StatefulWidget {
   final bool from_shipping_info;
@@ -1577,7 +1578,7 @@ class _AddressState extends State<Address> {
   }
 
   buildAddressList() {
-    if (is_logged_in == false) {
+    if (is_logged_in.$ == false) {
       return SizedBox(
         height: 100,
         child: Center(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:one_context/one_context.dart';
@@ -193,7 +195,7 @@ class _AuctionPurchaseHistoryState extends State<AuctionPurchaseHistory> {
           _scrollController.position.maxScrollExtent) {
         _showMoreProductLoadingContainer = true;
         setState(() {
-          print(_page);
+          log(_page.toString());
           _page++;
         });
         getPurchaseList();
@@ -570,29 +572,27 @@ class _AuctionPurchaseHistoryState extends State<AuctionPurchaseHistory> {
     );
   }
 
-  Container buildTopAppBarContainer() {
-    return Container(
-      child: Row(
-        children: [
-          Builder(
-            builder: (context) => IconButton(
-              padding: EdgeInsets.zero,
-              icon: UsefulElements.backIcon(context),
-              onPressed: () {
-                return Navigator.of(context).pop();
-              },
-            ),
+  Widget buildTopAppBarContainer() {
+    return Row(
+      children: [
+        Builder(
+          builder: (context) => IconButton(
+            padding: EdgeInsets.zero,
+            icon: UsefulElements.backIcon(context),
+            onPressed: () {
+              return Navigator.of(context).pop();
+            },
           ),
-          Text(
-            AppLocalizations.of(context)!.auction_purchase_history_ucf,
-            style: TextStyle(
-              fontSize: 16,
-              color: MyTheme.dark_font_grey,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        Text(
+          AppLocalizations.of(context)!.auction_purchase_history_ucf,
+          style: TextStyle(
+            fontSize: 16,
+            color: MyTheme.dark_font_grey,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

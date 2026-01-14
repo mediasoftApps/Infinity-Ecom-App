@@ -748,117 +748,115 @@ class _FilterState extends State<Filter> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * .85,
             height: 70,
-            child: Container(
-              child: Padding(
-                padding: MediaQuery.of(context).viewPadding.top > 30
-                    ? const EdgeInsets.symmetric(
-                        vertical: 15.0,
-                        horizontal: 0.0,
-                      )
-                    : const EdgeInsets.symmetric(
-                        vertical: 5.0,
-                        horizontal: 0.0,
-                      ),
-                child: TypeAheadField(
-                  suggestionsCallback: (pattern) async {
-                    var suggestions = await SearchRepository()
-                        .getSearchSuggestionListResponse(
-                      query_key: pattern,
-                      type: _selectedFilter!.option_key,
-                    );
+            child: Padding(
+              padding: MediaQuery.of(context).viewPadding.top > 30
+                  ? const EdgeInsets.symmetric(
+                      vertical: 15.0,
+                      horizontal: 0.0,
+                    )
+                  : const EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 0.0,
+                    ),
+              child: TypeAheadField(
+                suggestionsCallback: (pattern) async {
+                  var suggestions =
+                      await SearchRepository().getSearchSuggestionListResponse(
+                    query_key: pattern,
+                    type: _selectedFilter!.option_key,
+                  );
 
-                    return suggestions;
-                  },
-                  loadingBuilder: (context) {
-                    return Container(
-                      height: 40,
-                      color: Colors.white,
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.loading_suggestions,
-                          style: TextStyle(color: MyTheme.medium_grey),
+                  return suggestions;
+                },
+                loadingBuilder: (context) {
+                  return Container(
+                    height: 40,
+                    color: Colors.white,
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.loading_suggestions,
+                        style: TextStyle(color: MyTheme.medium_grey),
+                      ),
+                    ),
+                  );
+                },
+                itemBuilder: (context, dynamic suggestion) {
+                  var subtitle =
+                      "${AppLocalizations.of(context)!.searched_for_all_lower} ${suggestion.count} ${AppLocalizations.of(context)!.times_all_lower}";
+                  if (suggestion.type != "search") {
+                    subtitle =
+                        "${suggestion.type_string} ${AppLocalizations.of(context)!.found_all_lower}";
+                  }
+                  return ListTile(
+                    tileColor: Colors.white,
+                    dense: true,
+                    title: Text(
+                      suggestion.query,
+                      style: TextStyle(
+                        color: suggestion.type != "search"
+                            ? MyTheme.accent_color
+                            : MyTheme.font_grey,
+                      ),
+                    ),
+                    subtitle: Text(
+                      subtitle,
+                      style: TextStyle(
+                        color: suggestion.type != "search"
+                            ? MyTheme.font_grey
+                            : MyTheme.medium_grey,
+                      ),
+                    ),
+                  );
+                },
+                onSelected: (dynamic suggestion) {
+                  _searchController.text = suggestion.query;
+                  _searchKey = suggestion.query;
+                  setState(() {});
+                  _onSearchSubmit();
+                },
+                builder: (context, controller, focusNode) {
+                  return TextField(
+                    controller: controller,
+                    focusNode: focusNode,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: MyTheme.white,
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: MyTheme.medium_grey,
+                      ),
+                      hintText: AppLocalizations.of(context)!.search_here_ucf,
+                      hintStyle: TextStyle(
+                        fontSize: 12.0,
+                        color: MyTheme.textfield_grey,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: MyTheme.noColor,
+                          width: 0.5,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
                         ),
                       ),
-                    );
-                  },
-                  itemBuilder: (context, dynamic suggestion) {
-                    var subtitle =
-                        "${AppLocalizations.of(context)!.searched_for_all_lower} ${suggestion.count} ${AppLocalizations.of(context)!.times_all_lower}";
-                    if (suggestion.type != "search") {
-                      subtitle =
-                          "${suggestion.type_string} ${AppLocalizations.of(context)!.found_all_lower}";
-                    }
-                    return ListTile(
-                      tileColor: Colors.white,
-                      dense: true,
-                      title: Text(
-                        suggestion.query,
-                        style: TextStyle(
-                          color: suggestion.type != "search"
-                              ? MyTheme.accent_color
-                              : MyTheme.font_grey,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: MyTheme.noColor,
+                          width: 1.0,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
                         ),
                       ),
-                      subtitle: Text(
-                        subtitle,
-                        style: TextStyle(
-                          color: suggestion.type != "search"
-                              ? MyTheme.font_grey
-                              : MyTheme.medium_grey,
-                        ),
+                      contentPadding: EdgeInsets.only(
+                        left: 8.0,
+                        top: 5.0,
+                        bottom: 5.0,
                       ),
-                    );
-                  },
-                  onSelected: (dynamic suggestion) {
-                    _searchController.text = suggestion.query;
-                    _searchKey = suggestion.query;
-                    setState(() {});
-                    _onSearchSubmit();
-                  },
-                  builder: (context, controller, focusNode) {
-                    return TextField(
-                      controller: controller,
-                      focusNode: focusNode,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: MyTheme.white,
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: MyTheme.medium_grey,
-                        ),
-                        hintText: AppLocalizations.of(context)!.search_here_ucf,
-                        hintStyle: TextStyle(
-                          fontSize: 12.0,
-                          color: MyTheme.textfield_grey,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyTheme.noColor,
-                            width: 0.5,
-                          ),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8.0),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: MyTheme.noColor,
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8.0),
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.only(
-                          left: 8.0,
-                          top: 5.0,
-                          bottom: 5.0,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -1168,10 +1166,8 @@ class _FilterState extends State<Filter> {
     );
   }
 
-  Container buildProductList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildProductScrollableList())]),
-    );
+  Widget buildProductList() {
+    return Column(children: [Expanded(child: buildProductScrollableList())]);
   }
 
   buildProductScrollableList() {
@@ -1238,10 +1234,8 @@ class _FilterState extends State<Filter> {
     }
   }
 
-  Container buildBrandList() {
-    return Container(
-      child: Column(children: [Expanded(child: buildBrandScrollableList())]),
-    );
+  Widget buildBrandList() {
+    return Column(children: [Expanded(child: buildBrandScrollableList())]);
   }
 
   buildBrandScrollableList() {

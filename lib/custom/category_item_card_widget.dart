@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../data_model/category_response.dart';
@@ -19,58 +18,55 @@ class CategoryItemCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var itemWidth =
-        ((DeviceInfo(context).width! - 48) / 3);
-    return Container(
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return CategoryProducts(
-                  slug: categoryResponse.categories![index].slug ?? "",
-                );
-              },
-            ),
-          );
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
-              width: itemWidth,
-              height: itemWidth,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder.png',
-                  image: categoryResponse.categories![index].coverImage ?? '',
-                  fit: BoxFit.cover,
-                ),
+    var itemWidth = ((DeviceInfo(context).width! - 48) / 3);
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return CategoryProducts(
+                slug: categoryResponse.categories![index].slug ?? "",
+              );
+            },
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
+            width: itemWidth,
+            height: itemWidth,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: FadeInImage.assetNetwork(
+                placeholder: 'assets/placeholder.png',
+                image: categoryResponse.categories![index].coverImage ?? '',
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 8),
-            Container(
-              width: itemWidth,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                categoryResponse.categories![index].name!,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: TextStyle(
-                  color: MyTheme.font_grey,
-                  fontSize: 10,
-                  height: 1.4,
-                  fontWeight: FontWeight.w600,
-                ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: itemWidth,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              categoryResponse.categories![index].name!,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: TextStyle(
+                color: MyTheme.font_grey,
+                fontSize: 10,
+                height: 1.4,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

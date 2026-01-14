@@ -1,17 +1,18 @@
 import 'dart:async';
 
-import 'package:infinity_ecom_app/custom/device_info.dart';
-import 'package:infinity_ecom_app/custom/useful_elements.dart';
-import 'package:infinity_ecom_app/helpers/shared_value_helper.dart';
-import 'package:infinity_ecom_app/helpers/shimmer_helper.dart';
-import 'package:infinity_ecom_app/my_theme.dart';
-import 'package:infinity_ecom_app/repositories/chat_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
-import 'package:infinity_ecom_app/l10n/app_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:shimmer/shimmer.dart';
+
+import '../../custom/device_info.dart';
+import '../../custom/useful_elements.dart';
+import '../../helpers/shared_value_helper.dart';
+import '../../helpers/shimmer_helper.dart';
+import '../../l10n/app_localizations.dart';
+import '../../my_theme.dart';
+import '../../repositories/chat_repository.dart';
 
 class Chat extends StatefulWidget {
   const Chat({
@@ -176,78 +177,76 @@ class _ChatState extends State<Chat> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      title: Container(
-        child: SizedBox(
-          width: 350,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: 40,
-                height: 40,
-                margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-                  border: Border.all(
-                    color: Color.fromRGBO(112, 112, 112, .3),
-                    width: 1,
-                  ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(35),
-                  child: FadeInImage.assetNetwork(
-                    placeholder: 'assets/placeholder.png',
-                    image: widget.messenger_image!,
-                    fit: BoxFit.contain,
-                  ),
+      title: SizedBox(
+        width: 350,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 40,
+              height: 40,
+              margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                border: Border.all(
+                  color: Color.fromRGBO(112, 112, 112, .3),
+                  width: 1,
                 ),
               ),
-              SizedBox(
-                width: 220,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.messenger_name!,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: MyTheme.font_grey,
-                          fontSize: 14,
-                          height: 1.6,
-                          fontWeight: FontWeight.w600,
-                        ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/placeholder.png',
+                  image: widget.messenger_image!,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 220,
+              child: Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.messenger_name!,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: MyTheme.font_grey,
+                        fontSize: 14,
+                        height: 1.6,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        widget.messenger_title!,
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: MyTheme.medium_grey,
-                          fontSize: 12,
-                          height: 1.6,
-                        ),
+                    ),
+                    Text(
+                      widget.messenger_title!,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: MyTheme.medium_grey,
+                        fontSize: 12,
+                        height: 1.6,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  _onRefresh();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.rotate_left, color: MyTheme.font_grey),
-                ),
+            ),
+            Spacer(),
+            InkWell(
+              onTap: () {
+                _onRefresh();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.rotate_left, color: MyTheme.font_grey),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       elevation: 0.0,
@@ -261,54 +260,50 @@ class _ChatState extends State<Chat> {
       centerTitle: false,
       scrolledUnderElevation: 0.0,
       elevation: 0,
-      title: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 35,
-                  height: 35,
-                  margin: EdgeInsets.only(right: 14),
-                  child: Stack(
-                    children: [
-                      UsefulElements.roundImageWithPlaceholder(
-                        elevation: 1,
-                        borderWidth: 0,
-                        url: widget.messenger_image,
-                        width: 35.0,
-                        height: 35.0,
-                        fit: BoxFit.cover,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ],
-                  ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 35,
+                height: 35,
+                margin: EdgeInsets.only(right: 14),
+                child: Stack(
+                  children: [
+                    UsefulElements.roundImageWithPlaceholder(
+                      elevation: 1,
+                      borderWidth: 0,
+                      url: widget.messenger_image,
+                      width: 35.0,
+                      height: 35.0,
+                      fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ],
                 ),
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: DeviceInfo(context).width! / 3,
-                        child: Text(
-                          widget.messenger_name!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: MyTheme.dark_font_grey,
-                          ),
-                        ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: DeviceInfo(context).width! / 3,
+                    child: Text(
+                      widget.messenger_name!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: MyTheme.dark_font_grey,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
       backgroundColor: MyTheme.mainColor,
       leading: Container(
@@ -500,7 +495,7 @@ class _ChatState extends State<Chat> {
                 ),
               ),
               Text(
-                date + " " + time,
+                "$date $time",
                 style: TextStyle(color: MyTheme.medium_grey, fontSize: 10),
               ),
             ],
